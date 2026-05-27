@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS Skills Enablement — QL + MVG Pilot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-label">Professional Services · Global Pilot · June–August 2026</div>
+      <h1>Skills Enablement for the QL + MVG Pilot</h1>
+      <p class="header-sub">A minimum viable skills layer that works alongside the governance and metrics infrastructure GT is building — giving consultants the vocabulary, judgment, and job aids they need to make MVG gates meaningful, not just present.</p>
+      <div class="header-meta">Last Updated: May 27, 2026 &nbsp;·&nbsp; Contact: Josh Kohler, Learning Experience Design</div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#why">Why This Exists</a>
+      <a href="#orientation">MVG Orientation</a>
+      <a href="#gates">Gate-by-Gate Guide</a>
+      <a href="#jobaids">Priority Job Aids</a>
+      <a href="#data">Data Collection</a>
+      <a href="#whats-next">What's Next</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- WHY THIS EXISTS -->
+    <section id="why">
+      <h2>Why This Exists</h2>
+      <p>The QL + MVG pilot has a governance layer, a metrics layer, and a tooling layer. What it doesn't have yet is a <strong>skills layer</strong> — the enablement that helps consultants understand why the gates exist, what judgment they require at each stop, and how to navigate them with confidence rather than compliance.</p>
+      <p>Stephanie flagged this directly: consultants will need enablement on the MVG model itself, not just on how to deliver the work. This proposal addresses that gap.</p>
+
+      <div class="callout">
+        <div class="callout-title">The "Yes And" Structure</div>
+        <p>This pilot enablement is Track 1 — minimum viable, June 1 ready. The full three-track program (Base Layer, Proficiency Track, Immersive Cohort) is Track 2, built for scale after the pilot proves the model. Nothing here is disposable — the gate cards, job aids, and data collection mechanisms all become inputs to the full program design.</p>
+      </div>
+
+      <div class="three-col">
+        <div class="col-card">
+          <div class="col-label">GT Builds</div>
+          <p>Governance layer, tracking tool, metrics, weekly digest, Pilot Trail Guide Slack skill</p>
+        </div>
+        <div class="col-card">
+          <div class="col-label">Enablement Builds</div>
+          <p>Skills layer: MVG orientation, gate-by-gate guide, priority job aids, data collection mechanisms</p>
+        </div>
+        <div class="col-card">
+          <div class="col-label">Innovation Builds</div>
+          <p>Tools layer: Claude, Scopezilla, productivity infrastructure</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MVG ORIENTATION -->
+    <section id="orientation">
+      <h2>MVG Orientation Brief</h2>
+      <p class="section-sub">For consultants onboarding to a QL + MVG pilot project.</p>
+
+      <p>The Minimum Viable Governance framework is not a compliance layer. It is the structure that makes AI-native delivery repeatable rather than lucky. MVG gives the engagement its spine — a set of phase gates where humans make deliberate decisions before work advances. Without it, agentic delivery is fast but ungoverned. With it, speed and rigor coexist.</p>
+
+      <div class="callout">
+        <div class="callout-title">The Governing Logic</div>
+        <p>Agents execute quickly, plausibly, and without self-doubt — the gates are where humans catch what agents cannot.</p>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h3>What Changes in AI-Native Delivery</h3>
+          <ul>
+            <li>Build compresses — agents do construction work that previously took weeks</li>
+            <li>Intent Definition becomes a first-class phase — what you ask agents to do matters more than how fast they do it</li>
+            <li>Refinement and Validation become the new critical path — a continuous loop, not a phase-end check</li>
+            <li>The gates become more consequential — errors amplified by agent velocity are expensive to catch late</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What Stays the Same</h3>
+          <ul>
+            <li>The customer still needs to own the outcome</li>
+            <li>The consultant is still accountable for quality and fit</li>
+            <li>The engagement still fails if the wrong thing is built fast</li>
+          </ul>
+          <div class="principle-tag">Human-led, agent-powered</div>
+          <p>Agents accelerate execution. Consultants lead strategy, validate output, and govern the decisions that cannot be automated.</p>
+        </div>
+      </div>
+
+      <h3>The Six MVG Phases</h3>
+      <div class="phase-table">
+        <div class="phase-row phase-header">
+          <span>Phase</span><span>Name</span><span>Stage Gate</span>
+        </div>
+        <div class="phase-row">
+          <span class="phase-num">0</span><span>Internal Onboarding</span><span>Validated Success Criteria</span>
+        </div>
+        <div class="phase-row">
+          <span class="phase-num">1</span><span>Prepare</span><span>Customer-Approved Engagement Roadmap (Epics)</span>
+        </div>
+        <div class="phase-row">
+          <span class="phase-num">2</span><span>Design</span><span>Architecture Sign-Off</span>
+        </div>
+        <div class="phase-row">
+          <span class="phase-num">3</span><span>Deliver</span><span>Approved Release Plan</span>
+        </div>
+        <div class="phase-row">
+          <span class="phase-num">4</span><span>Deploy</span><span>UAT Sign-Off + Formal Go/No-Go</span>
+        </div>
+        <div class="phase-row">
+          <span class="phase-num">5</span><span>Adopt/Consume</span><span>Release Notes + Customer-Accepted Handoff Package</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- GATE BY GATE -->
+    <section id="gates">
+      <h2>Gate-by-Gate Flight Guide</h2>
+      <p class="section-sub">Each gate card covers the full stop: what to land with, the skills that are load-bearing, the gate decision, and what to carry into the next phase.</p>
+
+      <!-- PRE-FLIGHT -->
+      <div class="gate-card">
+        <div class="gate-header preflight">
+          <span class="gate-tag">Pre-Flight</span>
+          <span class="gate-title">Before the Engagement Begins</span>
+        </div>
+        <div class="gate-body">
+          <div class="gate-section">
+            <div class="gate-section-label">The One Question That Determines Everything</div>
+            <p>Is this customer actually ready for AI-native delivery? Before Phase 0 opens, the consultant must assess whether the engagement should proceed under an AI-native model at all. The Quantum Leap program defines five readiness conditions: asset and data readiness, governance orientation, rapid decisioning capability, willingness to experiment, and contracts in order.</p>
+          </div>
+          <div class="gate-section">
+            <div class="gate-section-label">Skill in Focus</div>
+            <div class="skill-tag">Customer AI Readiness Assessment</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 0 -->
+      <div class="gate-card">
+        <div class="gate-header">
+          <span class="gate-tag">Phase 0</span>
+          <span class="gate-title">Internal Onboarding</span>
+          <span class="gate-gate">Gate: Validated Success Criteria</span>
+        </div>
+        <div class="gate-body">
+          <div class="gate-section landing">
+            <div class="gate-section-label">Landing — What to Arrive With</div>
+            <p>Before this gate closes, the team needs a shared, measurable definition of success in outcome terms, not deliverable terms. The success criteria validated here are the quality standard every downstream gate will be measured against. If they're vague now, every gate that follows has no teeth.</p>
+          </div>
+          <div class="gate-section">
+            <div class="gate-section-label">Skills Load-Bearing at This Gate</div>
+            <table class="skills-table">
+              <tr><td><strong>Outcome Framing</strong></td><td>Success criteria must describe what changes for the customer — not what gets built.</td></tr>
+              <tr><td><strong>Intent Writing</strong></td><td>The Phase 1 roadmap is grounded in intent established here. Vague intent at Phase 0 produces unpredictable agent behavior downstream.</td></tr>
+              <tr><td><strong>Data Quality Judgment</strong></td><td>Before agents are scoped for any task, the data must be assessed as fit for agentic use — not just available.</td></tr>
+            </table>
+          </div>
+          <div class="gate-section gate-q">
+            <div class="gate-section-label">Gate Question</div>
+            <p>Does the team have a shared, measurable definition of success — and has the customer's data been assessed as fit for the agentic workflows being planned?</p>
+          </div>
+          <div class="gate-section takeoff">
+            <div class="gate-section-label">Takeoff — Carry This Into Phase 1</div>
+            <p>The success criteria validated here are the anchor for every epic in the Phase 1 roadmap. Take them into the first customer session and make them visible. If a proposed epic can't be traced to one of these criteria, that's a scope question — not a delivery task.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 1 -->
+      <div class="gate-card">
+        <div class="gate-header">
+          <span class="gate-tag">Phase 1</span>
+          <span class="gate-title">Prepare</span>
+          <span class="gate-gate">Gate: Customer-Approved Engagement Roadmap (Epics)</span>
+        </div>
+        <div class="gate-body">
+          <div class="gate-section landing">
+            <div class="gate-section-label">Landing — What to Arrive With</div>
+            <p>The roadmap the customer approves here must be one they helped build — not one they were asked to sign off on. A roadmap the customer co-authored creates ownership. A roadmap the customer approved creates a future scope dispute.</p>
+          </div>
+          <div class="gate-section">
+            <div class="gate-section-label">Skills Load-Bearing at This Gate</div>
+            <table class="skills-table">
+              <tr><td><strong>Change Co-Creation</strong></td><td>The roadmap must be co-authored in working sessions, not presented for approval.</td></tr>
+              <tr><td><strong>Outcome Framing</strong></td><td>Each epic should trace to an outcome, not a feature. The roadmap is a value realization plan, not a task list.</td></tr>
+              <tr><td><strong>Intent Writing</strong></td><td>Customer-approved epics become the primary input to agent-assisted design in Phase 2. Imprecise epics produce unpredictable agent output.</td></tr>
+              <tr><td><strong>Systems Thinking</strong></td><td>The roadmap should reflect how the customer's systems, data, and people interact — not just what the software will do.</td></tr>
+            </table>
+          </div>
+          <div class="gate-section gate-q">
+            <div class="gate-section-label">Gate Question</div>
+            <p>Would a team member joining mid-stream — or an agent acting on this roadmap — understand exactly what success looks like for each epic, and is the scope bounded enough to deliver it?</p>
+          </div>
+          <div class="gate-section takeoff">
+            <div class="gate-section-label">Takeoff — Carry This Into Phase 2</div>
+            <p>The epics approved here become the design brief for Phase 2. Before agents begin generating architecture artifacts, each epic needs a well-formed intent statement — not just an epic label. The first task of Phase 2 is translating customer-approved epics into agent-ready intent.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 2 -->
+      <div class="gate-card">
+        <div class="gate-header">
+          <span class="gate-tag">Phase 2</span>
+          <span class="gate-title">Design</span>
+          <span class="gate-gate">Gate: Architecture Sign-Off</span>
+        </div>
+        <div class="gate-body">
+          <div class="gate-section landing">
+            <div class="gate-section-label">Landing — What to Arrive With</div>
+            <p>Agents begin doing real construction in this phase — generating solution designs, architecture artifacts, process maps. The consultant's role shifts from producer to director. Consultants who stay in producer mode lose the efficiency benefit and compromise their ability to validate what's been generated.</p>
+          </div>
+          <div class="gate-section">
+            <div class="gate-section-label">Skills Load-Bearing at This Gate</div>
+            <table class="skills-table">
+              <tr><td><strong>Intent Writing</strong></td><td>Every agent-assisted design artifact starts with an intent statement. Quality here determines whether output is usable or requires complete regeneration.</td></tr>
+              <tr><td><strong>Output Validation</strong></td><td>Architecture sign-off is a formal gate. Validation must be structured and documented — not an impression formed on visual review.</td></tr>
+              <tr><td><strong>Human-AI Orchestration</strong></td><td>The consultant must decide what agents design, what humans design, and how closely to supervise the blend.</td></tr>
+              <tr><td><strong>Discernment</strong></td><td>Agent-generated architecture can look complete and be subtly wrong. Calibrated scrutiny is required when output is polished.</td></tr>
+            </table>
+          </div>
+          <div class="gate-section gate-q">
+            <div class="gate-section-label">Gate Question</div>
+            <p>Was the architecture reviewed against defined criteria — and did the customer actively participate in shaping it, or only approve it?</p>
+          </div>
+          <div class="gate-section takeoff">
+            <div class="gate-section-label">Takeoff — Carry This Into Phase 3</div>
+            <p>Architecture sign-off is the last gate before delivery velocity kicks in. Any ambiguity in the architecture compounds at Phase 3 speed. Before Phase 3 opens, confirm that every agent-facing component has a clear, specific intent statement attached to it.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 3 -->
+      <div class="gate-card">
+        <div class="gate-header">
+          <span class="gate-tag">Phase 3</span>
+          <span class="gate-title">Deliver</span>
+          <span class="gate-gate">Gate: Approved Release Plan</span>
+        </div>
+        <div class="gate-body">
+          <div class="gate-section landing">
+            <div class="gate-section-label">Landing — What to Arrive With</div>
+            <p>This is the highest-velocity phase in an AI-native model. Agents are building continuously. The consultant's primary job is not construction — it is orchestration, discernment, and continuous validation across a fast-moving, high-volume build cycle. This is the phase most likely to expose automation complacency.</p>
+          </div>
+          <div class="gate-section">
+            <div class="gate-section-label">Skills Load-Bearing at This Gate</div>
+            <table class="skills-table">
+              <tr><td><strong>Discernment</strong></td><td>Agents produce plausible-looking output at speed. Calibrated vigilance — not just accepting work that appears complete — is the primary skill demand.</td></tr>
+              <tr><td><strong>Output Validation</strong></td><td>At delivery velocity, validation must be fast AND systematic. Continuous validation loops built into the build cycle, not tacked on at the end.</td></tr>
+              <tr><td><strong>Human-AI Orchestration</strong></td><td>Build tasks vary enormously in how safely they can be delegated. Calibrated judgment must be maintained across the full build cycle.</td></tr>
+              <tr><td><strong>Intent Writing</strong></td><td>New sub-tasks surface throughout delivery. Intent is not set once at kickoff — it must be iteratively refined as the build evolves.</td></tr>
+            </table>
+          </div>
+          <div class="gate-section gate-q">
+            <div class="gate-section-label">Gate Question</div>
+            <p>Does the release plan reflect what was actually built — was each component validated against the intent and outcomes defined in Phases 0 and 1 — and have responsible AI risks been actively reviewed?</p>
+          </div>
+          <div class="gate-section takeoff">
+            <div class="gate-section-label">Takeoff — Carry This Into Phase 4</div>
+            <p>Before Phase 4 opens, confirm that UAT criteria trace directly back to the success criteria defined in Phase 0. If they don't, UAT will test the wrong things and the Go/No-Go decision will be made on incomplete evidence.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 4 -->
+      <div class="gate-card">
+        <div class="gate-header">
+          <span class="gate-tag">Phase 4</span>
+          <span class="gate-title">Deploy</span>
+          <span class="gate-gate">Gate: UAT Sign-Off + Formal Go/No-Go</span>
+        </div>
+        <div class="gate-body">
+          <div class="gate-section landing">
+            <div class="gate-section-label">Landing — What to Arrive With</div>
+            <p>Deployment is the point of irreversibility. The Go/No-Go is the highest-stakes judgment call in the lifecycle — and in an AI-native model, the consultant is forming that judgment about work that was largely agent-generated. This gate is where discernment is most consequential and most likely to fail under stakeholder pressure.</p>
+          </div>
+          <div class="gate-section">
+            <div class="gate-section-label">Skills Load-Bearing at This Gate</div>
+            <table class="skills-table">
+              <tr><td><strong>Discernment</strong></td><td>The Go/No-Go requires a clear, defensible judgment about whether the system is ready — not whether it looks ready or whether stakeholders are ready to move on.</td></tr>
+              <tr><td><strong>Output Validation</strong></td><td>UAT criteria must trace to the Phase 0 success criteria. If they don't, UAT is testing the wrong things.</td></tr>
+              <tr><td><strong>Change Co-Creation</strong></td><td>UAT with genuine customer participation reduces post-go-live adoption friction significantly.</td></tr>
+            </table>
+          </div>
+          <div class="gate-section gate-q">
+            <div class="gate-section-label">Gate Question</div>
+            <p>Can the consultant make a defensible, evidence-based case that this system is ready to deliver the outcomes defined in Phase 0 — and does the customer share that confidence?</p>
+          </div>
+          <div class="gate-section takeoff">
+            <div class="gate-section-label">Takeoff — Carry This Into Phase 5</div>
+            <p>Go-live is not the end. In an AI-native model, agents can continue optimizing in production. Before Phase 5 opens, confirm that the customer team knows what decisions they are now responsible for making — and that they have the capability to make them.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 5 -->
+      <div class="gate-card">
+        <div class="gate-header">
+          <span class="gate-tag">Phase 5</span>
+          <span class="gate-title">Adopt/Consume</span>
+          <span class="gate-gate">Gate: Release Notes + Customer-Accepted Handoff Package</span>
+        </div>
+        <div class="gate-body">
+          <div class="gate-section landing">
+            <div class="gate-section-label">Landing — What to Arrive With</div>
+            <p>Phase 5 in an AI-native model is a transfer of governance responsibility, not a training event. A customer team that cannot make sound human-AI orchestration decisions after the consultant leaves is not ready for handoff, regardless of what the documentation says.</p>
+          </div>
+          <div class="gate-section">
+            <div class="gate-section-label">Skills Load-Bearing at This Gate</div>
+            <table class="skills-table">
+              <tr><td><strong>Outcome Framing</strong></td><td>Adoption is only meaningful measured against the outcomes defined in Phase 0. The handoff package must include a measurement plan, not just system documentation.</td></tr>
+              <tr><td><strong>Human-AI Orchestration</strong></td><td>The customer's team now owns the orchestration decisions the consultant was making. That capability must be transferred deliberately.</td></tr>
+              <tr><td><strong>Change Co-Creation</strong></td><td>Customers who co-created the solution drive their own adoption. Phase 5 reinforces that ownership.</td></tr>
+            </table>
+          </div>
+          <div class="gate-section gate-q">
+            <div class="gate-section-label">Gate Question</div>
+            <p>Does the customer have everything they need to measure outcomes, maintain the system, and govern their own human-AI orchestration decisions — without the consultant in the room?</p>
+          </div>
+          <div class="gate-section takeoff">
+            <div class="gate-section-label">Takeoff — Carry This Beyond the Engagement</div>
+            <p>Document two things before you close: one intent statement that worked well enough to reuse, and one validation decision that revealed something about what good looks like on this engagement. These become reusable patterns for the next team.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- PRIORITY JOB AIDS -->
+    <section id="jobids">
+      <h2>Priority Job Aids for Pilot Launch</h2>
+      <p class="section-sub">Three pieces prioritized for June 1 based on consequence on a live engagement and build feasibility. Remaining Base Layer job aids ship in waves after pilot launch, informed by what data collection surfaces.</p>
+
+      <div class="three-col">
+        <div class="col-card priority">
+          <div class="priority-num">1</div>
+          <div class="col-label">Intent Writing</div>
+          <div class="format-tag">Slack Canvas</div>
+          <p>Highest-leverage skill in the framework. Errors in intent propagate through every downstream agent action before anyone notices. Consultants need a reference they can check mid-task.</p>
+        </div>
+        <div class="col-card priority">
+          <div class="priority-num">2</div>
+          <div class="col-label">Output Validation</div>
+          <div class="format-tag">Slack Canvas</div>
+          <p>Continuous validation loops are new behavior for most consultants. The four-step decision protocol (accept / accept with edits / regenerate / escalate) gives them a decision, not just an instruction.</p>
+        </div>
+        <div class="col-card priority">
+          <div class="priority-num">3</div>
+          <div class="col-label">Discernment</div>
+          <div class="format-tag">Trailhead Unit</div>
+          <p>Automation complacency is the invisible risk at Phase 3 velocity. Naming it — and explaining why it gets worse as tools improve — is the minimum intervention before consultants hit delivery speed.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATA COLLECTION -->
+    <section id="data">
+      <h2>Data Collection Mechanisms</h2>
+      <p class="section-sub">Five mechanisms run in parallel. Together they cover real-time signal, gate-level reflection, post-project depth, pattern synthesis, and field observation — the full picture needed to design the three-track program that follows the pilot.</p>
+
+      <div class="mechanism-list">
+
+        <div class="mechanism">
+          <div class="mechanism-header">
+            <span class="mechanism-num">1</span>
+            <span class="mechanism-name">Feedback Loop — Always On</span>
+            <span class="mechanism-owner">GT / Lauren Hunt</span>
+          </div>
+          <p>Async, low-friction, continuous. Consultants drop skill observations into <code>#ql-learnings-feedback</code> in the flow of work. A habit prompt pinned to the channel: <em>"What was hard? What did you wish you had?"</em> No structure required.</p>
+          <div class="mechanism-feeds">Feeds: Which job aids are missing or insufficient at the Base Layer</div>
+        </div>
+
+        <div class="mechanism">
+          <div class="mechanism-header">
+            <span class="mechanism-num">2</span>
+            <span class="mechanism-name">Gate Pulse Check — At Each Submission</span>
+            <span class="mechanism-owner">Victoria Gailey / Michele Lubeck</span>
+          </div>
+          <p>3–5 structured questions tied to each gate artifact submission. Piggybacks on the ~30 min/week PM tracking cadence GT is already designing — no new submission event. Questions vary by phase and target the load-bearing skills at that gate.</p>
+          <div class="mechanism-feeds">Feeds: Which skills are actually load-bearing at each phase vs. which are theoretical</div>
+        </div>
+
+        <div class="mechanism">
+          <div class="mechanism-header">
+            <span class="mechanism-num">3</span>
+            <span class="mechanism-name">Exit Interview — At Project Close</span>
+            <span class="mechanism-owner">Stephanie Flasch / GT Team</span>
+          </div>
+          <p>20-minute structured conversation with the PM and one senior consultant per project at Phase 5 handoff. Three questions: What was hardest? What would you have wanted earlier? What did you invent that should be captured? The richest source for full program design.</p>
+          <div class="mechanism-feeds">Feeds: What the experience arc of the Proficiency Track should feel like</div>
+        </div>
+
+        <div class="mechanism">
+          <div class="mechanism-header">
+            <span class="mechanism-num">4</span>
+            <span class="mechanism-name">Cohort Pattern Digest — Weekly</span>
+            <span class="mechanism-owner">GT / Lauren Hunt</span>
+          </div>
+          <p>GT is already planning a weekly cohort digest. A simple "skill observation" field added to the digest format lets consultants narrate what they're noticing about their own capability gaps in context. Low lift to add; high signal for L&D.</p>
+          <div class="mechanism-feeds">Feeds: Language and framing that resonates with consultants in the field</div>
+        </div>
+
+        <div class="mechanism">
+          <div class="mechanism-header">
+            <span class="mechanism-num">5</span>
+            <span class="mechanism-name">AI Coach Observations — Weekly</span>
+            <span class="mechanism-owner">PACE Team / Kristen Lappin</span>
+          </div>
+          <p>For pilot projects with a designated Regional AI Coach or PACE team member, a simple weekly observation template: <em>What skill gap did you observe? What did you do about it?</em> Field-level behavioral data that self-report cannot produce.</p>
+          <div class="mechanism-feeds">Feeds: What the Immersive Cohort mock project needs to simulate to be realistic</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WHATS NEXT -->
+    <section id="whats-next">
+      <h2>What's Next</h2>
+
+      <div class="two-col">
+        <div>
+          <h3>Immediate (Before June 1)</h3>
+          <ul>
+            <li><strong>Align with Amy Dykstra</strong> — her Quick Start Guide and 3-tier onboarding content and our gate cards and job aids should ship as a single coherent package, not two parallel documents</li>
+            <li><strong>Align with Victoria Gailey</strong> — her Customer Readiness for Pilot Checklist and our Customer AI Readiness canvas cover adjacent ground; the five Quantum Leap criteria language should be consistent across both</li>
+            <li><strong>Build the three priority job aids</strong> — Intent Writing canvas, Output Validation canvas, Discernment Trailhead unit</li>
+          </ul>
+        </div>
+        <div>
+          <h3>After Pilot (Scale)</h3>
+          <ul>
+            <li>Remaining 6 Base Layer canvases and 2 Trailhead modules ship in waves informed by pilot feedback</li>
+            <li>Proficiency Track (~23 hours, scenario-based) — design complete, build begins post-pilot</li>
+            <li>Immersive Cohort (80+ hours, virtual + in-person) — design in progress, informed by pilot data</li>
+            <li>Final pilot report (August 7) feeds directly into both tracks</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">How Pilot Data Feeds the Full Program</div>
+        <table class="skills-table">
+          <tr><th>Mechanism</th><th>What it answers for the full program</th></tr>
+          <tr><td>Feedback Loop</td><td>Which job aids are missing or insufficient at the Base Layer</td></tr>
+          <tr><td>Gate Pulse Check</td><td>Which skills are actually load-bearing at each phase vs. which are theoretical</td></tr>
+          <tr><td>Exit Interview</td><td>What the experience arc of the Proficiency Track should feel like</td></tr>
+          <tr><td>Cohort Digest</td><td>What language and framing resonates with consultants in the field</td></tr>
+          <tr><td>Coach Observations</td><td>What the Immersive Cohort mock project needs to simulate to be realistic</td></tr>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Professional Services Learning Experience Design &nbsp;·&nbsp; Josh Kohler &nbsp;·&nbsp; May 2026</p>
+      <p>For questions about the QL + MVG Pilot, contact Stephanie Flasch (Global Delivery Governance)</p>
+    </div>
+  </footer>
+
+</body>
+</html>
