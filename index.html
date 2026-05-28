@@ -21,6 +21,7 @@
     <div class="nav-inner">
       <a href="#why">Why This Exists</a>
       <a href="#orientation">MVG Orientation</a>
+      <a href="#spine">Skills & MVG</a>
       <a href="#gates">Gate-by-Gate Guide</a>
       <a href="#jobaids">Priority Job Aids</a>
       <a href="#data">Data Collection</a>
@@ -115,6 +116,110 @@
           <span class="phase-num">5</span><span>Adopt/Consume</span><span>Release Notes + Customer-Accepted Handoff Package</span>
         </div>
       </div>
+    </section>
+
+    <!-- SKILLS & MVG SPINE -->
+    <section id="spine">
+      <h2>MVG as the Organizing Spine</h2>
+      <p class="section-sub">Every skill in this framework exists because MVG requires it. Here is that connection made explicit.</p>
+
+      <p>The Minimum Viable Governance framework is not a backdrop for skills enablement — it is the organizing logic. Each MVG gate creates a distinct set of skill demands. What a consultant needs to do well in Phase 0 is different from what Phase 3 requires. And the more agentic the delivery, the more judgment-intensive each checkpoint becomes.</p>
+
+      <div class="callout">
+        <div class="callout-title">Why Skill Demand Intensifies Under Agentic Conditions</div>
+        <p>In traditional delivery, human review cycles absorb many risks informally — a developer asks a clarifying question, a PM notices scope creep, a QA reviewer catches errors. Agentic delivery removes that absorption layer. Agents don't ask clarifying questions. They don't flag scope expansion. They don't know the design decisions behind their own output. The skills below are the human layer that replaces what was absorbed informally.</p>
+      </div>
+
+      <h3>The Skill Demand Across the Lifecycle</h3>
+
+      <div class="spine-table-wrap">
+        <table class="spine-table">
+          <thead>
+            <tr>
+              <th>Phase</th>
+              <th>Gate</th>
+              <th>Primary Skill Demand</th>
+              <th>What Breaks Without It</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="phase-cell preflight-cell">Pre-Phase 0</td>
+              <td>Prerequisite judgment</td>
+              <td><strong>Customer AI Readiness Assessment</strong></td>
+              <td>Team commits to AI-native delivery with a customer who cannot sustain it; gaps surface when velocity is highest</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">Phase 0</td>
+              <td>Validated Success Criteria</td>
+              <td><strong>Outcome Framing</strong> · Intent Writing · Data Quality Judgment</td>
+              <td>Success criteria are output-framed; agents are scoped against unassessed data; Phase 1 roadmap has no outcome anchor</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">Phase 1</td>
+              <td>Customer-Approved Roadmap</td>
+              <td><strong>Change Co-Creation</strong> · Outcome Framing · Systems Thinking</td>
+              <td>Roadmap is presented for approval, not co-authored; epics are feature-labeled; scope creep begins before delivery starts</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">Phase 2</td>
+              <td>Architecture Sign-Off</td>
+              <td><strong>Intent Writing</strong> · Output Validation · Discernment</td>
+              <td>Agent-generated architecture looks complete and is subtly wrong; validation is impressionistic; errors pass through at Phase 3 velocity</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">Phase 3</td>
+              <td>Approved Release Plan</td>
+              <td><strong>Discernment</strong> · Output Validation · Human-AI Orchestration</td>
+              <td>Automation complacency sets in; validation becomes ad hoc; consultant loses situation awareness of what was built and why</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">Phase 4</td>
+              <td>UAT Sign-Off + Go/No-Go</td>
+              <td><strong>Discernment</strong> · Output Validation · Change Co-Creation</td>
+              <td>Go/No-Go decided on completion rate rather than outcome-readiness; known issues rationalized under deployment pressure</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">Phase 5</td>
+              <td>Customer-Accepted Handoff</td>
+              <td><strong>Outcome Framing</strong> · Human-AI Orchestration · Change Co-Creation</td>
+              <td>Handoff documents what was built but not how to measure whether it worked; customer cannot govern their own orchestration decisions</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>The Common Failure Pattern</h3>
+      <p>Across every skill, the failure mode follows the same logic: <strong>speed creates pressure to skip the human-intensive step the skill is designed to protect.</strong></p>
+
+      <div class="failure-grid">
+        <div class="failure-item">
+          <div class="failure-skill">Intent Writing</div>
+          <div class="failure-skip">gets skipped because prompting feels faster</div>
+        </div>
+        <div class="failure-item">
+          <div class="failure-skill">Output Validation</div>
+          <div class="failure-skip">gets skipped because the output looks good</div>
+        </div>
+        <div class="failure-item">
+          <div class="failure-skill">Change Co-Creation</div>
+          <div class="failure-skip">gets skipped because the AI already produced something</div>
+        </div>
+        <div class="failure-item">
+          <div class="failure-skill">Customer AI Readiness</div>
+          <div class="failure-skip">gets skipped because the customer asked for AI-native delivery</div>
+        </div>
+        <div class="failure-item">
+          <div class="failure-skill">Data Quality Judgment</div>
+          <div class="failure-skip">gets assumed rather than assessed</div>
+        </div>
+        <div class="failure-item">
+          <div class="failure-skill">Discernment</div>
+          <div class="failure-skip">gets bypassed because polished output signals correctness</div>
+        </div>
+      </div>
+
+      <p>These are not knowledge gaps — they are habits under pressure. Knowing what discernment is does not make a consultant apply it at Phase 3 velocity when a customer is in the room and the release plan is due. The gate cards below are designed to interrupt that pattern at each stop.</p>
     </section>
 
     <!-- GATE BY GATE -->
