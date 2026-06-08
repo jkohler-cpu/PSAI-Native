@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proficiency Track — Experience Design</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    /* Arc summary bar */
+    .arc-bar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 28px 0 40px;
+    }
+    .arc-bar-step {
+      padding: 14px 16px;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .arc-bar-step:last-child { border-right: none; }
+    .arc-bar-step.open  { background: var(--card); }
+    .arc-bar-step.act1  { background: rgba(22,163,74,0.05); }
+    .arc-bar-step.act2  { background: rgba(1,118,211,0.05); }
+    .arc-bar-step.act3  { background: rgba(245,158,11,0.05); }
+    .arc-bar-step.close { background: var(--card); }
+    .arc-bar-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 5px;
+    }
+    .arc-bar-step.open  .arc-bar-label { color: var(--muted); }
+    .arc-bar-step.act1  .arc-bar-label { color: var(--green); }
+    .arc-bar-step.act2  .arc-bar-label { color: var(--blue); }
+    .arc-bar-step.act3  .arc-bar-label { color: var(--gold); }
+    .arc-bar-step.close .arc-bar-label { color: var(--muted); }
+    .arc-bar-name { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 6px; }
+    .arc-bar-hrs { font-size: 13px; font-weight: 800; }
+    .arc-bar-step.open  .arc-bar-hrs { color: var(--muted); }
+    .arc-bar-step.act1  .arc-bar-hrs { color: var(--green); }
+    .arc-bar-step.act2  .arc-bar-hrs { color: var(--blue); }
+    .arc-bar-step.act3  .arc-bar-hrs { color: var(--gold); }
+    .arc-bar-step.close .arc-bar-hrs { color: var(--muted); }
+
+    /* Act cards */
+    .act-card {
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 24px 0;
+      border: 1px solid var(--border);
+    }
+    .act-card.open  { border-top: 3px solid var(--border); }
+    .act-card.act1  { border-top: 3px solid var(--green); }
+    .act-card.act2  { border-top: 3px solid var(--blue); }
+    .act-card.act3  { border-top: 3px solid var(--gold); }
+    .act-card.close { border-top: 3px solid var(--border); }
+
+    .act-header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .act-card.open  .act-header { background: var(--card); }
+    .act-card.act1  .act-header { background: rgba(22,163,74,0.05); }
+    .act-card.act2  .act-header { background: rgba(1,118,211,0.05); }
+    .act-card.act3  .act-header { background: rgba(245,158,11,0.05); }
+    .act-card.close .act-header { background: var(--card); }
+
+    .act-num {
+      min-width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .act-card.open  .act-num { background: var(--bg); color: var(--muted); }
+    .act-card.act1  .act-num { background: rgba(22,163,74,0.1); color: var(--green); }
+    .act-card.act2  .act-num { background: rgba(1,118,211,0.1); color: var(--blue); }
+    .act-card.act3  .act-num { background: rgba(245,158,11,0.1); color: var(--gold); }
+    .act-card.close .act-num { background: var(--bg); color: var(--muted); }
+
+    .act-header-text { flex: 1; }
+    .act-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 4px;
+    }
+    .act-card.open  .act-eyebrow { color: var(--muted); }
+    .act-card.act1  .act-eyebrow { color: var(--green); }
+    .act-card.act2  .act-eyebrow { color: var(--blue); }
+    .act-card.act3  .act-eyebrow { color: var(--gold); }
+    .act-card.close .act-eyebrow { color: var(--muted); }
+
+    .act-title { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 6px; line-height: 1.2; }
+    .act-purpose { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 680px; }
+    .act-hrs { font-size: 22px; font-weight: 800; white-space: nowrap; padding-top: 4px; }
+    .act-card.open  .act-hrs { color: var(--border); }
+    .act-card.act1  .act-hrs { color: var(--green); }
+    .act-card.act2  .act-hrs { color: var(--blue); }
+    .act-card.act3  .act-hrs { color: var(--gold); }
+    .act-card.close .act-hrs { color: var(--border); }
+
+    /* Act body grid */
+    .act-body { display: grid; grid-template-columns: 1fr 1fr; background: var(--card); }
+    .act-body-full { background: var(--card); padding: 20px 24px; }
+    .act-col { padding: 20px 24px; }
+    .act-col:first-child { border-right: 1px solid var(--border); }
+    .act-col-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.09em; color: var(--muted); margin-bottom: 12px;
+    }
+
+    /* Skill chips */
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+    .skill-chip {
+      font-size: 12px; font-weight: 600;
+      background: var(--bg); color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 4px 10px; border-radius: 4px; line-height: 1.3;
+    }
+    .skill-chip.salesforce {
+      background: rgba(1,118,211,0.08);
+      color: var(--blue);
+      border-color: rgba(1,118,211,0.2);
+    }
+
+    /* CPS tags */
+    .cps-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cps-chip {
+      font-size: 12px; font-weight: 600;
+      background: rgba(124,58,237,0.08); color: var(--purple);
+      border: 1px solid rgba(124,58,237,0.2);
+      padding: 4px 10px; border-radius: 4px;
+    }
+
+    /* Modality flow */
+    .modality-flow { display: flex; align-items: flex-start; gap: 0; flex-wrap: wrap; }
+    .modality-step { display: flex; align-items: center; gap: 0; }
+    .modality-pill {
+      font-size: 12px; font-weight: 600; padding: 6px 12px;
+      border-radius: 5px; white-space: nowrap; line-height: 1.3; text-align: center;
+    }
+    .mod-concept  { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+    .mod-scenario { background: rgba(22,163,74,0.08); color: var(--green); border: 1px solid rgba(22,163,74,0.2); }
+    .mod-pressure { background: rgba(1,118,211,0.08); color: var(--blue); border: 1px solid rgba(1,118,211,0.2); }
+    .mod-playbook { background: rgba(124,58,237,0.08); color: var(--purple); border: 1px solid rgba(124,58,237,0.2); }
+    .mod-gate     { background: rgba(245,158,11,0.08); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+    .mod-peer     { background: rgba(220,38,38,0.06); color: var(--red); border: 1px solid rgba(220,38,38,0.15); }
+    .mod-customer { background: rgba(245,158,11,0.08); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+    .mod-pattern  { background: rgba(22,163,74,0.08); color: var(--green); border: 1px solid rgba(22,163,74,0.2); }
+    .mod-diagnostic { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+    .mod-synthesis  { background: rgba(124,58,237,0.08); color: var(--purple); border: 1px solid rgba(124,58,237,0.2); }
+    .mod-brief      { background: rgba(124,58,237,0.08); color: var(--purple); border: 1px solid rgba(124,58,237,0.2); }
+    .mod-video      { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+    .mod-arrow { color: var(--border); font-size: 14px; padding: 0 6px; flex-shrink: 0; }
+
+    /* Throughline callout */
+    .throughline-bar {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--purple);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin: 32px 0;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .throughline-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.09em; color: var(--purple); padding-top: 2px;
+    }
+    .throughline-mechanisms { display: flex; flex-wrap: wrap; gap: 10px; }
+    .throughline-item { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; }
+    .throughline-item-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .throughline-item-desc { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+    /* MVG phase tags */
+    .mvg-tag {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      background: rgba(245,158,11,0.08); color: var(--gold);
+      border: 1px solid rgba(245,158,11,0.2);
+      padding: 2px 8px; border-radius: 3px;
+    }
+
+    /* Gate-mirror sections inside act cards */
+    .act-gate-section { padding: 16px 22px; border-top: 1px solid var(--border); }
+    .act-gate-section.landing { background: rgba(1,118,211,0.04); }
+    .act-gate-section.gate-q  { background: rgba(245,158,11,0.05); border-left: 3px solid var(--gold); }
+    .act-gate-section.breaks  { background: rgba(220,38,38,0.04); border-left: 3px solid var(--red); }
+    .act-gate-section.takeoff { background: rgba(22,163,74,0.04); }
+    .act-gate-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.09em; margin-bottom: 10px;
+    }
+    .act-gate-section.landing .act-gate-label { color: var(--blue); }
+    .act-gate-section.gate-q  .act-gate-label { color: var(--gold); }
+    .act-gate-section.breaks  .act-gate-label { color: var(--red); }
+    .act-gate-section.takeoff .act-gate-label { color: var(--green); }
+    .act-gate-section p { margin-bottom: 0; font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    .gate-q-list { list-style: none; padding: 0; margin: 0; }
+    .gate-q-list li {
+      font-size: 13px; color: var(--muted); line-height: 1.6;
+      padding: 7px 0 7px 14px;
+      border-bottom: 1px solid rgba(245,158,11,0.12);
+      position: relative;
+    }
+    .gate-q-list li:last-child { border-bottom: none; }
+    .gate-q-list li::before {
+      content: ''; position: absolute; left: 0; top: 15px;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+    }
+    .gate-q-tag {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--gold); margin-right: 8px;
+    }
+
+    .breaks-list { list-style: none; padding: 0; margin: 0; }
+    .breaks-list li {
+      font-size: 13px; color: var(--muted); line-height: 1.55;
+      padding: 5px 0 5px 14px;
+      border-bottom: 1px solid rgba(220,38,38,0.1);
+      position: relative;
+    }
+    .breaks-list li:last-child { border-bottom: none; }
+    .breaks-list li::before {
+      content: ''; position: absolute; left: 0; top: 13px;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--red);
+    }
+    .breaks-skill { font-weight: 700; color: var(--red); margin-right: 6px; }
+
+    @media (max-width: 640px) {
+      .arc-bar { grid-template-columns: 1fr 1fr; }
+      .arc-bar-step:nth-child(5) { border-top: 1px solid var(--border); }
+      .act-body { grid-template-columns: 1fr; }
+      .act-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .act-header { flex-wrap: wrap; }
+      .throughline-bar { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="site-nav">
+  <div class="site-nav-inner">
+    <span class="site-nav-label">AI-Native Delivery Enablement</span>
+    <a href="index.html">Flight Guide</a>
+    <a href="proficiency-overview.html">Program Design</a>
+    <a href="proficiency-track.html" class="current">Proficiency Track</a>
+    <a href="agentic-coach.html">Agentic Coach</a>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-label">AI-Native Delivery Enablement · AI-Native Delivery · Tier 2</div>
+    <h1>Proficiency Track<br>Experience Design</h1>
+    <p class="header-sub">A structured learning arc for delivery consultants and GTM sellers on active AI-native engagements. Two paths that share Act 1 — so what gets sold and what gets delivered start from the same foundation.</p>
+    <div class="header-meta">Delivery path ~23 hrs · GTM path ~10 hrs &nbsp;·&nbsp; Shared Act 1 &nbsp;·&nbsp; Trailhead · Slack canvases · Yoodli</div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#arc">Arc Overview</a>
+    <a href="#opening">Opening</a>
+    <a href="#act1">Act 1 (Shared)</a>
+    <a href="#act2">Act 2</a>
+    <a href="#act3">Act 3</a>
+    <a href="#close">Close</a>
+    <a href="#gtm">GTM Path</a>
+    <a href="#throughline">Throughlines</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ARC OVERVIEW -->
+  <section id="arc">
+    <h2>The Arc at a Glance</h2>
+    <p class="section-sub">Two paths through the same track. Delivery and GTM share Act 1 — before the build, when the engagement can still be shaped. GTM diverges after that into a dedicated module. Delivery continues through Acts 2 and 3.</p>
+
+    <div class="arc-bar">
+      <div class="arc-bar-step open">
+        <div class="arc-bar-label">Opening</div>
+        <div class="arc-bar-name">Orientation</div>
+        <div class="arc-bar-hrs">~1 hr</div>
+      </div>
+      <div class="arc-bar-step act1">
+        <div class="arc-bar-label">Act 1 · Phases 0–1 · Shared</div>
+        <div class="arc-bar-name">Before You Build</div>
+        <div class="arc-bar-hrs">~7 hrs</div>
+      </div>
+      <div class="arc-bar-step act2">
+        <div class="arc-bar-label">Act 2 · Phases 2–3</div>
+        <div class="arc-bar-name">While You're Delivering</div>
+        <div class="arc-bar-hrs">~8 hrs</div>
+      </div>
+      <div class="arc-bar-step act3">
+        <div class="arc-bar-label">Act 3 · Phases 4–5+</div>
+        <div class="arc-bar-name">With the Customer &amp; Beyond</div>
+        <div class="arc-bar-hrs">~6 hrs</div>
+      </div>
+      <div class="arc-bar-step close">
+        <div class="arc-bar-label">Close</div>
+        <div class="arc-bar-name">The Debrief</div>
+        <div class="arc-bar-hrs">~1 hr</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Design principle: consequences compound</div>
+      <p>Each act is set at a different point in delivery — so learners feel the stakes change. Mistakes in Act 1 (before the build) are cheap to fix. Mistakes in Act 2 (mid-delivery, under time pressure) are expensive. By Act 3, the consequences of earlier decisions become visible to the customer. The arc is designed so this is felt, not just stated.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Modality stack: three tools, three purposes</div>
+      <p><strong style="color: var(--text);">Trailhead</strong> carries the structured learning spine for each act — concept input, scenario, and checkpoint. <strong style="color: var(--text);">Slack always-on canvases</strong> serve as the in-the-moment reference layer: decision protocols, anti-patterns, and observable behaviors accessible without leaving the flow of work. <strong style="color: var(--text);">Yoodli</strong> handles the communicative clusters — Change Co-Creation, Customer AI Readiness conversations, Outcome Framing — where judgment requires a practiced human voice, not just reading comprehension.</p>
+    </div>
+  </section>
+
+  <!-- OPENING -->
+  <section id="opening">
+    <h2>Opening: Orientation</h2>
+    <p class="section-sub">Before the learning begins — surface what learners already believe and set the stakes.</p>
+
+    <div class="act-card open">
+      <div class="act-header">
+        <div class="act-num">⊙</div>
+        <div class="act-header-text">
+          <div class="act-eyebrow">Opening</div>
+          <div class="act-title">Orientation</div>
+          <div class="act-purpose">This isn't an icebreaker — it's a diagnostic. The goal is to surface existing mental models before the learning begins, so that what follows has something to push against. Learners who don't know what they currently believe can't tell when that belief has changed.</div>
+        </div>
+        <div class="act-hrs">~1 hr</div>
+      </div>
+      <div class="act-body-full">
+        <div class="act-col-label">Modality sequence</div>
+        <div class="modality-flow">
+          <div class="modality-step">
+            <div class="modality-pill mod-diagnostic">Written diagnostic</div>
+            <div class="mod-arrow">→</div>
+          </div>
+          <div class="modality-step">
+            <div class="modality-pill mod-video">Narrative scenario brief</div>
+          </div>
+        </div>
+        <p style="margin-top: 14px; font-size: 13px; color: var(--muted);">The diagnostic captures current assumptions about AI-native delivery; the scenario brief introduces the fictional engagement that runs through all three acts as a common reference point.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 1 -->
+  <section id="act1">
+    <h2>Act 1: Before You Build</h2>
+    <p class="section-sub">Phases 0 and 1 — the skills that determine whether the engagement is set up to succeed.</p>
+
+    <div class="act-card act1">
+      <div class="act-header">
+        <div class="act-num">1</div>
+        <div class="act-header-text">
+          <div class="act-eyebrow">Act 1 · <span class="mvg-tag">Pre-Flight · Phase 0 · Phase 1</span> · Delivery + GTM shared</div>
+          <div class="act-title">Before You Build</div>
+          <div class="act-purpose">The engagement can still be shaped here. Mistakes are cheap to fix now — and expensive after Phase 2 opens. This act puts learners in the Pre-Flight and Phase 0–1 gates: assessing readiness, framing outcomes, surfacing assumptions, and producing the intent that agents will act on.</div>
+        </div>
+        <div class="act-hrs">~7 hrs</div>
+      </div>
+
+      <div class="act-body">
+        <div class="act-col">
+          <div class="act-col-label">Skills covered</div>
+          <div class="skill-chips">
+            <span class="skill-chip">Customer AI Readiness Assessment</span>
+            <span class="skill-chip salesforce">Data Quality Judgment (Data Cloud readiness)</span>
+            <span class="skill-chip">Assumption Surfacing &amp; Documentation</span>
+            <span class="skill-chip">Outcome Framing</span>
+            <span class="skill-chip">Intent Writing + Prompt Template Design</span>
+          </div>
+          <p style="margin-top: 12px; font-size: 12px; color: var(--muted); line-height: 1.5;">Data Cloud readiness is a Salesforce-specific sub-skill — platform knowledge meeting judgment, not just tool training.</p>
+        </div>
+        <div class="act-col">
+          <div class="act-col-label">CPS developed</div>
+          <div class="cps-chips">
+            <span class="cps-chip">Judgment &amp; Reasoning</span>
+            <span class="cps-chip">Systems Thinking</span>
+            <span class="cps-chip">Collaborative Communication</span>
+            <span class="cps-chip">Information Discernment</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="act-gate-section landing">
+        <div class="act-gate-label">Landing — what this act prepares you to arrive with</div>
+        <p>Before Phase 0 closes, the team needs a shared, measurable definition of success in outcome terms — not deliverable terms. The success criteria validated at the Phase 0 gate are the quality standard every downstream gate will be measured against. Before Phase 1 closes, the roadmap must be one the customer helped build, not one they were asked to sign off on. A co-authored roadmap creates ownership; an approved roadmap creates a future scope dispute.</p>
+      </div>
+
+      <div class="act-body" style="border-top: 1px solid var(--border);">
+        <div class="act-col">
+          <div class="act-col-label">Load-bearing skills at these gates</div>
+          <table style="width:100%; font-size:13px; border-collapse:collapse;">
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600; width:38%;">Customer AI Readiness</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Pre-Flight: should this engagement proceed under an AI-native model at all?</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Outcome Framing</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 0: success criteria must describe what changes for the customer — not what gets built.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Data Quality Judgment</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 0: data must be assessed as fit for agentic use — not just available.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Change Co-Creation</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 1: roadmap built in working sessions with the customer, not presented for approval.</td></tr>
+            <tr><td style="padding:7px 0; color:var(--text); font-weight:600;">Intent Writing</td><td style="padding:7px 0 7px 10px; color:var(--muted);">Phase 1: customer-approved epics become the brief for agent-assisted design in Phase 2. Imprecise epics produce unpredictable agent output.</td></tr>
+          </table>
+        </div>
+        <div class="act-col">
+          <div class="act-col-label">Modality sequence</div>
+          <div class="modality-flow" style="margin-bottom:14px;">
+            <div class="modality-step">
+              <div class="modality-pill mod-concept">Trailhead concept</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-scenario">Scenario decision<br>with consequence</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-playbook">Playbook entry</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-gate">Gate reflection</div>
+            </div>
+          </div>
+          <p style="font-size: 12px; color: var(--muted); line-height: 1.5;">Yoodli: Customer AI Readiness conversation — practicing the Pre-Flight judgment call with a customer who believes they're ready.</p>
+        </div>
+      </div>
+
+      <div class="act-gate-section gate-q">
+        <div class="act-gate-label">Gate questions — the scenarios put learners here</div>
+        <ul class="gate-q-list">
+          <li><span class="gate-q-tag">Pre-Flight</span>Is this customer actually ready for AI-native delivery — and if not, what's the honest recommendation?</li>
+          <li><span class="gate-q-tag">Phase 0</span>Does the team have a shared, measurable definition of success — and has the customer's data been assessed as fit for the agentic workflows being planned?</li>
+          <li><span class="gate-q-tag">Phase 1</span>Would a team member joining mid-stream — or an agent acting on this roadmap — understand exactly what success looks like for each epic, and is the scope bounded enough to deliver it?</li>
+        </ul>
+      </div>
+
+      <div class="act-gate-section breaks">
+        <div class="act-gate-label">What breaks when these skills are skipped</div>
+        <ul class="breaks-list">
+          <li><span class="breaks-skill">Customer AI Readiness skipped</span>— team commits to AI-native delivery with a customer who cannot sustain it; gaps surface when velocity is highest</li>
+          <li><span class="breaks-skill">Outcome Framing skipped</span>— success criteria are output-framed; Phase 1 roadmap has no outcome anchor; every downstream gate has no teeth</li>
+          <li><span class="breaks-skill">Intent Writing skipped</span>— imprecise epics produce unpredictable agent behavior at Phase 2 velocity; errors are expensive to catch late</li>
+          <li><span class="breaks-skill">Change Co-Creation skipped</span>— roadmap is presented for approval, not co-authored; scope creep begins before delivery starts</li>
+        </ul>
+      </div>
+
+      <div class="act-gate-section takeoff">
+        <div class="act-gate-label">Takeoff — what learners carry into Act 2</div>
+        <p>The success criteria and intent statements produced here are the quality standard every Phase 2 and 3 gate will be measured against. Act 2 opens at architecture sign-off — the last gate before delivery velocity kicks in. Any ambiguity in intent established in Act 1 compounds at that speed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 2 -->
+  <section id="act2">
+    <h2>Act 2: While You're Delivering</h2>
+    <p class="section-sub">Phases 2 and 3 — the skills that operate at delivery velocity, under the exact conditions where they most often fail.</p>
+
+    <div class="act-card act2">
+      <div class="act-header">
+        <div class="act-num">2</div>
+        <div class="act-header-text">
+          <div class="act-eyebrow">Act 2 · <span class="mvg-tag">Phase 2 · Phase 3</span> · Delivery path</div>
+          <div class="act-title">While You're Delivering</div>
+          <div class="act-purpose">This act deliberately introduces time pressure and volume — the conditions under which automation complacency, validation shortcuts, and orchestration failures actually happen. Architecture sign-off through the Build Day Loop: agents are doing real construction, and the consultant's job is direction, discernment, and continuous validation — not production.</div>
+        </div>
+        <div class="act-hrs">~8 hrs</div>
+      </div>
+
+      <div class="act-body">
+        <div class="act-col">
+          <div class="act-col-label">Skills covered</div>
+          <div class="skill-chips">
+            <span class="skill-chip salesforce">Agentforce Agent Design Principles</span>
+            <span class="skill-chip salesforce">Failure Mode Literacy (Agentforce, Claude, Cursor)</span>
+            <span class="skill-chip">Human-AI Orchestration</span>
+            <span class="skill-chip">Discernment</span>
+            <span class="skill-chip">Output Validation</span>
+            <span class="skill-chip">Responsible AI Sensing</span>
+            <span class="skill-chip salesforce">Einstein Trust Layer &amp; Data Governance</span>
+          </div>
+          <p style="margin-top: 12px; font-size: 12px; color: var(--muted); line-height: 1.5;">Failure Mode Literacy is tool-specific — Agentforce, Claude, and Cursor each have distinct failure patterns that need to be recognized before they cause customer-visible problems.</p>
+        </div>
+        <div class="act-col">
+          <div class="act-col-label">CPS developed</div>
+          <div class="cps-chips">
+            <span class="cps-chip">Judgment &amp; Reasoning</span>
+            <span class="cps-chip">Information Discernment</span>
+            <span class="cps-chip">Adaptive Learning</span>
+            <span class="cps-chip">Creative Direction &amp; Taste</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="act-gate-section landing">
+        <div class="act-gate-label">Landing — what this act prepares you to arrive with</div>
+        <p>Phase 2 opens with agents beginning real construction — generating solution designs, architecture artifacts, process maps. The consultant's role shifts from producer to director. Phase 3 is the highest-velocity phase: agents building continuously, the consultant orchestrating and validating across a fast-moving build cycle. This act is where automation complacency is most likely to take hold.</p>
+      </div>
+
+      <div class="act-body" style="border-top: 1px solid var(--border);">
+        <div class="act-col">
+          <div class="act-col-label">Load-bearing skills at these gates</div>
+          <table style="width:100%; font-size:13px; border-collapse:collapse;">
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600; width:38%;">Intent Writing</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Every agent-assisted design artifact starts with an intent statement. Quality here determines whether output is usable or requires complete regeneration.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Output Validation</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Architecture sign-off is a formal gate. Validation must be structured and documented — not an impression formed on visual review. At Phase 3 velocity, it must be fast AND systematic.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Discernment</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Agent-generated architecture can look complete and be subtly wrong. Calibrated vigilance is required when output is polished — especially at delivery velocity.</td></tr>
+            <tr><td style="padding:7px 0; color:var(--text); font-weight:600;">Human-AI Orchestration</td><td style="padding:7px 0 7px 10px; color:var(--muted);">Build tasks vary enormously in how safely they can be delegated. Calibrated judgment must be maintained across the full build cycle, not just at the start.</td></tr>
+          </table>
+        </div>
+        <div class="act-col">
+          <div class="act-col-label">Modality sequence</div>
+          <div class="modality-flow" style="margin-bottom:14px;">
+            <div class="modality-step">
+              <div class="modality-pill mod-concept">Trailhead concept</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-pressure">Pressure scenario<br>with consequence</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-peer">Peer exchange<br>at midpoint</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-playbook">Playbook entry</div>
+            </div>
+          </div>
+          <p style="font-size: 12px; color: var(--muted); line-height: 1.5;">Peer exchange is Act 2's synchronous moment — timed to land mid-act when shortcuts are most tempting. Surfaces the moments learners nearly cut the validation step, and why.</p>
+        </div>
+      </div>
+
+      <div class="act-gate-section gate-q">
+        <div class="act-gate-label">Gate questions — the scenarios put learners here</div>
+        <ul class="gate-q-list">
+          <li><span class="gate-q-tag">Phase 2</span>Was the architecture reviewed against defined criteria — and did the customer actively participate in shaping it, or only approve it?</li>
+          <li><span class="gate-q-tag">Phase 3</span>Does the release plan reflect what was actually built — was each component validated against the intent and outcomes defined in Phases 0 and 1 — and have responsible AI risks been actively reviewed?</li>
+        </ul>
+      </div>
+
+      <div class="act-gate-section breaks">
+        <div class="act-gate-label">What breaks when these skills are skipped</div>
+        <ul class="breaks-list">
+          <li><span class="breaks-skill">Discernment skipped</span>— agent-generated architecture looks complete and is subtly wrong; errors pass through at Phase 3 velocity and become expensive</li>
+          <li><span class="breaks-skill">Output Validation skipped</span>— validation is impressionistic; automation complacency sets in; consultant loses situation awareness of what was built and why</li>
+          <li><span class="breaks-skill">Human-AI Orchestration skipped</span>— build tasks delegated without calibration; consultant finds out at Phase 4 that critical components were handled incorrectly at Phase 3 speed</li>
+          <li><span class="breaks-skill">Intent Writing skipped mid-build</span>— new sub-tasks scoped imprecisely; intent is treated as set-once at kickoff rather than iteratively refined as the build evolves</li>
+        </ul>
+      </div>
+
+      <div class="act-gate-section takeoff">
+        <div class="act-gate-label">Takeoff — what learners carry into Act 3</div>
+        <p>Architecture sign-off and the release plan are the last human-governed gates before the customer sees what was built in UAT. Act 3 opens at deployment — the point of irreversibility. Confirm before moving that UAT criteria trace back to the Phase 0 success criteria. If they don't, UAT will test the wrong things.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 3 -->
+  <section id="act3">
+    <h2>Act 3: With the Customer &amp; Beyond</h2>
+    <p class="section-sub">Phases 4, 5, and reuse — where the consequences of earlier decisions become visible, and the learning compounds into the next engagement.</p>
+
+    <div class="act-card act3">
+      <div class="act-header">
+        <div class="act-num">3</div>
+        <div class="act-header-text">
+          <div class="act-eyebrow">Act 3 · <span class="mvg-tag">Phase 4 · Phase 5 · Reuse</span> · Delivery path</div>
+          <div class="act-title">With the Customer &amp; Beyond</div>
+          <div class="act-purpose">Deployment is the point of irreversibility. The consequences of every earlier decision become visible here — in UAT, in the Go/No-Go, in whether the customer can govern their own system after handoff. This act also establishes the habit of writing back to practice memory so what was learned on this engagement compounds into the next one.</div>
+        </div>
+        <div class="act-hrs">~6 hrs</div>
+      </div>
+
+      <div class="act-body">
+        <div class="act-col">
+          <div class="act-col-label">Skills covered</div>
+          <div class="skill-chips">
+            <span class="skill-chip">Change Co-Creation &amp; Scope Governance Under Acceleration</span>
+            <span class="skill-chip">Communicating AI-Generated Work</span>
+            <span class="skill-chip">Consumption Model Literacy</span>
+            <span class="skill-chip">HOK-to-Agentic Transition Judgment</span>
+            <span class="skill-chip">Field Pattern Documentation</span>
+          </div>
+          <p style="margin-top: 12px; font-size: 12px; color: var(--muted); line-height: 1.5;">Scope Governance Under Acceleration — when AI makes everything feel fast and possible, scope expands faster and less visibly. This act teaches holding the boundary without killing momentum.</p>
+        </div>
+        <div class="act-col">
+          <div class="act-col-label">CPS developed</div>
+          <div class="cps-chips">
+            <span class="cps-chip">Collaborative Communication</span>
+            <span class="cps-chip">Creative Direction &amp; Taste</span>
+            <span class="cps-chip">Adaptive Learning</span>
+            <span class="cps-chip">Systems Thinking</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="act-gate-section landing">
+        <div class="act-gate-label">Landing — what this act prepares you to arrive with</div>
+        <p>The Go/No-Go is the highest-stakes judgment call in the engagement lifecycle — and in an AI-native model, the consultant is forming that judgment about work that was largely agent-generated. Phase 5 is not a training event; it is a transfer of governance responsibility. A customer team that cannot make sound human-AI orchestration decisions after the consultant leaves is not ready for handoff, regardless of what the documentation says.</p>
+      </div>
+
+      <div class="act-body" style="border-top: 1px solid var(--border);">
+        <div class="act-col">
+          <div class="act-col-label">Load-bearing skills at these gates</div>
+          <table style="width:100%; font-size:13px; border-collapse:collapse;">
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600; width:38%;">Discernment</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 4: the Go/No-Go requires a clear, defensible judgment about whether the system is ready — not whether it looks ready or whether stakeholders are ready to move on.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Output Validation</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 4: UAT criteria must trace to the Phase 0 success criteria. If they don't, UAT is testing the wrong things.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Change Co-Creation</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 4–5: UAT with genuine customer participation reduces post-go-live adoption friction. Customers who co-created the solution drive their own adoption.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Outcome Framing</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 5: the handoff package must include a measurement plan, not just system documentation. Adoption is only meaningful measured against Phase 0 outcomes.</td></tr>
+            <tr><td style="padding:7px 0; color:var(--text); font-weight:600;">Human-AI Orchestration</td><td style="padding:7px 0 7px 10px; color:var(--muted);">Phase 5: the customer's team now owns the orchestration decisions the consultant was making. That capability must be transferred deliberately.</td></tr>
+          </table>
+        </div>
+        <div class="act-col">
+          <div class="act-col-label">Modality sequence</div>
+          <div class="modality-flow" style="margin-bottom:14px;">
+            <div class="modality-step">
+              <div class="modality-pill mod-concept">Trailhead concept</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-customer">Customer-voice scenario</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-playbook">Playbook entry</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-pattern">Pattern contribution</div>
+            </div>
+          </div>
+          <p style="font-size: 12px; color: var(--muted); line-height: 1.5;">Yoodli: delivering a Go/No-Go recommendation under stakeholder pressure; communicating AI-generated work to a customer who didn't see it being built.</p>
+        </div>
+      </div>
+
+      <div class="act-gate-section gate-q">
+        <div class="act-gate-label">Gate questions — the scenarios put learners here</div>
+        <ul class="gate-q-list">
+          <li><span class="gate-q-tag">Phase 4</span>Can the consultant make a defensible, evidence-based case that this system is ready to deliver the outcomes defined in Phase 0 — and does the customer share that confidence?</li>
+          <li><span class="gate-q-tag">Phase 5</span>Does the customer have everything they need to measure outcomes, maintain the system, and govern their own human-AI orchestration decisions — without the consultant in the room?</li>
+        </ul>
+      </div>
+
+      <div class="act-gate-section breaks">
+        <div class="act-gate-label">What breaks when these skills are skipped</div>
+        <ul class="breaks-list">
+          <li><span class="breaks-skill">Discernment skipped at Go/No-Go</span>— decision made on completion rate rather than outcome-readiness; known issues rationalized under deployment pressure</li>
+          <li><span class="breaks-skill">Outcome Framing skipped at handoff</span>— handoff documents what was built but not how to measure whether it worked; customer cannot tell if the engagement succeeded</li>
+          <li><span class="breaks-skill">Human-AI Orchestration not transferred</span>— customer cannot govern their own agents after the consultant leaves; adoption stalls or degrades without support</li>
+          <li><span class="breaks-skill">Pattern contribution skipped</span>— engagement memory not written back; next team inherits the same gaps; practice never compounds</li>
+        </ul>
+      </div>
+
+      <div class="act-gate-section takeoff">
+        <div class="act-gate-label">Takeoff — what learners carry beyond the engagement</div>
+        <p>Document two things before closing: one intent statement that worked well enough to reuse, and one validation decision that revealed something about what good looks like on this engagement. These are the Field Playbook entries that become reusable patterns for the next team — and the first contribution to the practice memory the whole program depends on.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSE -->
+  <section id="close">
+    <h2>Close: The Debrief</h2>
+    <p class="section-sub">Make the learning visible and set up what comes next.</p>
+
+    <div class="act-card close">
+      <div class="act-header">
+        <div class="act-num">⊘</div>
+        <div class="act-header-text">
+          <div class="act-eyebrow">Close</div>
+          <div class="act-title">The Debrief</div>
+          <div class="act-purpose">The mirror of the Opening. The same diagnostic — but now the learner can see how their answers have changed. The personal synthesis brings together Playbook entries from all three acts into a coherent pattern. The forward brief names the one or two skills the learner most wants to build further, and commits to how.</div>
+        </div>
+        <div class="act-hrs">~1 hr</div>
+      </div>
+      <div class="act-body-full">
+        <div class="act-col-label">Modality sequence</div>
+        <div class="modality-flow">
+          <div class="modality-step">
+            <div class="modality-pill mod-diagnostic">Reflective diagnostic</div>
+            <div class="mod-arrow">→</div>
+          </div>
+          <div class="modality-step">
+            <div class="modality-pill mod-synthesis">Personal synthesis</div>
+            <div class="mod-arrow">→</div>
+          </div>
+          <div class="modality-step">
+            <div class="modality-pill mod-brief">Forward brief</div>
+          </div>
+        </div>
+        <p style="margin-top: 14px; font-size: 13px; color: var(--muted);">The forward brief is an intentional bridge to the Immersive Cohort and the Agentic Coach track — it names the learner's next step and makes it easier for coaches to pick up where the track left off.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GTM PATH -->
+  <section id="gtm">
+    <h2>GTM Path</h2>
+    <p class="section-sub">After completing Act 1 with the delivery track, GTM sellers diverge into a dedicated module — scoping integrity, delivery literacy, and the handoff.</p>
+
+    <div class="act-card act1">
+      <div class="act-header">
+        <div class="act-num" style="background: rgba(245,158,11,0.1); color: var(--gold);">G</div>
+        <div class="act-header-text">
+          <div class="act-eyebrow" style="color: var(--gold);">GTM Module · After Act 1</div>
+          <div class="act-title">Scoping for What Delivery Can Actually Deliver</div>
+          <div class="act-purpose">The GTM path starts from the same place as delivery — Act 1's pre-engagement skills — then asks a different question: what does a seller need to understand about AI-native delivery in order to scope it honestly? The module covers delivery literacy, scoping integrity under commercial pressure, and the GTM-to-delivery handoff as a structured skill rather than an informal pass-off.</div>
+        </div>
+        <div class="act-hrs" style="color: var(--gold);">~3 hrs</div>
+      </div>
+      <div class="act-body">
+        <div class="act-col">
+          <div class="act-col-label">Skills covered</div>
+          <div class="skill-chips">
+            <span class="skill-chip">MVG delivery literacy — what the phases actually require</span>
+            <span class="skill-chip">Scoping integrity under deal pressure</span>
+            <span class="skill-chip">Customer AI Readiness — honest pre-sale assessment</span>
+            <span class="skill-chip">Outcome Framing in the deal cycle</span>
+            <span class="skill-chip salesforce">Solutioning Agent fluency</span>
+            <span class="skill-chip">GTM-to-delivery handoff protocol</span>
+          </div>
+          <p style="margin-top: 12px; font-size: 12px; color: var(--muted); line-height: 1.5;">The core tension this module holds: commercial pressure pushes toward yes; delivery integrity requires honesty about readiness. Sellers who understand what delivery phases 0–3 actually require can have a different kind of scoping conversation — and hand off with the information the delivery team needs, not just a signed SOW.</p>
+        </div>
+        <div class="act-col">
+          <div class="act-col-label">Modality sequence</div>
+          <div class="modality-flow" style="margin-bottom: 14px;">
+            <div class="modality-step">
+              <div class="modality-pill mod-concept">Delivery arc brief</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-scenario">Scoping scenario</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-customer">Yoodli readiness conversation</div>
+              <div class="mod-arrow">→</div>
+            </div>
+            <div class="modality-step">
+              <div class="modality-pill mod-playbook">Handoff brief</div>
+            </div>
+          </div>
+          <div class="act-col-label">Yoodli scenarios</div>
+          <div class="skill-chips">
+            <span class="skill-chip">Customer AI readiness conversation</span>
+            <span class="skill-chip">Outcome framing with an executive sponsor</span>
+            <span class="skill-chip">Delivering a "not yet ready" recommendation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">The handoff brief — the GTM path's closing artifact</div>
+      <p>Instead of a Field Playbook entry, the GTM path closes with a handoff brief: a structured document capturing the customer's assessed readiness, the outcome framing agreed with the sponsor, known data and governance gaps, and the commercial commitments that will constrain delivery. This goes to the delivery team at project kickoff — it's the GTM path's contribution to the shared throughline.</p>
+    </div>
+  </section>
+
+  <!-- THROUGHLINES -->
+  <section id="throughline">
+    <h2>Throughline Mechanisms</h2>
+    <p class="section-sub">The elements that hold the arc together across all five parts — not activities within a single act, but structural connectors across the whole experience.</p>
+
+    <div class="throughline-bar">
+      <div class="throughline-label">Throughlines</div>
+      <div class="throughline-mechanisms">
+        <div class="throughline-item">
+          <div class="throughline-item-name">The Field Playbook</div>
+          <div class="throughline-item-desc">Each act ends with a Playbook entry — a personal artifact documenting what the learner decided, why, and what they'd do differently. By the Close, the Playbook is a complete record of field judgment across all three delivery phases.</div>
+        </div>
+        <div class="throughline-item">
+          <div class="throughline-item-name">Opening &amp; Closing Diagnostic</div>
+          <div class="throughline-item-desc">The same diagnostic runs at the start (Opening) and the end (Close). The comparison makes belief change visible — not just whether the learner passed, but where their mental model shifted and where it didn't.</div>
+        </div>
+        <div class="throughline-item">
+          <div class="throughline-item-name">Pattern Contribution</div>
+          <div class="throughline-item-desc">Act 3 ends with a contribution to the shared PS field knowledge base. Each cohort adds to it. Over time this becomes the Salesforce-specific evidence the skill cluster research currently flags as missing.</div>
+        </div>
+        <div class="throughline-item">
+          <div class="throughline-item-name">Peer Exchange (Act 2 midpoint)</div>
+          <div class="throughline-item-desc">The one synchronous touchpoint in the track. Timed to land at the highest-pressure point — mid-delivery, when validation shortcuts are most tempting — so peer norms around quality are reinforced exactly when they're most needed.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">What this track doesn't include</div>
+      <p>The Proficiency Track is designed to be completable independently, on an active engagement, without requiring cohort scheduling. It does not include live facilitated workshops, embedded coaching, or simulated customer engagement sessions — those belong in the Immersive Cohort (Tier 3). Yoodli covers practice for communicative skills, but it is self-paced; it is not a coached live session. The Immersive Cohort is what happens when you need the full facilitated, live version.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    AI-Native Delivery Enablement · AI-Native Delivery · Proficiency Track Experience Design<br>
+    Tier 2 of the <a href="proficiency-overview.html" style="color: var(--muted); text-decoration: underline;">four-tier proficiency program</a> · Sourced from <code>AI_Native_Skills_Framework.md</code> and Proficiency Track Experience Design sheet
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Coach — Pilot Enablement</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Page-specific additions */
+    .day-card {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .day-header {
+      background: #161616;
+      border-bottom: 1px solid #2a2a2a;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .day-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: #1e1a3a;
+      color: #a89cf7;
+      padding: 3px 10px;
+      border-radius: 3px;
+    }
+    .day-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+    .day-body {
+      padding: 14px 18px;
+    }
+    .day-body ul { margin-bottom: 0; }
+
+    .rhythm-block {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      padding: 16px 20px;
+    }
+    .rhythm-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7c6af7;
+      margin-bottom: 10px;
+    }
+    .rhythm-block ul { margin-bottom: 0; }
+
+    .nonneg-card {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      padding: 18px 20px;
+    }
+    .nonneg-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .nonneg-body {
+      font-size: 14px;
+      color: #aaa;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    .resistance-card {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .resistance-quote {
+      background: #1a1600;
+      border-left: 3px solid #ca8a04;
+      padding: 14px 18px;
+      font-size: 14px;
+      font-style: italic;
+      color: #d4a017;
+    }
+    .resistance-redirect {
+      padding: 14px 18px;
+    }
+    .resistance-redirect-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #3a8a50;
+      margin-bottom: 6px;
+    }
+    .resistance-redirect p {
+      margin-bottom: 0;
+      font-size: 14px;
+    }
+
+    .escalation-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #111;
+    }
+    .escalation-table-wrap {
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .escalation-table thead tr { background: #161616; }
+    .escalation-table th {
+      text-align: left;
+      padding: 11px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #555;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .escalation-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #1e1e1e;
+      vertical-align: top;
+      color: #aaa;
+    }
+    .escalation-table tbody tr:last-child td { border-bottom: none; }
+    .escalation-table td:first-child { color: #e0e0e0; font-weight: 500; width: 38%; }
+    .own-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      background: #0f1a12;
+      color: #3a8a50;
+      border: 1px solid #1e4025;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .escalate-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      background: #1a1600;
+      color: #ca8a04;
+      border: 1px solid #3d3000;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+
+    .inferred-notice {
+      background: #1a1600;
+      border: 1px solid #3d3000;
+      border-left: 3px solid #ca8a04;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #a07000;
+    }
+
+    .skills-coaching-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #111;
+    }
+    .skills-coaching-wrap {
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .skills-coaching-table thead tr { background: #161616; }
+    .skills-coaching-table th {
+      text-align: left;
+      padding: 11px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #555;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .skills-coaching-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #1e1e1e;
+      vertical-align: top;
+      color: #aaa;
+      line-height: 1.5;
+    }
+    .skills-coaching-table tbody tr:last-child td { border-bottom: none; }
+    .skills-coaching-table td:first-child {
+      color: #a89cf7;
+      font-weight: 700;
+      white-space: nowrap;
+      width: 160px;
+    }
+    .skills-coaching-table td:nth-child(3) {
+      color: #7ecf91;
+      font-style: italic;
+    }
+
+    .philosophy-list {
+      margin: 20px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .philosophy-item {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 12px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+    }
+    .philosophy-arrow {
+      color: #7c6af7;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .philosophy-text {
+      font-size: 14px;
+      color: #bbb;
+      line-height: 1.5;
+    }
+    .philosophy-text strong {
+      color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="site-nav">
+  <div class="site-nav-inner">
+    <span class="site-nav-label">AI-Native Delivery Enablement</span>
+    <a href="index.html">Flight Guide</a>
+    <a href="proficiency-overview.html">Program Design</a>
+    <a href="proficiency-track.html">Proficiency Track</a>
+    <a href="agentic-coach.html" class="current">Agentic Coach</a>
+  </div>
+</div>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-label">Professional Services · Quantum Leap Pilot · June–August 2026</div>
+      <h1>Agentic Coach — Pilot Enablement</h1>
+      <p class="header-sub">For Agentic Coaches on Quantum Leap pilot teams. Your working reference for when you're embedded on a team and the pressure is on — not a restatement of your role definition, but the things you actually need.</p>
+      <div class="header-meta">Last Updated: June 5, 2026 &nbsp;·&nbsp; Contact: Josh Kohler, Learning Experience Design</div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#what-you-own">What You Own</a>
+      <a href="#first-week">First Week</a>
+      <a href="#rhythm">Weekly Rhythm</a>
+      <a href="#nonneg">7 Non-Negotiables</a>
+      <a href="#skills">Skills You're Coaching</a>
+      <a href="#resistance">Holding the Line</a>
+      <a href="#escalation">Escalation Map</a>
+      <a href="#community">Peer Community</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- WHAT YOU OWN -->
+    <section id="what-you-own">
+      <h2>What You Own</h2>
+      <p class="section-sub">One paragraph. Everything else in this canvas elaborates on it.</p>
+      <div class="callout">
+        <p>You are the accountable driver of Quantum Leap AI-native execution on your pilot team. The execution model is new to everyone — including you. That's fine. What's not optional is execution: daily demos happen, intent statements get written, the Pipeline Gate doesn't get bypassed. When the team wants to default to the old way, you hold the line. When something is broken, you fix it or escalate fast. You are the first escalation point on your team and a direct contributor to the data that determines how this scales. Your execution here is a direct contribution to Professional Services' FY27 V2MOM on AI-native delivery.</p>
+      </div>
+
+      <div class="philosophy-list">
+        <div class="philosophy-item">
+          <span class="philosophy-arrow">→</span>
+          <span class="philosophy-text"><strong>Problem Solving over Inquisitive Questioning</strong> — Gather data through questions to inform solutions you will create and own</span>
+        </div>
+        <div class="philosophy-item">
+          <span class="philosophy-arrow">→</span>
+          <span class="philosophy-text"><strong>Ownership over Suggestion</strong> — Directly drive initiatives and own accountability for outcomes — not recommendations</span>
+        </div>
+        <div class="philosophy-item">
+          <span class="philosophy-arrow">→</span>
+          <span class="philosophy-text"><strong>Outcomes over Activities</strong> — Success is measured by business value delivered, not training sessions conducted</span>
+        </div>
+        <div class="philosophy-item">
+          <span class="philosophy-arrow">→</span>
+          <span class="philosophy-text"><strong>Commitment over Comfort</strong> — Keep the team executing the new execution model even when it's harder than the old way</span>
+        </div>
+        <div class="philosophy-item">
+          <span class="philosophy-arrow">→</span>
+          <span class="philosophy-text"><strong>Intervene Early, Escalate Fast</strong> — When blockers emerge or the team wants to compromise, act immediately</span>
+        </div>
+      </div>
+      <div class="three-col">
+        <div class="col-card">
+          <div class="col-label">35% of your time</div>
+          <p>Driving QL Execution — intent statements, daily demos, non-negotiables enforcement, execution model adherence</p>
+        </div>
+        <div class="col-card">
+          <div class="col-label">30% of your time</div>
+          <p>Tracking Productivity &amp; Output — dashboard maintenance, metrics analysis, productivity reporting, business value outcome documentation</p>
+        </div>
+        <div class="col-card">
+          <div class="col-label">20% + 15%</div>
+          <p>AI Tool Enablement — hands-on coaching, pair-working, workshops &nbsp;·&nbsp; Problem-Solving &amp; Documentation — blocker removal, learnings capture</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIRST WEEK -->
+    <section id="first-week">
+      <h2>Your First Week</h2>
+      <p class="section-sub">The goal is simple: understand your team's starting point and establish your presence before delivery velocity kicks in.</p>
+
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-tag">Day 1</span>
+          <span class="day-title">Land and assess</span>
+        </div>
+        <div class="day-body">
+          <ul>
+            <li>Attend or review the <strong>M01 Handoff</strong> — understand what Scopezilla produced and what the pod inherited</li>
+            <li>Introduce yourself to the full pod; be explicit about your role — driver, not just advisor</li>
+            <li>Confirm tool access is complete for every team member: Claude, Cursor, Scopezilla. Flag any gaps immediately.</li>
+            <li>Confirm the <strong>AI Tool Consent Canvas</strong> is signed — no one touches a customer org without it</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-tag">Days 2–3</span>
+          <span class="day-title">Watch mobilization, read the team</span>
+        </div>
+        <div class="day-body">
+          <ul>
+            <li>Sit in on <strong>M02 Mobilization</strong> — watch how the team absorbs the pre-sales material and augments the gap list</li>
+            <li>Take note of who's leaning in vs. who's waiting to be told what to do — this is your first read on where resistance will come from</li>
+            <li>Confirm GitHub repo and build sandbox are operational; confirm <strong>MeshMesh status</strong> for your team (still in procurement for some — treat as a risk until confirmed)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-tag">Days 4–5</span>
+          <span class="day-title">Review, baseline, brief</span>
+        </div>
+        <div class="day-body">
+          <ul>
+            <li>Review the draft <strong>Engagement Roadmap</strong> before it goes to the customer — does it describe outcomes or features?</li>
+            <li>Check that intent statements being written are structured (goal, constraints, success criteria, edge cases, guardrails) — not just prompts</li>
+            <li>Set up your <strong>productivity tracking dashboard baseline</strong></li>
+            <li>Brief project leadership on your initial read: team readiness, tool gaps, any early risks</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- WEEKLY RHYTHM -->
+    <section id="rhythm">
+      <h2>Your Weekly Rhythm</h2>
+      <p class="section-sub">What you do every day, every week, and at key milestones.</p>
+
+      <div class="rhythm-block">
+        <div class="rhythm-label">Daily</div>
+        <ul>
+          <li>Confirm the <strong>Daily Demo is happening</strong> — working software, not a status update</li>
+          <li>Scan the build cycle for <strong>automation complacency</strong>: is the team accepting agent output without reviewing it?</li>
+          <li>Check the <strong>Pipeline Gate</strong> — no build artifact advances without passing it</li>
+        </ul>
+      </div>
+
+      <div class="rhythm-block">
+        <div class="rhythm-label">Weekly</div>
+        <ul>
+          <li>Deliver <strong>productivity report</strong> to project leadership: intent completions, demo days, AI usage, blockers, trends</li>
+          <li>Check in with project leadership on adoption progress and team performance</li>
+          <li>Run your <strong>coaching interventions</strong> based on data — who needs support, what pattern is emerging</li>
+        </ul>
+      </div>
+
+      <div class="rhythm-block">
+        <div class="rhythm-label">Bi-weekly</div>
+        <ul>
+          <li>Sync with other Agentic Coaches — what did you solve this week, what needs program-level attention</li>
+          <li>Escalate systemic issues (things that can't be fixed at the team level) to program leadership</li>
+        </ul>
+      </div>
+
+      <div class="rhythm-block">
+        <div class="rhythm-label">End of Pilot</div>
+        <ul>
+          <li>Comprehensive retrospective with full metrics analysis and recommendations for scaling</li>
+          <li>Exit interview with the Delivery Governance team — 20 minutes with the PM and one senior consultant</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 7 NON-NEGOTIABLES -->
+    <section id="nonneg">
+      <h2>The 7 Non-Negotiables</h2>
+      <p class="section-sub">The commitments you enforce. The team does not get to negotiate them down under delivery pressure. Every non-negotiable exists to protect one thing: the customer's ability to go live successfully and trust what was built.</p>
+
+      <div class="inferred-notice">
+        <strong>WIP:</strong> Definitions below are inferred from the QL playbook and pilot materials. Flag anything that needs correction to program leadership.
+      </div>
+
+      <div class="nonneg-card">
+        <div class="nonneg-title">1. Demo Daily</div>
+        <p class="nonneg-body">Working software reaches a deployable state every week and is demonstrated to the customer every build day — not status decks, not slide updates, working software. Enforced by the Pipeline Gate (automated, wired to the GitHub repo). No build artifact advances without passing it. <em>"We'll catch up next week"</em> is not an acceptable response to a failed gate.</p>
+      </div>
+
+      <div class="nonneg-card">
+        <div class="nonneg-title">2. Transparent Collaboration</div>
+        <p class="nonneg-body">Everything the team builds is visible to the customer in real time — through daily demos, not status decks. Call-transcript mining (Gemini transcribes every customer session) ensures decisions and risks surface within 24 hours. No surprises at go-live that were detectable earlier.</p>
+      </div>
+
+      <div class="nonneg-card">
+        <div class="nonneg-title">3. AI-Native Development</div>
+        <p class="nonneg-body">Agents do construction work. Consultants write intent statements, validate output, and govern decisions — they are not building manually and using AI as a spell-checker. If the team is doing the same work they always did with an AI tool open in another tab, this non-negotiable is being violated.</p>
+      </div>
+
+      <div class="nonneg-card">
+        <div class="nonneg-title">4. Trust-Driven Development</div>
+        <p class="nonneg-body">Quality is built in, not checked at the end. Tests are written before or alongside code, and the Pipeline Gate enforces this automatically. Trust with the customer is earned through consistent, verifiable delivery — not promises. It is not optional on build days.</p>
+      </div>
+
+      <div class="nonneg-card">
+        <div class="nonneg-title">5. Continuous Feedback</div>
+        <p class="nonneg-body">Customer feedback is gathered every build day through the Daily Demo, not saved up for phase reviews. Decisions get documented the same day they're made. The engagement roadmap is a live document, not a static artifact revised once a week.</p>
+      </div>
+
+      <div class="nonneg-card">
+        <div class="nonneg-title">6. Data-Driven Decisions</div>
+        <p class="nonneg-body">Coaching interventions, delivery decisions, and escalations are grounded in productivity data — velocity metrics, AI usage patterns, defect rates. <em>"I think the team is doing well"</em> is not a status update. Numbers are.</p>
+      </div>
+
+      <div class="nonneg-card">
+        <div class="nonneg-title">7. Executive Alignment</div>
+        <p class="nonneg-body">The customer's executive sponsor is actively aligned and engaged — not just named on the org chart. They signed the Engagement Roadmap at M04. They are available to make and hold decisions quickly. If this isn't happening, flag it: misaligned or absent executive sponsorship is one of the clearest early signals that the engagement will stall.</p>
+      </div>
+    </section>
+
+    <!-- SKILLS YOU'RE COACHING -->
+    <section id="skills">
+      <h2>The Skills You're Coaching</h2>
+      <p class="section-sub">Tool fluency is the floor. The harder coaching job is the judgment skills — the ones that break under delivery pressure even when consultants know they matter.</p>
+
+      <div class="skills-coaching-wrap">
+        <table class="skills-coaching-table">
+          <thead>
+            <tr>
+              <th>Skill</th>
+              <th>What it looks like when it's absent</th>
+              <th>Your coaching move</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Intent Writing</td>
+              <td>Vague prompts, agent output that keeps missing the mark, time spent editing instead of directing</td>
+              <td>"What would you need to see in the output to know it's right? Write that down before you prompt."</td>
+            </tr>
+            <tr>
+              <td>Discernment</td>
+              <td>Team accepts polished agent output without reviewing it — automation complacency setting in</td>
+              <td>"How do you know this is right? What would wrong look like?" — especially at Phase 3 velocity</td>
+            </tr>
+            <tr>
+              <td>Output Validation</td>
+              <td>Ad hoc spot-checks, different team members applying different quality standards</td>
+              <td>Point to the Output Validation canvas; ask for a documented accept / regenerate / escalate decision, not a vibe</td>
+            </tr>
+            <tr>
+              <td>Outcome Framing</td>
+              <td>Epics are feature-labeled, success is measured by tasks completed</td>
+              <td>"What changes for the customer when this epic is done?" If they can't answer, the epic isn't ready.</td>
+            </tr>
+            <tr>
+              <td>Human-AI Orchestration</td>
+              <td>Consultant either over-delegates high-stakes decisions or over-supervises low-stakes tasks</td>
+              <td>"What happens if this agent output is wrong? How reversible is it?" — use that to calibrate supervision level</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">For the full skills framework</div>
+        <p>Skills mapped to every MVG phase — what to land with, what's load-bearing, what to carry forward — see the MVE canvas → <strong>Skills at Each Gate</strong>.</p>
+      </div>
+    </section>
+
+    <!-- WHEN THEY RESIST -->
+    <section id="resistance">
+      <h2>Holding the Line</h2>
+      <p class="section-sub">Resistance rarely sounds like "I don't want to do this." It sounds like reasonable objections under pressure.</p>
+
+      <div class="resistance-card">
+        <div class="resistance-quote">"We don't have time for the daily demo today."</div>
+        <div class="resistance-redirect">
+          <div class="resistance-redirect-label">Redirect</div>
+          <p>This is the most common reversion. The daily demo is not optional — it is the primary continuous feedback loop and a non-negotiable. <strong>"I understand we're under pressure. What's the minimum working piece we can show in 15 minutes? That counts."</strong> Hold the line.</p>
+        </div>
+      </div>
+
+      <div class="resistance-card">
+        <div class="resistance-quote">"This intent statement process is slowing us down — we'll just prompt directly."</div>
+        <div class="resistance-redirect">
+          <div class="resistance-redirect-label">Redirect</div>
+          <p>This is the AI-augmented trap: reverting to prompting like it's a tool rather than directing like it's a resource. <strong>"How long did it take to fix the last output that missed? Spend five minutes on the intent statement first."</strong></p>
+        </div>
+      </div>
+
+      <div class="resistance-card">
+        <div class="resistance-quote">"The agent output looks good enough — let's move it forward."</div>
+        <div class="resistance-redirect">
+          <div class="resistance-redirect-label">Redirect</div>
+          <p>Automation complacency in real time. <strong>"Walk me through how you validated it. What criteria did you use?"</strong> Make the validation visible — it short-circuits the shortcut.</p>
+        </div>
+      </div>
+
+      <div class="resistance-card">
+        <div class="resistance-quote">"The customer keeps adding scope in the working sessions."</div>
+        <div class="resistance-redirect">
+          <div class="resistance-redirect-label">Redirect</div>
+          <p>Scope expansion disguised as co-creation. Help the team distinguish input that <em>reshapes intent</em> (incorporate it) from input that <em>expands scope</em> (log it, route to a future epic, don't absorb silently). The distinction must be made in the room, in real time.</p>
+        </div>
+      </div>
+
+      <div class="resistance-card">
+        <div class="resistance-quote">"We've always done it this way and it works."</div>
+        <div class="resistance-redirect">
+          <div class="resistance-redirect-label">Redirect</div>
+          <p>The clearest reversion signal. <strong>"What would 'working' look like under QL? Let's measure it against that."</strong> Don't argue about the old way — anchor to the new standard.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESCALATION MAP -->
+    <section id="escalation">
+      <h2>Your Escalation Map</h2>
+      <p class="section-sub">You solve what you can. You escalate fast what you can't.</p>
+
+      <div class="escalation-table-wrap">
+        <table class="escalation-table">
+          <thead>
+            <tr>
+              <th>Situation</th>
+              <th>Owner</th>
+              <th>How</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Team skipping daily demos</td>
+              <td><span class="own-badge">You own it</span></td>
+              <td>Hold the line on-the-spot</td>
+            </tr>
+            <tr>
+              <td>Tool access gaps</td>
+              <td><span class="own-badge">You own it first</span></td>
+              <td>Troubleshoot; escalate to GT / tool owners if unresolved in 24h</td>
+            </tr>
+            <tr>
+              <td>Consultant needs more support on a skill</td>
+              <td><span class="own-badge">You own it</span></td>
+              <td>1:1 coaching, pair-working, point to job aids</td>
+            </tr>
+            <tr>
+              <td>MeshMesh / Apromore procurement blockers</td>
+              <td><span class="escalate-badge">Escalate immediately</span></td>
+              <td>Program leadership — do not plan these tools into delivery architecture until confirmed</td>
+            </tr>
+            <tr>
+              <td>Non-negotiable conflicts with engagement constraints</td>
+              <td><span class="escalate-badge">Escalate immediately</span></td>
+              <td>Document the conflict first; bring to program leadership same day</td>
+            </tr>
+            <tr>
+              <td>Customer executive sponsor disengaged</td>
+              <td><span class="escalate-badge">Flag to project leadership</span></td>
+              <td>Raise in weekly project leadership check-in; don't wait for it to stall delivery</td>
+            </tr>
+            <tr>
+              <td>Pattern showing up across multiple team members</td>
+              <td><span class="escalate-badge">Bring to coach sync</span></td>
+              <td>Document and raise at bi-weekly coach sync; escalate to program leadership if systemic</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">Program leadership escalation channel</div>
+        <p>To be confirmed at pilot launch. If you don't have this before Day 1, ask before you need it.</p>
+      </div>
+    </section>
+
+    <!-- PEER COMMUNITY -->
+    <section id="community">
+      <h2>Your Peer Coach Community</h2>
+      <p class="section-sub">You are not the only one figuring this out.</p>
+
+      <p>Every Agentic Coach on the pilot is in the same position — new execution model, live customer, accountable for making it work. The bi-weekly coach sync is the structured moment to use that.</p>
+
+      <div class="rhythm-block">
+        <div class="rhythm-label">Bi-weekly Coach Sync</div>
+        <ul>
+          <li>Come with: <strong>one thing that worked</strong>, one thing that broke, one question for the group</li>
+          <li>Share what you solved this week — not just what happened</li>
+          <li>Escalate issues that need program-level attention, not just team-level fixes</li>
+        </ul>
+      </div>
+
+      <div class="rhythm-block">
+        <div class="rhythm-label">Between Syncs — #ql-learnings-feedback</div>
+        <ul>
+          <li>Drop observations in the flow of work — not structured, just a habit</li>
+          <li>Prompt: <em>What was hard? What did you wish you had?</em></li>
+          <li>What you surface here feeds directly into how the execution model scales after the pilot</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">Why this matters beyond your team</div>
+        <p>The patterns you surface across syncs and in the feedback channel are the primary input into the three-track learning program that follows this pilot. What you document becomes the playbook for the next cohort. This is not optional overhead — it is the research.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      Agentic Coach Enablement Canvas &nbsp;·&nbsp; QL + MVG Global Pilot, June–August 2026<br>
+      Professional Services · Learning Experience Design · Contact: Josh Kohler<br>
+      Built from: Agentic Coach Role Definition v3.0 (May 25, 2026) · QL Playbook · MVG Framework
+    </div>
+  </footer>
+
+</body>
+</html>

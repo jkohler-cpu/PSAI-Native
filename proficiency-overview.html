@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Native Proficiency — Program Design</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Program arc */
+    .arc-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 28px 0 32px;
+    }
+    .arc-step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 18px;
+      position: relative;
+    }
+    .arc-step.tier-1 { border-top: 2px solid var(--green); }
+    .arc-step.tier-2 { border-top: 2px solid var(--blue); }
+    .arc-step.tier-3 { border-top: 2px solid var(--gold); }
+    .arc-step.tier-4 { border-top: 2px solid var(--purple); }
+    .arc-tier-num {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .arc-format-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+    .arc-tier-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    .arc-audience {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+    .arc-duration { font-size: 12px; font-weight: 700; }
+    .arc-step.tier-1 .arc-duration { color: var(--green); }
+    .arc-step.tier-2 .arc-duration { color: var(--blue); }
+    .arc-step.tier-3 .arc-duration { color: var(--gold); }
+    .arc-step.tier-4 .arc-duration { color: var(--purple); }
+
+    /* Depth indicators */
+    .depth-i, .depth-p, .depth-a, .depth-c, .depth-none {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .depth-i { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+    .depth-p { background: rgba(1,118,211,0.08); color: var(--blue); border: 1px solid rgba(1,118,211,0.2); }
+    .depth-a { background: rgba(22,163,74,0.08); color: var(--green); border: 1px solid rgba(22,163,74,0.2); }
+    .depth-c { background: rgba(124,58,237,0.08); color: var(--purple); border: 1px solid rgba(124,58,237,0.2); }
+    .depth-none { color: var(--border); }
+
+    /* Coverage table */
+    .coverage-wrap {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin: 8px 0 24px;
+    }
+    .coverage-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: var(--card);
+    }
+    .coverage-table thead tr { background: var(--bg); }
+    .coverage-table th {
+      text-align: left;
+      padding: 11px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .coverage-table th:not(:first-child) { text-align: center; }
+    .coverage-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      color: var(--muted);
+    }
+    .coverage-table tbody tr:last-child td { border-bottom: none; }
+    .coverage-table tbody tr:hover td { background: var(--bg); }
+    .coverage-table td:not(:first-child) { text-align: center; }
+    .coverage-table td:first-child { font-weight: 600; color: var(--text); min-width: 210px; }
+    .cluster-group-row td {
+      background: var(--bg) !important;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      padding: 8px 14px;
+    }
+    .th-t1 { color: var(--green) !important; }
+    .th-t2 { color: var(--blue) !important; }
+    .th-t3 { color: var(--gold) !important; }
+    .th-t4 { color: var(--purple) !important; }
+
+    /* Depth legend */
+    .depth-legend { display: flex; gap: 20px; flex-wrap: wrap; margin: 0 0 16px; }
+    .depth-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+
+    /* Tier cards */
+    .tier-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .tier-card.tier-1 { border-left: 3px solid var(--green); }
+    .tier-card.tier-2 { border-left: 3px solid var(--blue); }
+    .tier-card.tier-3 { border-left: 3px solid var(--gold); }
+    .tier-card.tier-4 { border-left: 3px solid var(--purple); }
+    .tier-card-header {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .tier-badge {
+      width: 34px; height: 34px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 800; flex-shrink: 0;
+    }
+    .tier-1 .tier-badge { background: rgba(22,163,74,0.1); color: var(--green); }
+    .tier-2 .tier-badge { background: rgba(1,118,211,0.1); color: var(--blue); }
+    .tier-3 .tier-badge { background: rgba(245,158,11,0.1); color: var(--gold); }
+    .tier-4 .tier-badge { background: rgba(124,58,237,0.1); color: var(--purple); }
+    .tier-card-name { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+    .tier-card-meta { font-size: 12px; color: var(--muted); }
+    .tier-card-body { display: grid; grid-template-columns: 1fr 1fr; }
+    .tier-col { padding: 18px 22px; }
+    .tier-col:first-child { border-right: 1px solid var(--border); }
+    .tier-col-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.09em; color: var(--muted); margin-bottom: 10px;
+    }
+    .tier-col p { font-size: 13px; color: var(--muted); margin-bottom: 0; line-height: 1.6; }
+    .tier-col ul { padding-left: 16px; margin: 0; }
+    .tier-col li { font-size: 13px; color: var(--muted); margin-bottom: 5px; }
+    .tier-card-outcome {
+      padding: 13px 22px;
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .tier-outcome-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; margin-right: 10px;
+    }
+    .tier-1 .tier-outcome-label { color: var(--green); }
+    .tier-2 .tier-outcome-label { color: var(--blue); }
+    .tier-3 .tier-outcome-label { color: var(--gold); }
+    .tier-4 .tier-outcome-label { color: var(--purple); }
+
+    /* Role paths */
+    .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+    .role-grid .role-card:last-child:nth-child(odd) { grid-column: 1 / -1; max-width: calc(50% - 6px); }
+    .role-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+    .role-card.role-coach { border-top: 2px solid var(--purple); }
+    .role-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 5px; }
+    .role-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 16px; }
+    .role-path-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-bottom: 16px; }
+    .role-pill {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; padding: 4px 10px; border-radius: 20px;
+    }
+    .role-pill.t1 { background: rgba(22,163,74,0.1); color: var(--green); border: 1px solid rgba(22,163,74,0.2); }
+    .role-pill.t2 { background: rgba(1,118,211,0.1); color: var(--blue); border: 1px solid rgba(1,118,211,0.2); }
+    .role-pill.t3 { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.2); }
+    .role-pill.t4 { background: rgba(124,58,237,0.1); color: var(--purple); border: 1px solid rgba(124,58,237,0.2); }
+    .role-arrow { color: var(--border); font-size: 13px; }
+    .role-skills-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;
+    }
+    .role-skill-list { list-style: none; padding: 0; margin: 0; }
+    .role-skill-list li {
+      font-size: 12px; color: var(--muted); margin-bottom: 4px;
+      padding-left: 12px; position: relative;
+    }
+    .role-skill-list li::before { content: '·'; position: absolute; left: 0; color: var(--muted); }
+
+    /* Leadership progression */
+    .leader-progression { margin: 28px 0; }
+    .leader-phase-row {
+      display: grid; grid-template-columns: 220px 1fr;
+      gap: 0; border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden; margin-bottom: 10px;
+    }
+    .leader-phase-left {
+      padding: 22px; display: flex; flex-direction: column;
+      justify-content: center; border-right: 1px solid var(--border);
+    }
+    .leader-phase-row.lp1 .leader-phase-left { background: rgba(22,163,74,0.06); }
+    .leader-phase-row.lp2 .leader-phase-left { background: rgba(1,118,211,0.06); }
+    .leader-phase-row.lp3 .leader-phase-left { background: rgba(124,58,237,0.06); }
+    .leader-phase-num {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 5px;
+    }
+    .leader-phase-row.lp1 .leader-phase-num { color: var(--green); }
+    .leader-phase-row.lp2 .leader-phase-num { color: var(--blue); }
+    .leader-phase-row.lp3 .leader-phase-num { color: var(--purple); }
+    .leader-phase-name { font-size: 16px; font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 5px; }
+    .leader-phase-q { font-size: 12px; font-style: italic; color: var(--muted); line-height: 1.4; }
+    .leader-phase-right {
+      background: var(--card); padding: 18px 22px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .leader-focus-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.09em; color: var(--muted); margin-bottom: 8px;
+    }
+    .leader-focus-list { list-style: none; padding: 0; margin: 0; }
+    .leader-focus-list li {
+      font-size: 12px; color: var(--muted); margin-bottom: 4px;
+      padding-left: 10px; position: relative;
+    }
+    .leader-focus-list li::before { content: '·'; position: absolute; left: 0; color: var(--muted); }
+    .leader-outcome {
+      background: var(--bg); border-top: 1px solid var(--border);
+      padding: 11px 22px; font-size: 12px; color: var(--muted);
+    }
+    .leader-outcome-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; margin-right: 8px;
+    }
+    .leader-phase-row.lp1 .leader-outcome-label { color: var(--green); }
+    .leader-phase-row.lp2 .leader-outcome-label { color: var(--blue); }
+    .leader-phase-row.lp3 .leader-outcome-label { color: var(--purple); }
+    .leader-tier-tag {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 2px 8px; border-radius: 3px; margin-left: 8px; vertical-align: middle;
+    }
+    .leader-tier-tag.t1 { background: rgba(22,163,74,0.1); color: var(--green); border: 1px solid rgba(22,163,74,0.2); }
+    .leader-tier-tag.t2 { background: rgba(1,118,211,0.1); color: var(--blue); border: 1px solid rgba(1,118,211,0.2); }
+    .leader-tier-tag.t3 { background: rgba(124,58,237,0.1); color: var(--purple); border: 1px solid rgba(124,58,237,0.2); }
+
+    @media (max-width: 640px) {
+      .leader-phase-row { grid-template-columns: 1fr; }
+      .leader-phase-left { border-right: none; border-bottom: 1px solid var(--border); }
+      .leader-phase-right { grid-template-columns: 1fr; }
+    }
+
+    /* Build sequence */
+    .build-seq { counter-reset: build-step; margin: 24px 0; }
+    .build-phase {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 18px 20px; margin-bottom: 10px;
+      display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: start;
+    }
+    .build-phase-label { font-size: 12px; font-weight: 700; color: var(--purple); }
+    .build-phase-clusters { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .build-cluster-tag {
+      font-size: 11px; font-weight: 600;
+      background: rgba(124,58,237,0.08); color: var(--purple);
+      border: 1px solid rgba(124,58,237,0.2); padding: 2px 10px; border-radius: 3px;
+    }
+    .build-phase-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    @media (max-width: 640px) {
+      .arc-flow { grid-template-columns: 1fr 1fr; }
+      .tier-card-body { grid-template-columns: 1fr; }
+      .tier-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .role-grid { grid-template-columns: 1fr; }
+      .build-phase { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="site-nav">
+  <div class="site-nav-inner">
+    <span class="site-nav-label">AI-Native Delivery Enablement</span>
+    <a href="index.html">Flight Guide</a>
+    <a href="proficiency-overview.html" class="current">Program Design</a>
+    <a href="proficiency-track.html">Proficiency Track</a>
+    <a href="agentic-coach.html">Agentic Coach</a>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-label">AI-Native Delivery Enablement · AI-Native Delivery</div>
+    <h1>Proficiency Program Design</h1>
+    <p class="header-sub">How PS practitioners build AI-native delivery capability — from baseline fluency to coaching others through it. Four tiers, eleven skill clusters, one through-line.</p>
+    <div class="header-meta">11 skill clusters &nbsp;·&nbsp; 4 program tiers &nbsp;·&nbsp; 4 delivery roles &nbsp;·&nbsp; Tier 1 live June 2026</div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#arc">Program Arc</a>
+    <a href="#tiers">The Four Tiers</a>
+    <a href="#skills-map">Skills Coverage</a>
+    <a href="#role-paths">Role Paths</a>
+    <a href="#leadership">Leadership Progression</a>
+    <a href="#build">Build Sequence</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- PROGRAM ARC -->
+  <section id="arc">
+    <h2>Program Arc</h2>
+    <p class="section-sub">The same 11 skill clusters run through all four tiers. What changes is depth — from awareness to practiced judgment to real-stakes application to coaching others.</p>
+
+    <div class="arc-flow">
+      <div class="arc-step tier-1">
+        <div class="arc-tier-num">Tier 1</div>
+        <div class="arc-format-tag">Slack · 7 weeks · Live now</div>
+        <div class="arc-tier-name">AI Adoption Accelerator</div>
+        <div class="arc-audience">All PS practitioners — ICs and leaders</div>
+        <div class="arc-duration">7 weeks · June–July 2026</div>
+      </div>
+      <div class="arc-step tier-2">
+        <div class="arc-tier-num">Tier 2</div>
+        <div class="arc-format-tag">Trailhead · Slack · Yoodli</div>
+        <div class="arc-tier-name">Proficiency Track</div>
+        <div class="arc-audience">Consultants on active AI-native engagements</div>
+        <div class="arc-duration">3–4 weeks</div>
+      </div>
+      <div class="arc-step tier-3">
+        <div class="arc-tier-num">Tier 3</div>
+        <div class="arc-format-tag">Cohort · Embedded · Live</div>
+        <div class="arc-tier-name">Immersive Cohort</div>
+        <div class="arc-audience">Pilot teams in active Quantum Leap engagements</div>
+        <div class="arc-duration">Multi-week</div>
+      </div>
+      <div class="arc-step tier-4">
+        <div class="arc-tier-num">Tier 4</div>
+        <div class="arc-format-tag">Intensive + Ongoing</div>
+        <div class="arc-tier-name">Agentic Coach Track</div>
+        <div class="arc-audience">Agentic Coaches and designated Player Coaches</div>
+        <div class="arc-duration">2-day intensive + ongoing</div>
+      </div>
+    </div>
+
+    <div class="phase-table">
+      <div class="phase-row phase-header">
+        <span>Tier</span>
+        <span>Entry point</span>
+        <span>Purpose</span>
+      </div>
+      <div class="phase-row">
+        <span style="font-weight: 700; color: var(--green); font-size: 13px;">Accelerator</span>
+        <span>All PS — running now, June–July 2026</span>
+        <span style="color: var(--muted);">AI tool adoption and AI-augmented delivery habits for all of PS. Slack-first, bite-sized, 7-week program with IC and leader tracks. Covers Claude Code, Agentforce Vibes, Cursor, Conversation Design, and AI in Action.</span>
+      </div>
+      <div class="phase-row">
+        <span style="font-weight: 700; color: var(--blue); font-size: 13px;">Proficiency</span>
+        <span>At engagement kickoff or pre-boarding</span>
+        <span style="color: var(--muted);">Build judgment skills for a live engagement via Trailhead learning paths, Slack always-on reference canvases, and Yoodli-powered practice for communicative skills. Practiced application, not just awareness.</span>
+      </div>
+      <div class="phase-row">
+        <span style="font-weight: 700; color: var(--gold); font-size: 13px;">Immersive</span>
+        <span>Selected for Quantum Leap pilot cohort</span>
+        <span style="color: var(--muted);">Apply skills under real delivery conditions with coaching support. Generate field evidence for the broader program.</span>
+      </div>
+      <div class="phase-row">
+        <span style="font-weight: 700; color: var(--purple); font-size: 13px;">Coach Track</span>
+        <span>Selected as Agentic Coach or Player Coach</span>
+        <span style="color: var(--muted);">Build capacity to coach others through AI-native delivery — sustaining and spreading capability across the PS org.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE FOUR TIERS -->
+  <section id="tiers">
+    <h2>The Four Tiers</h2>
+    <p class="section-sub">What each tier builds, how it's delivered, and what a practitioner can do when they finish it.</p>
+
+    <div class="tier-card tier-1">
+      <div class="tier-card-header">
+        <div class="tier-badge">1</div>
+        <div>
+          <div class="tier-card-name">AI Adoption Accelerator</div>
+          <div class="tier-card-meta">All PS practitioners &nbsp;·&nbsp; Slack-first, 7 weeks &nbsp;·&nbsp; 4 tracks: Delivery · GTM · Leaders · All PS &nbsp;·&nbsp; Live June–July 2026</div>
+        </div>
+      </div>
+      <div class="tier-card-body">
+        <div class="tier-col">
+          <div class="tier-col-label">Delivery track</div>
+          <ul>
+            <li>7-week Slack DM journey — IC (Mondays) + Leader (Fridays)</li>
+            <li>Conversation Design Fundamentals — 12 global LC sessions</li>
+            <li>Delivering with AI Learning Circles — 22 sessions</li>
+            <li>AI Tools Spotlight — Claude Code, Agentforce Vibes, Cursor</li>
+          </ul>
+          <div class="tier-col-label" style="margin-top: 16px;">GTM track</div>
+          <ul>
+            <li>GTM AI Tool Webinar</li>
+            <li>AI-Powered Selling Experience</li>
+            <li>Services Scoping / Solutioning Agent</li>
+            <li>Yoodli-powered roleplays for customer conversations</li>
+          </ul>
+        </div>
+        <div class="tier-col">
+          <div class="tier-col-label">All PS</div>
+          <ul>
+            <li>AI in Action — field-driven, by ProServ for ProServ</li>
+            <li>AI Tools Spotlight sessions</li>
+            <li>Slack canvas as program home base</li>
+          </ul>
+          <div class="tier-col-label" style="margin-top: 16px;">Leaders track</div>
+          <ul>
+            <li>AI-First Leaders — coaching, accountability, mindset shift</li>
+            <li>Coaching AI usage and driving team adoption</li>
+            <li>Friday Slack DM with IC preview each week</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tier-card-outcome tier-1">
+        <span class="tier-outcome-label">After this tier</span>
+        <span>Practitioner is consistently using AI tools in their daily workflow — in delivery, in deals, or in leadership — and has the habit foundation the Proficiency Track builds on.</span>
+      </div>
+    </div>
+
+    <div class="tier-card tier-2">
+      <div class="tier-card-header">
+        <div class="tier-badge">2</div>
+        <div>
+          <div class="tier-card-name">Proficiency Track</div>
+          <div class="tier-card-meta">Delivery · GTM · Leaders &nbsp;·&nbsp; Trailhead · Slack · Yoodli &nbsp;·&nbsp; Three paths, shared foundation</div>
+        </div>
+      </div>
+      <div class="tier-card-body">
+        <div class="tier-col">
+          <div class="tier-col-label">Delivery path</div>
+          <p>Three acts aligned to the MVG delivery arc — Before You Build, While You're Delivering, With the Customer &amp; Beyond. Builds practiced judgment across all 11 clusters. Opens with a diagnostic; closes with a forward brief.</p>
+          <div class="tier-col-label" style="margin-top: 16px;">GTM path</div>
+          <p>Shares Act 1 (pre-engagement skills) with the delivery path, then diverges into a GTM-specific module covering scoping integrity, MVG delivery literacy, and the GTM-to-delivery handoff. Yoodli for customer scoping and readiness conversations. Closes with a shared forward brief aligned to the delivery team taking over.</p>
+          <div class="tier-col-label" style="margin-top: 16px;">Leader path <span style="font-weight:400; color:var(--muted);">(Phase 2 of the Leadership Progression)</span></div>
+          <p>The fluency and judgment phase of the leadership arc — building confident human-AI partnership. Trailhead for tool selection, discernment, and responsible use; Slack canvases with leader-specific decision protocols; Yoodli for coaching conversations and team AI accountability discussions. Connects forward to Phase 3: AI-Native Leadership.</p>
+        </div>
+        <div class="tier-col">
+          <div class="tier-col-label">Modality stack</div>
+          <ul>
+            <li><strong style="color: var(--text);">Trailhead</strong> — structured learning paths for each skill cluster; concept + scenario + checkpoint</li>
+            <li><strong style="color: var(--text);">Slack always-on canvases</strong> — reference cards, decision protocols, and anti-pattern guides in the flow of work</li>
+            <li><strong style="color: var(--text);">Yoodli</strong> — communicative clusters: Customer AI Readiness conversations, Outcome Framing, scoping handoff</li>
+            <li>Opening diagnostic + closing forward brief</li>
+            <li>Peer exchange at Act 2 midpoint (delivery) / GTM module midpoint</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tier-card-outcome tier-2">
+        <span class="tier-outcome-label">After this tier — delivery</span>
+        <span>Practitioner can write defensible intent, validate AI outputs against a rubric, and make calibrated human-AI delegation decisions on an active engagement.</span>
+      </div>
+      <div class="tier-card-outcome tier-2" style="border-top: 1px solid var(--border);">
+        <span class="tier-outcome-label">After this tier — GTM</span>
+        <span>Seller can scope AI-native engagements honestly against MVG readiness criteria, frame outcomes rather than deliverables, and hand off to delivery with the information they need to succeed.</span>
+      </div>
+      <div class="tier-card-outcome tier-2" style="border-top: 1px solid var(--border);">
+        <span class="tier-outcome-label">After this tier — Leaders</span>
+        <span>Leader has genuine fluency working alongside AI — can make calibrated tool and judgment decisions, coach team members through adoption from a place of earned credibility, and is ready to engage Phase 3 of the Leadership Progression.</span>
+      </div>
+    </div>
+
+    <div class="tier-card tier-3">
+      <div class="tier-card-header">
+        <div class="tier-badge">3</div>
+        <div>
+          <div class="tier-card-name">Immersive Cohort</div>
+          <div class="tier-card-meta">Quantum Leap pilot teams &nbsp;·&nbsp; Cohort-based, embedded &nbsp;·&nbsp; Multi-week, aligned to engagement arc</div>
+        </div>
+      </div>
+      <div class="tier-card-body">
+        <div class="tier-col">
+          <div class="tier-col-label">What it builds</div>
+          <p>Real-stakes application of all skills under live delivery conditions, with facilitation and coaching support. This is where learning becomes practice — pressure scenarios, mock projects, co-creation workshops, and on-project reinforcement. It also generates the Salesforce-specific field artifacts the Proficiency Track currently needs.</p>
+        </div>
+        <div class="tier-col">
+          <div class="tier-col-label">Format &amp; Assets</div>
+          <ul>
+            <li>Live facilitated workshops — in-person or virtual</li>
+            <li>Mock projects and pressure scenarios (time constraint + stakeholder pressure)</li>
+            <li>Customer co-creation session simulation</li>
+            <li>On-project reinforcement with Agentic Coach presence</li>
+            <li>Post-project debrief and learning capture</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tier-card-outcome tier-3">
+        <span class="tier-outcome-label">After this tier</span>
+        <span>Practitioner has applied all skills under real conditions — navigated system interdependencies, facilitated co-creation, and maintained scrutiny under pressure.</span>
+      </div>
+    </div>
+
+    <div class="tier-card tier-4">
+      <div class="tier-card-header">
+        <div class="tier-badge">4</div>
+        <div>
+          <div class="tier-card-name">Agentic Coach Track</div>
+          <div class="tier-card-meta">Agentic Coaches &amp; Player Coaches &nbsp;·&nbsp; 2-day in-person intensive + ongoing protocols</div>
+        </div>
+      </div>
+      <div class="tier-card-body">
+        <div class="tier-col">
+          <div class="tier-col-label">What it builds</div>
+          <p>Coaching and facilitation skills for sustaining AI-native delivery quality in the flow of work. Emphasis on coaching Discernment and Intent Writing — the hardest skills to coach because they require a different approach than technical coaching. The 2-day intensive includes live facilitation practice and peer coaching protocol development.</p>
+        </div>
+        <div class="tier-col">
+          <div class="tier-col-label">Format &amp; Assets</div>
+          <ul>
+            <li>2-day in-person intensive — facilitation and coaching practice</li>
+            <li>Per-cluster coach guides and coaching prompts</li>
+            <li>Anti-pattern playbook with in-flight recognition signals</li>
+            <li>Peer Coach Community (#ql-learnings-feedback)</li>
+            <li>Quarterly Agentic Coach retrospective</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tier-card-outcome tier-4">
+        <span class="tier-outcome-label">After this tier</span>
+        <span>Coach can recognize skill gaps in the flow of work, use targeted coaching prompts, facilitate discernment reflection, and hold the execution model standards without killing team momentum.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS COVERAGE MAP -->
+  <section id="skills-map">
+    <h2>Skills Coverage Map</h2>
+    <p class="section-sub">How each skill cluster deepens across the four tiers. All 11 clusters run through the full program — depth increases, not scope.</p>
+
+    <div class="depth-legend">
+      <div class="depth-legend-item"><span class="depth-i">Intro</span>&nbsp; First exposure, foundational concept</div>
+      <div class="depth-legend-item"><span class="depth-p">Practiced</span>&nbsp; Structured scenarios, rubric-based judgment</div>
+      <div class="depth-legend-item"><span class="depth-a">Applied</span>&nbsp; Real conditions, embedded in live work</div>
+      <div class="depth-legend-item"><span class="depth-c">Coached</span>&nbsp; Facilitating and coaching others</div>
+      <div class="depth-legend-item"><span class="depth-none">—</span>&nbsp; Not in this tier</div>
+    </div>
+
+    <div class="coverage-wrap">
+      <table class="coverage-table">
+        <thead>
+          <tr>
+            <th>Skill Cluster</th>
+            <th class="th-t1">Accelerator</th>
+            <th class="th-t2">Proficiency</th>
+            <th class="th-t3">Immersive</th>
+            <th class="th-t4">Coach Track</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="cluster-group-row"><td colspan="5">Core Judgment</td></tr>
+          <tr>
+            <td>Intent Writing</td>
+            <td><span class="depth-i">Intro</span></td>
+            <td><span class="depth-p">Practiced</span></td>
+            <td><span class="depth-a">Applied</span></td>
+            <td><span class="depth-c">Coached</span></td>
+          </tr>
+          <tr>
+            <td>Discernment</td>
+            <td><span class="depth-i">Intro</span></td>
+            <td><span class="depth-p">Practiced</span></td>
+            <td><span class="depth-a">Applied</span></td>
+            <td><span class="depth-c">Coached</span></td>
+          </tr>
+          <tr>
+            <td>Output Validation</td>
+            <td><span class="depth-i">Intro</span></td>
+            <td><span class="depth-p">Practiced</span></td>
+            <td><span class="depth-a">Applied</span></td>
+            <td><span class="depth-c">Coached</span></td>
+          </tr>
+          <tr>
+            <td>Human-AI Orchestration</td>
+            <td><span class="depth-i">Intro</span></td>
+            <td><span class="depth-p">Practiced</span></td>
+            <td><span class="depth-a">Applied</span></td>
+            <td><span class="depth-c">Coached</span></td>
+          </tr>
+
+          <tr class="cluster-group-row"><td colspan="5">Delivery Judgment</td></tr>
+          <tr>
+            <td>Outcome Framing</td>
+            <td><span class="depth-i">Intro</span></td>
+            <td><span class="depth-p">Practiced</span></td>
+            <td><span class="depth-a">Applied</span></td>
+            <td><span class="depth-c">Coached</span></td>
+          </tr>
+          <tr>
+            <td>Systems Thinking</td>
+            <td><span class="depth-i">Intro</span></td>
+            <td><span class="depth-p">Practiced</span></td>
+            <td><span class="depth-a">Applied</span></td>
+            <td><span class="depth-c">Coached</span></td>
+          </tr>
+          <tr>
+            <td>Data Quality Judgment</td>
+            <td><span class="depth-i">Intro</span></td>
+            <td><span class="depth-p">Practiced</span></td>
+            <td><span class="depth-a">Applied</span></td>
+            <td><span class="depth-none">—</span></td>
+          </tr>
+          <tr>
+            <td>Customer AI Readiness</td>
+            <td><span class="depth-i">Intro</span></td>
+            <td><span class="depth-p">Practiced</span></td>
+            <td><span class="depth-a">Applied</span></td>
+            <td><span class="depth-none">—</span></td>
+          </tr>
+
+          <tr class="cluster-group-row"><td colspan="5">Human Factors</td></tr>
+          <tr>
+            <td>Change Co-Creation</td>
+            <td><span class="depth-i">Intro</span></td>
+            <td><span class="depth-p">Practiced</span></td>
+            <td><span class="depth-a">Applied</span></td>
+            <td><span class="depth-c">Coached</span></td>
+          </tr>
+          <tr>
+            <td>Creative Direction &amp; Taste</td>
+            <td><span class="depth-i">Intro</span></td>
+            <td><span class="depth-p">Practiced</span></td>
+            <td><span class="depth-a">Applied</span></td>
+            <td><span class="depth-none">—</span></td>
+          </tr>
+          <tr>
+            <td>Adaptive Learning</td>
+            <td><span class="depth-i">Intro</span></td>
+            <td><span class="depth-p">Practiced</span></td>
+            <td><span class="depth-a">Applied</span></td>
+            <td><span class="depth-c">Coached</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Why some clusters don't reach the Coach Track</div>
+      <p>Data Quality Judgment and Customer AI Readiness Assessment are pre-engagement diagnostic skills — they happen before the team forms, so there's no live coaching context. Creative Direction &amp; Taste is highly individual and context-specific; coaches recognize it in the field but it doesn't lend itself to a formal coaching protocol. These three clusters max out at Applied in Tier 3.</p>
+    </div>
+  </section>
+
+  <!-- ROLE PATHS -->
+  <section id="role-paths">
+    <h2>Role Paths</h2>
+    <p class="section-sub">Which tiers each role moves through and which skill clusters are their primary focus.</p>
+
+    <div class="role-grid">
+
+      <div class="role-card">
+        <div class="role-title">Implementation Architect</div>
+        <div class="role-desc">Builds, configures, and deploys the agentic solutions — highest exposure to AI output quality and orchestration decisions in the flow of work.</div>
+        <div class="role-path-steps">
+          <span class="role-pill t1">Accelerator</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t2">Proficiency</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t3">Immersive</span>
+        </div>
+        <div class="role-skills-label">Priority clusters</div>
+        <ul class="role-skill-list">
+          <li>Intent Writing</li>
+          <li>Output Validation</li>
+          <li>Human-AI Orchestration</li>
+          <li>Data Quality Judgment</li>
+          <li>Creative Direction &amp; Taste</li>
+        </ul>
+      </div>
+
+      <div class="role-card">
+        <div class="role-title">Project Lead</div>
+        <div class="role-desc">Governs the engagement — accountable for scope, outcomes, and stakeholder alignment across all delivery phases.</div>
+        <div class="role-path-steps">
+          <span class="role-pill t1">Accelerator</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t2">Proficiency</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t3">Immersive</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t4">Coach Track*</span>
+        </div>
+        <div class="role-skills-label">Priority clusters</div>
+        <ul class="role-skill-list">
+          <li>Outcome Framing</li>
+          <li>Customer AI Readiness Assessment</li>
+          <li>Systems Thinking</li>
+          <li>Change Co-Creation</li>
+          <li>Human-AI Orchestration</li>
+        </ul>
+      </div>
+
+      <div class="role-card">
+        <div class="role-title">Adoption Architect</div>
+        <div class="role-desc">Manages change and adoption on the customer side — focused on pre-engagement readiness and in-flight co-creation.</div>
+        <div class="role-path-steps">
+          <span class="role-pill t1">Accelerator</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t2">Proficiency</span>
+        </div>
+        <div class="role-skills-label">Priority clusters</div>
+        <ul class="role-skill-list">
+          <li>Change Co-Creation</li>
+          <li>Customer AI Readiness Assessment</li>
+          <li>Data Quality Judgment</li>
+          <li>Outcome Framing</li>
+        </ul>
+      </div>
+
+      <div class="role-card">
+        <div class="role-title">GTM — Sellers &amp; Presales</div>
+        <div class="role-desc">PS sellers and solution consultants — scoping and positioning AI-native engagements in the deal cycle. Their work creates the conditions delivery either inherits or inherits problems from.</div>
+        <div class="role-path-steps">
+          <span class="role-pill t1">Accelerator (GTM)</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t2">Proficiency (GTM path)</span>
+        </div>
+        <div class="role-skills-label">Priority clusters</div>
+        <ul class="role-skill-list">
+          <li>Customer AI Readiness Assessment</li>
+          <li>Outcome Framing</li>
+          <li>Change Co-Creation</li>
+          <li>Data Quality Judgment</li>
+          <li>Intent Writing (scoping &amp; solutioning)</li>
+        </ul>
+      </div>
+
+      <div class="role-card role-coach">
+        <div class="role-title">Agentic Coach</div>
+        <div class="role-desc">Embedded senior specialist accountable for Quantum Leap execution quality — coaches the team in real time, holds the non-negotiables.</div>
+        <div class="role-path-steps">
+          <span class="role-pill t1">Accelerator</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t2">Proficiency</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t3">Immersive</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t4">Coach Track</span>
+        </div>
+        <div class="role-skills-label">Priority clusters — all four tiers</div>
+        <ul class="role-skill-list">
+          <li>Intent Writing</li>
+          <li>Discernment</li>
+          <li>Output Validation</li>
+          <li>Human-AI Orchestration</li>
+          <li>Systems Thinking</li>
+          <li>Adaptive Learning</li>
+        </ul>
+      </div>
+
+    </div>
+
+      <div class="role-card">
+        <div class="role-title">People Leaders — FLM / SLM</div>
+        <div class="role-desc">PS managers who need to lead through the shift — personally fluent with AI tools, capable of coaching team adoption, and prepared to lead in an AI-native organization as team structures and expectations evolve.</div>
+        <div class="role-path-steps">
+          <span class="role-pill t1">Accelerator (Leaders)</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t2">Proficiency (Leader path)</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t4">AI-Native Leadership</span>
+        </div>
+        <div class="role-skills-label">Three-phase arc</div>
+        <ul class="role-skill-list">
+          <li>Phase 1 — AI fluency in their own role today</li>
+          <li>Phase 2 — human-AI partnership judgment and discernment</li>
+          <li>Phase 3 — leading AI-native teams, workforce transformation, ambiguity</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p style="font-size: 12px; color: var(--muted); margin-top: 4px;">* Project Leads are eligible for the Coach Track when designated as Player Coaches for their engagement.<br>* GTM path to Proficiency Track covers the pre-engagement clusters (Customer AI Readiness, Outcome Framing, Change Co-Creation) — not the full delivery arc.</p>
+  </section>
+
+  <!-- LEADERSHIP PROGRESSION -->
+  <section id="leadership">
+    <h2>Leadership Progression</h2>
+    <p class="section-sub">A dedicated arc for PS people managers — from AI fluency in their own role today, through confident human-AI partnership, to leading in an AI-native organization. Three phases that span the program tiers.</p>
+
+    <div class="callout">
+      <div class="callout-title">Design principle: personal fluency before coaching</div>
+      <p>Leaders cannot coach AI adoption on their teams if they haven't worked through it themselves. The progression is intentionally sequenced — Phase 1 builds personal confidence through practical application before Phase 2 shifts attention to partnering with AI, and Phase 3 only becomes meaningful once a leader has genuine fluency to draw on. Leaders who skip to Phase 3 without Phases 1 and 2 lead through AI-native change in the abstract. Leaders who work through the arc lead from experience.</p>
+    </div>
+
+    <div class="leader-progression">
+
+      <div class="leader-phase-row lp1">
+        <div class="leader-phase-left">
+          <div class="leader-phase-num">Phase 1 <span class="leader-tier-tag t1">Accelerator</span></div>
+          <div class="leader-phase-name">Apply AI in Their Role Today</div>
+          <div class="leader-phase-q">"How can AI help me lead more effectively today?"</div>
+        </div>
+        <div class="leader-phase-right">
+          <div>
+            <div class="leader-focus-label">Focus</div>
+            <ul class="leader-focus-list">
+              <li>Feedback</li>
+              <li>Coaching</li>
+              <li>Communication</li>
+              <li>Meetings</li>
+              <li>Decision making</li>
+            </ul>
+          </div>
+          <div>
+            <div class="leader-focus-label">Delivered through</div>
+            <ul class="leader-focus-list">
+              <li>7-week Accelerator leader track (Fridays)</li>
+              <li>AI-First Leaders session — virtual LC</li>
+              <li>Peer-led demos and AI in Action</li>
+              <li>Slackbot leader skill and prompts</li>
+            </ul>
+          </div>
+        </div>
+        <div class="leader-outcome">
+          <span class="leader-outcome-label">Outcome</span>Leaders apply AI to improve day-to-day leadership effectiveness and productivity — building confidence through real use before coaching it.
+        </div>
+      </div>
+
+      <div class="leader-phase-row lp2">
+        <div class="leader-phase-left">
+          <div class="leader-phase-num">Phase 2 <span class="leader-tier-tag t2">Proficiency</span></div>
+          <div class="leader-phase-name">Build Fluency and Confidence Working with AI</div>
+          <div class="leader-phase-q">"How do I effectively partner with AI?"</div>
+        </div>
+        <div class="leader-phase-right">
+          <div>
+            <div class="leader-focus-label">Focus</div>
+            <ul class="leader-focus-list">
+              <li>Tool selection</li>
+              <li>Human judgment</li>
+              <li>Discernment</li>
+              <li>Human + AI collaboration</li>
+              <li>Responsible use</li>
+            </ul>
+          </div>
+          <div>
+            <div class="leader-focus-label">Delivered through</div>
+            <ul class="leader-focus-list">
+              <li>Trailhead paths for leader-specific clusters</li>
+              <li>Slack always-on canvases — decision protocols for leaders</li>
+              <li>Yoodli — coaching conversations, team AI accountability discussions</li>
+              <li>Peer exchange with other leaders in the cohort</li>
+            </ul>
+          </div>
+        </div>
+        <div class="leader-outcome">
+          <span class="leader-outcome-label">Outcome</span>Leaders develop confidence, judgment, and practical fluency working alongside AI — and can coach their teams from a place of earned credibility, not just expectation-setting.
+        </div>
+      </div>
+
+      <div class="leader-phase-row lp3">
+        <div class="leader-phase-left">
+          <div class="leader-phase-num">Phase 3 <span class="leader-tier-tag t3">AI-Native Leadership</span></div>
+          <div class="leader-phase-name">Prepare for the Shift Toward AI-Native Ways of Working</div>
+          <div class="leader-phase-q">"How do I lead in an AI-native organization?"</div>
+        </div>
+        <div class="leader-phase-right">
+          <div>
+            <div class="leader-focus-label">Focus</div>
+            <ul class="leader-focus-list">
+              <li>AI-native delivery models</li>
+              <li>Team evolution</li>
+              <li>Performance management</li>
+              <li>Workforce transformation</li>
+              <li>Leadership through ambiguity</li>
+            </ul>
+          </div>
+          <div>
+            <div class="leader-focus-label">Relationship to the broader program</div>
+            <ul class="leader-focus-list">
+              <li>Builds on personal fluency from Phases 1–2</li>
+              <li>Connects to Immersive Cohort — leaders whose teams are in pilots get first access</li>
+              <li>Feeds the Agentic Coach track for leaders designated as Player Coaches</li>
+              <li>Format TBD — likely cohort-based with peer exchange and case study work</li>
+            </ul>
+          </div>
+        </div>
+        <div class="leader-outcome">
+          <span class="leader-outcome-label">Outcome</span>Leaders are prepared to guide teams through evolving ways of working, AI-native delivery expectations, and the workforce and structural changes that come with them.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BUILD SEQUENCE -->
+  <section id="build">
+    <h2>Build Sequence</h2>
+    <p class="section-sub">The recommended order for building out assets — by program tier, not skill cluster number. Highest leverage first.</p>
+
+    <div class="build-seq">
+
+      <div class="build-phase">
+        <div>
+          <div class="build-phase-label">Phase 1</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 3px;">Proficiency Slack canvases<br>All 11 clusters</div>
+        </div>
+        <div>
+          <div class="build-phase-desc">Always-on Slack reference canvases for all 11 clusters — the in-the-moment layer of the Proficiency Track. One canvas per cluster: concept, observable behaviors, decision protocol, and anti-patterns. These are what consultants reach for mid-engagement, not what they read in a course. Fast to build, immediately deployable, and they feed directly into the Trailhead and Yoodli layers above them.</div>
+          <div class="build-phase-clusters">
+            <span class="build-cluster-tag">Intent Writing</span>
+            <span class="build-cluster-tag">Discernment</span>
+            <span class="build-cluster-tag">Output Validation</span>
+            <span class="build-cluster-tag">Human-AI Orchestration</span>
+            <span class="build-cluster-tag">+ 7 more</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="build-phase">
+        <div>
+          <div class="build-phase-label">Phase 2</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 3px;">Proficiency Track<br>Priority 4 clusters</div>
+        </div>
+        <div>
+          <div class="build-phase-desc">Practice scenarios and analytic rubrics for the four highest-urgency clusters for pilot delivery. These are the skills where a gap causes the most direct delivery failure — and where the Agentic Coach needs coaching protocols before the next cohort launches.</div>
+          <div class="build-phase-clusters">
+            <span class="build-cluster-tag">Intent Writing</span>
+            <span class="build-cluster-tag">Discernment</span>
+            <span class="build-cluster-tag">Output Validation</span>
+            <span class="build-cluster-tag">Human-AI Orchestration</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="build-phase">
+        <div>
+          <div class="build-phase-label">Phase 3</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 3px;">Proficiency Track<br>Remaining clusters</div>
+        </div>
+        <div>
+          <div class="build-phase-desc">Extend the Proficiency Track to cover the remaining 7 clusters. These are still important — they fill out the full program and cover pre-engagement and human-factors skills — but they are not blocking the next pilot cohort launch.</div>
+          <div class="build-phase-clusters">
+            <span class="build-cluster-tag">Outcome Framing</span>
+            <span class="build-cluster-tag">Systems Thinking</span>
+            <span class="build-cluster-tag">Change Co-Creation</span>
+            <span class="build-cluster-tag">Data Quality Judgment</span>
+            <span class="build-cluster-tag">Customer AI Readiness</span>
+            <span class="build-cluster-tag">Creative Direction</span>
+            <span class="build-cluster-tag">Adaptive Learning</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="build-phase">
+        <div>
+          <div class="build-phase-label">Phase 4</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 3px;">Immersive Cohort<br>All clusters</div>
+        </div>
+        <div>
+          <div class="build-phase-desc">Live simulation builds — mock projects, pressure scenarios, co-creation workshops. These take longer to design and require live test conditions. They also depend on field artifacts from the active pilot cohort. Build in parallel with Phase 3 as pilot evidence comes in.</div>
+          <div class="build-phase-clusters">
+            <span class="build-cluster-tag">All 11 clusters</span>
+            <span class="build-cluster-tag">Field evidence required</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="build-phase">
+        <div>
+          <div class="build-phase-label">Phase 5</div>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 3px;">Coach Track<br>8 coachable clusters</div>
+        </div>
+        <div>
+          <div class="build-phase-desc">Coaching protocols, coach guides, and the anti-pattern playbook for the 8 clusters that reach the Coach Track. These build on everything above — a coaching protocol for Discernment, for example, requires the Proficiency rubrics and the Immersive scenarios to already exist. Build last; design the 2-day intensive in parallel with Phase 4.</div>
+          <div class="build-phase-clusters">
+            <span class="build-cluster-tag">Intent Writing</span>
+            <span class="build-cluster-tag">Discernment</span>
+            <span class="build-cluster-tag">Output Validation</span>
+            <span class="build-cluster-tag">Human-AI Orchestration</span>
+            <span class="build-cluster-tag">Outcome Framing</span>
+            <span class="build-cluster-tag">Systems Thinking</span>
+            <span class="build-cluster-tag">Change Co-Creation</span>
+            <span class="build-cluster-tag">Adaptive Learning</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Missing right now: Salesforce-specific field examples</div>
+      <p>Several clusters are externally well-evidenced but explicitly flag missing QL-specific examples (anonymized field artifacts, before/after prompts, real Salesforce delivery failures and recoveries). The active pilot cohort is generating these. Collecting them as the cohort runs — and routing them into the relevant cluster builds — is the highest-leverage content action right now.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    AI-Native Delivery Enablement · AI-Native Delivery · Proficiency Program Design<br>
+    Skill cluster research sourced from <code>AI_Native_Skills_Framework.md</code> · Generated 2026-05-26
+  </div>
+</footer>
+
+</body>
+</html>
