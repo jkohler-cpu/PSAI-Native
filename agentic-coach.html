@@ -255,6 +255,7 @@
     <a href="proficiency-overview.html">Program Design</a>
     <a href="proficiency-track.html">Proficiency Track</a>
     <a href="agentic-coach.html" class="current">Agentic Coach</a>
+    <a href="pl-guide.html">PL Guide</a>
   </div>
 </div>
 
@@ -490,8 +491,8 @@
             </tr>
             <tr>
               <td>Output Validation</td>
-              <td>Ad hoc spot-checks, different team members applying different quality standards</td>
-              <td>Point to the Output Validation canvas; ask for a documented accept / regenerate / escalate decision, not a vibe</td>
+              <td>Ad hoc spot-checks, different team members applying different quality standards; Feedback Loop queue swelling because rulings aren't documented</td>
+              <td>Ask for a four-ruling call: <strong>Approve · Refine · Reject · Escalate</strong> — not a vibe. Rejected intents enter a Feedback Loop state and age until re-reviewed; cycle time reflects the real alignment cost. If Rework Rate is above 25%, this is the skill that's broken.</td>
             </tr>
             <tr>
               <td>Outcome Framing</td>
@@ -500,16 +501,21 @@
             </tr>
             <tr>
               <td>Human-AI Orchestration</td>
-              <td>Consultant either over-delegates high-stakes decisions or over-supervises low-stakes tasks</td>
-              <td>"What happens if this agent output is wrong? How reversible is it?" — use that to calibrate supervision level</td>
+              <td>Consultant either over-delegates high-stakes decisions or over-supervises low-stakes tasks; Forward Buffer dropping because intent pipeline isn't being managed</td>
+              <td>"What happens if this agent output is wrong? How reversible is it?" — use that to calibrate supervision level. If Forward Buffer drops below 3 days, the orchestration judgment broke upstream — the cause is almost always an intent pipeline problem, not a build problem.</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div class="callout">
+        <div class="callout-title">Three failure modes to recognize before they compound</div>
+        <p><strong style="color:var(--text);">Intent Deficit</strong> — Forward Buffer drops below 3 days in the first week of Build. Agents stall; the IA scrambles. Intervene on intent quality before it becomes a schedule problem. <strong style="color:var(--text);">Review Lag</strong> — Rework Rate above 25% in the first 5 Build days. Agents are finishing faster than the IA can review; the IA is rushing rulings. Intervene on validation discipline now. <strong style="color:var(--text);">Scope-Creep</strong> — scope-change log not updated in 3+ days during active Build. Customer refinements are accumulating without classification. Intervene before the unclassified delta becomes a commercial problem.</p>
+      </div>
+
+      <div class="callout">
         <div class="callout-title">For the full skills framework</div>
-        <p>Skills mapped to every MVG phase — what to land with, what's load-bearing, what to carry forward — see the MVE canvas → <strong>Skills at Each Gate</strong>.</p>
+        <p>Skills mapped to every MVG phase — what to land with, what's load-bearing, what to carry forward — see the Flight Guide → <strong>Skills at Each Gate</strong>.</p>
       </div>
     </section>
 

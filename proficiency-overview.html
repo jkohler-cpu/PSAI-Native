@@ -315,6 +315,7 @@
     <a href="proficiency-overview.html" class="current">Program Design</a>
     <a href="proficiency-track.html">Proficiency Track</a>
     <a href="agentic-coach.html">Agentic Coach</a>
+    <a href="pl-guide.html">PL Guide</a>
   </div>
 </div>
 
@@ -564,6 +565,25 @@
     <h2>Skills Coverage Map</h2>
     <p class="section-sub">How each skill cluster deepens across the four tiers. All 11 clusters run through the full program — depth increases, not scope.</p>
 
+    <div class="callout">
+      <div class="callout-title">Official spine vs. supporting clusters — three tiers</div>
+      <p>The 11 skill clusters sit in three tiers relative to official Salesforce staffing skills. This matters for content steering: Tier 1 clusters anchor to skills PS already hires and develops against; Tier 2 clusters extend official skills with new descriptions written for AI-native delivery; Tier 3 clusters have no official match yet but provide the judgment context that makes the others meaningful.</p>
+      <table style="width:100%; font-size:13px; border-collapse:collapse; margin-top:12px;">
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 12px 8px 0; font-weight:700; color:var(--text); width:28%;">Tier 1 — Official Spine</td>
+          <td style="padding:8px 0; color:var(--muted);">Intent Writing → Prompt Engineering &nbsp;·&nbsp; Change Co-Creation → Facilitate Alignment &nbsp;·&nbsp; Data Quality Judgment → Data Quality Improvement &nbsp;·&nbsp; Adaptive Learning → Learning Mindset</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 12px 8px 0; font-weight:700; color:var(--blue);">Tier 2 — Extend</td>
+          <td style="padding:8px 0; color:var(--muted);">Discernment → AI Fluency &nbsp;·&nbsp; Output Validation → Agentforce Testing &nbsp;·&nbsp; Outcome Framing → Monitor and Measure Outcomes &nbsp;·&nbsp; Creative Direction &amp; Taste → Articulating What Good Looks Like</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px 8px 0; font-weight:700; color:var(--purple);">Tier 3 — Framework Originals</td>
+          <td style="padding:8px 0; color:var(--muted);">Human-AI Orchestration &nbsp;·&nbsp; Systems Thinking &nbsp;·&nbsp; Customer AI Readiness Assessment</td>
+        </tr>
+      </table>
+    </div>
+
     <div class="depth-legend">
       <div class="depth-legend-item"><span class="depth-i">Intro</span>&nbsp; First exposure, foundational concept</div>
       <div class="depth-legend-item"><span class="depth-p">Practiced</span>&nbsp; Structured scenarios, rubric-based judgment</div>
@@ -684,7 +704,7 @@
     <div class="role-grid">
 
       <div class="role-card">
-        <div class="role-title">Implementation Architect</div>
+        <div class="role-title">Implementation Architect (IA)</div>
         <div class="role-desc">Builds, configures, and deploys the agentic solutions — highest exposure to AI output quality and orchestration decisions in the flow of work.</div>
         <div class="role-path-steps">
           <span class="role-pill t1">Accelerator</span>
@@ -700,6 +720,15 @@
           <li>Human-AI Orchestration</li>
           <li>Data Quality Judgment</li>
           <li>Creative Direction &amp; Taste</li>
+        </ul>
+        <div class="role-skills-label" style="margin-top:12px;">IA-specific skill depth (from pilot mapping)</div>
+        <ul class="role-skill-list">
+          <li>Intent Statement Authorship — customer-confirmed, testable, bounded</li>
+          <li>LLM behavior patterns — knowing when to re-prompt vs. escalate</li>
+          <li>Data Literacy — assessing data fitness before agent scoping</li>
+          <li>Value Mapping — tracing epic to measurable customer outcome</li>
+          <li>Security &amp; Compliance review — what to own vs. specialist sign-off</li>
+          <li>Experimentation Mindset — structured hypothesis iteration, not trial-and-error</li>
         </ul>
       </div>
 
@@ -723,6 +752,36 @@
           <li>Change Co-Creation</li>
           <li>Human-AI Orchestration</li>
         </ul>
+      </div>
+
+      <div class="role-card">
+        <div class="role-title">Agent Orchestrator (AO)</div>
+        <div class="role-desc">Configures and operates the agent fleet — responsible for the technical execution layer of Build. Highest technical depth of the three pod roles; focuses on what the IA directs and what the PL governs.</div>
+        <div class="role-path-steps">
+          <span class="role-pill t1">Accelerator</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t2">Proficiency</span>
+          <span class="role-arrow">→</span>
+          <span class="role-pill t3">Immersive</span>
+        </div>
+        <div class="role-skills-label">Priority clusters</div>
+        <ul class="role-skill-list">
+          <li>Human-AI Orchestration (technical execution depth)</li>
+          <li>Output Validation</li>
+          <li>Discernment</li>
+          <li>Systems Thinking</li>
+        </ul>
+        <div class="role-skills-label" style="margin-top:12px;">AO-specific skill depth (from pilot mapping)</div>
+        <ul class="role-skill-list">
+          <li>Multi-Agent Workflow Design — routing tasks to the right agent</li>
+          <li>Fallbacks &amp; Escalations — handling agent failures gracefully</li>
+          <li>State Management — maintaining context across a multi-step build cycle</li>
+          <li>API Boundary Awareness — what the agent can and can't touch</li>
+          <li>Permission Scoping — right access, minimum required</li>
+          <li>Workflow Debugging — diagnosing where in the chain something broke</li>
+          <li>Latency &amp; Cost Awareness — recognizing when orchestration design is inefficient</li>
+        </ul>
+        <p style="font-size:12px; color:var(--muted); margin-top:10px; line-height:1.5;">Note: The AO path is not yet a built content track. These skill definitions come from the pilot mapping (Kristen Lappin) and inform the Immersive Cohort design. The Proficiency Track covers Human-AI Orchestration as a judgment skill (the dispatch decision); the technical configuration depth lives in the AO role path.</p>
       </div>
 
       <div class="role-card">
@@ -949,12 +1008,12 @@
           <div style="font-size: 12px; color: var(--muted); margin-top: 3px;">Proficiency Track<br>Priority 4 clusters</div>
         </div>
         <div>
-          <div class="build-phase-desc">Practice scenarios and analytic rubrics for the four highest-urgency clusters for pilot delivery. These are the skills where a gap causes the most direct delivery failure — and where the Agentic Coach needs coaching protocols before the next cohort launches.</div>
+          <div class="build-phase-desc">Practice scenarios and analytic rubrics for the four highest-urgency clusters for pilot delivery. These are the skills where a gap causes the most direct delivery failure — and where the Agentic Coach needs coaching protocols before the next cohort launches. <strong>Recommended starting sequence:</strong> (1) Intent Writing first — most source material, unlocks every other cluster. (2) Discernment second — best Cohort 1 source content, requires fictional scenario to exist. (3) Human-AI Orchestration third — build as a judgment canvas (dispatch decision + Forward Buffer), not a technical guide; AO technical depth goes in the AO role path. (4) Output Validation fourth — benefits from the fictional engagement and Discernment cluster being in place. Before building clusters 2–4, set up a field evidence capture mechanism for practitioner artifacts from the active pilot.</div>
           <div class="build-phase-clusters">
-            <span class="build-cluster-tag">Intent Writing</span>
-            <span class="build-cluster-tag">Discernment</span>
-            <span class="build-cluster-tag">Output Validation</span>
-            <span class="build-cluster-tag">Human-AI Orchestration</span>
+            <span class="build-cluster-tag">1 · Intent Writing</span>
+            <span class="build-cluster-tag">2 · Discernment</span>
+            <span class="build-cluster-tag">3 · Human-AI Orchestration</span>
+            <span class="build-cluster-tag">4 · Output Validation</span>
           </div>
         </div>
       </div>

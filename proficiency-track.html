@@ -246,6 +246,38 @@
     }
     .breaks-skill { font-weight: 700; color: var(--red); margin-right: 6px; }
 
+    /* PL aside */
+    .pl-aside {
+      background: rgba(124,58,237,0.04);
+      border: 1px solid rgba(124,58,237,0.15);
+      border-left: 3px solid var(--purple);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 24px;
+    }
+    .pl-aside-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.09em; color: var(--purple); margin-bottom: 8px;
+    }
+    .pl-aside p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
+    .pl-aside p:last-child { margin-bottom: 0; }
+
+    /* Intent rubric */
+    .rubric-section {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      background: rgba(22,163,74,0.03);
+      border-left: 3px solid var(--green);
+    }
+    .rubric-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.09em; color: var(--green); margin-bottom: 10px;
+    }
+    .rubric-table { width: 100%; font-size: 13px; border-collapse: collapse; margin-top: 8px; }
+    .rubric-table td { padding: 8px 0; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--muted); }
+    .rubric-table tr:last-child td { border-bottom: none; }
+    .rubric-table td:first-child { width: 36%; padding-right: 14px; }
+
     @media (max-width: 640px) {
       .arc-bar { grid-template-columns: 1fr 1fr; }
       .arc-bar-step:nth-child(5) { border-top: 1px solid var(--border); }
@@ -265,6 +297,7 @@
     <a href="proficiency-overview.html">Program Design</a>
     <a href="proficiency-track.html" class="current">Proficiency Track</a>
     <a href="agentic-coach.html">Agentic Coach</a>
+    <a href="pl-guide.html">PL Guide</a>
   </div>
 </div>
 
@@ -314,7 +347,7 @@
         <div class="arc-bar-hrs">~8 hrs</div>
       </div>
       <div class="arc-bar-step act3">
-        <div class="arc-bar-label">Act 3 · Phases 4–5+</div>
+        <div class="arc-bar-label">Act 3 · Phases 4–6+</div>
         <div class="arc-bar-name">With the Customer &amp; Beyond</div>
         <div class="arc-bar-hrs">~6 hrs</div>
       </div>
@@ -468,19 +501,32 @@
         <div class="act-gate-label">Takeoff — what learners carry into Act 2</div>
         <p>The success criteria and intent statements produced here are the quality standard every Phase 2 and 3 gate will be measured against. Act 2 opens at architecture sign-off — the last gate before delivery velocity kicks in. Any ambiguity in intent established in Act 1 compounds at that speed.</p>
       </div>
+
+      <div class="rubric-section">
+        <div class="rubric-label">Intent Quality Rubric — is this ready to hand to an agent?</div>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:10px; line-height:1.5;">A practitioner should be able to self-assess an intent statement against these criteria before it enters the Customer-Confirmed queue. Two labels surface in the Build Day Loop when an intent fails: <strong style="color:var(--text);">alignment-drag</strong> (the customer's real-world context wasn't fully surfaced in gap-closing) and <strong style="color:var(--text);">criteria-gap</strong> (the intent statement was ambiguous and the agent interpreted it too literally). The rubric below is how to prevent both.</p>
+        <table class="rubric-table">
+          <tr><td><strong style="color:var(--text);">Outcome-oriented</strong></td><td>Describes what changes for the customer — not what the agent should produce. Can you state what "done well" looks like before the build starts?</td></tr>
+          <tr><td><strong style="color:var(--text);">Testable</strong></td><td>Has explicit acceptance criteria a reviewer can use to judge the output without asking the author. If approval requires a conversation, the criteria aren't specific enough.</td></tr>
+          <tr><td><strong style="color:var(--text);">Bounded</strong></td><td>Completable and demo-able within a few Build days. "Implement billing module" is not an intent — "display invoice PDF," "process webhook," and "send overdue reminder" are.</td></tr>
+          <tr><td><strong style="color:var(--text);">Constrained</strong></td><td>Names the guardrails, known edge cases, and non-examples so the agent isn't left to interpret. Includes any platform-specific constraints (e.g. Person Accounts don't support standard sharing rules).</td></tr>
+          <tr><td><strong style="color:var(--text);">Customer-confirmed</strong></td><td>A named customer decision-maker has signed off in writing (logged in Engagement Memory as a Decision). An intent that hasn't been confirmed is a draft — it does not enter the Build queue.</td></tr>
+        </table>
+      </div>
+
     </div>
   </section>
 
   <!-- ACT 2 -->
   <section id="act2">
     <h2>Act 2: While You're Delivering</h2>
-    <p class="section-sub">Phases 2 and 3 — the skills that operate at delivery velocity, under the exact conditions where they most often fail.</p>
+    <p class="section-sub">Phases 2 and 3 — the skills that operate at design and build velocity, under the exact conditions where they most often fail.</p>
 
     <div class="act-card act2">
       <div class="act-header">
         <div class="act-num">2</div>
         <div class="act-header-text">
-          <div class="act-eyebrow">Act 2 · <span class="mvg-tag">Phase 2 · Phase 3</span> · Delivery path</div>
+          <div class="act-eyebrow">Act 2 · <span class="mvg-tag">Phase 2 · Phase 3</span> · Design + Build</div>
           <div class="act-title">While You're Delivering</div>
           <div class="act-purpose">This act deliberately introduces time pressure and volume — the conditions under which automation complacency, validation shortcuts, and orchestration failures actually happen. Architecture sign-off through the Build Day Loop: agents are doing real construction, and the consultant's job is direction, discernment, and continuous validation — not production.</div>
         </div>
@@ -514,17 +560,17 @@
 
       <div class="act-gate-section landing">
         <div class="act-gate-label">Landing — what this act prepares you to arrive with</div>
-        <p>Phase 2 opens with agents beginning real construction — generating solution designs, architecture artifacts, process maps. The consultant's role shifts from producer to director. Phase 3 is the highest-velocity phase: agents building continuously, the consultant orchestrating and validating across a fast-moving build cycle. This act is where automation complacency is most likely to take hold.</p>
+        <p>Phase 2 (Design) opens with agents beginning real construction — generating solution designs, architecture artifacts, process maps. The consultant's role shifts from producer to director. Phase 3 (Build) is the highest-velocity phase: agents building continuously, the consultant orchestrating and validating across a fast-moving build cycle. This act is where automation complacency is most likely to take hold.</p>
       </div>
 
       <div class="act-body" style="border-top: 1px solid var(--border);">
         <div class="act-col">
           <div class="act-col-label">Load-bearing skills at these gates</div>
           <table style="width:100%; font-size:13px; border-collapse:collapse;">
-            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600; width:38%;">Intent Writing</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Every agent-assisted design artifact starts with an intent statement. Quality here determines whether output is usable or requires complete regeneration.</td></tr>
-            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Output Validation</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Architecture sign-off is a formal gate. Validation must be structured and documented — not an impression formed on visual review. At Phase 3 velocity, it must be fast AND systematic.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600; width:38%;">Intent Writing</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Every agent-assisted design artifact starts with an intent statement. Quality here determines whether output is usable or requires complete regeneration. New sub-tasks surface throughout Build — intent is not set once at kickoff, it must be iteratively refined.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Output Validation</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Each artifact gets exactly one ruling: <strong>Approve · Refine · Reject · Escalate</strong>. Validation must be structured and documented — not an impression. At Phase 3 velocity, it must be fast AND systematic. Rejected intents enter a Feedback Loop state (they age rather than reset) — cycle time reflects the real cost of alignment work.</td></tr>
             <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Discernment</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Agent-generated architecture can look complete and be subtly wrong. Calibrated vigilance is required when output is polished — especially at delivery velocity.</td></tr>
-            <tr><td style="padding:7px 0; color:var(--text); font-weight:600;">Human-AI Orchestration</td><td style="padding:7px 0 7px 10px; color:var(--muted);">Build tasks vary enormously in how safely they can be delegated. Calibrated judgment must be maintained across the full build cycle, not just at the start.</td></tr>
+            <tr><td style="padding:7px 0; color:var(--text); font-weight:600;">Human-AI Orchestration</td><td style="padding:7px 0 7px 10px; color:var(--muted);">Build tasks vary enormously in how safely they can be delegated — to MeshMesh, Claude Code, or a human. The Forward Buffer (days of Customer-Confirmed work in queue) is the measurable signal for orchestration health. Healthy ≥ 3 days. If it drops below 3, the fleet is about to stall and the cause is almost always an intent pipeline problem, not a build problem.</td></tr>
           </table>
         </div>
         <div class="act-col">
@@ -554,39 +600,53 @@
         <div class="act-gate-label">Gate questions — the scenarios put learners here</div>
         <ul class="gate-q-list">
           <li><span class="gate-q-tag">Phase 2</span>Was the architecture reviewed against defined criteria — and did the customer actively participate in shaping it, or only approve it?</li>
-          <li><span class="gate-q-tag">Phase 3</span>Does the release plan reflect what was actually built — was each component validated against the intent and outcomes defined in Phases 0 and 1 — and have responsible AI risks been actively reviewed?</li>
+          <li><span class="gate-q-tag">Phase 3</span>Has build completion been accepted — was each component validated against the intent and outcomes defined in Phases 0 and 1 — and have responsible AI risks been actively reviewed?</li>
         </ul>
       </div>
 
       <div class="act-gate-section breaks">
-        <div class="act-gate-label">What breaks when these skills are skipped</div>
+        <div class="act-gate-label">What breaks when these skills are skipped — three named failure modes</div>
         <ul class="breaks-list">
-          <li><span class="breaks-skill">Discernment skipped</span>— agent-generated architecture looks complete and is subtly wrong; errors pass through at Phase 3 velocity and become expensive</li>
-          <li><span class="breaks-skill">Output Validation skipped</span>— validation is impressionistic; automation complacency sets in; consultant loses situation awareness of what was built and why</li>
-          <li><span class="breaks-skill">Human-AI Orchestration skipped</span>— build tasks delegated without calibration; consultant finds out at Phase 4 that critical components were handled incorrectly at Phase 3 speed</li>
-          <li><span class="breaks-skill">Intent Writing skipped mid-build</span>— new sub-tasks scoped imprecisely; intent is treated as set-once at kickoff rather than iteratively refined as the build evolves</li>
+          <li><span class="breaks-skill">Failure Mode: Intent Deficit</span>— Intent Writing pipeline stalls. Agents sit idle; the IA scrambles to gap-close; Build days slip and never recover. Early signal: Forward Buffer drops below 3 days in the first week of Build.</li>
+          <li><span class="breaks-skill">Failure Mode: Review Lag</span>— Output Validation and Discernment break down. Agents finish faster than the IA can review; the queue swells; the IA rushes calls; rework climbs past 25%; the PM mistakes a full board for good progress. Early signal: Rework Rate above 25% within the first 5 Build days.</li>
+          <li><span class="breaks-skill">Failure Mode: Scope-Creep</span>— Human-AI Orchestration and Change Co-Creation break down. Customer refinements accumulate without classification; by week 6 the solution is quietly different from what was scoped and nobody has a number for how different. Early signal: scope-change log not updated in 3+ days during active Build.</li>
+          <li><span class="breaks-skill">Intent Writing skipped mid-build</span>— new sub-tasks scoped imprecisely; intent treated as set-once at kickoff; criteria-gap labels accumulate in the Feedback Loop queue.</li>
         </ul>
       </div>
 
       <div class="act-gate-section takeoff">
         <div class="act-gate-label">Takeoff — what learners carry into Act 3</div>
-        <p>Architecture sign-off and the release plan are the last human-governed gates before the customer sees what was built in UAT. Act 3 opens at deployment — the point of irreversibility. Confirm before moving that UAT criteria trace back to the Phase 0 success criteria. If they don't, UAT will test the wrong things.</p>
+        <p>Architecture sign-off and build completion are the last human-governed gates before the customer sees what was built in UAT (Phase 4). Act 3 opens at testing — confirm before moving that UAT criteria trace back to the Phase 0 success criteria. If they don't, UAT will test the wrong things and the Phase 5 Go/No-Go will be made on incomplete evidence.</p>
       </div>
+
+      <div class="pl-aside">
+        <div class="pl-aside-label">Program Lead — Act 2 Operational Layer</div>
+        <p>PLs running Act 2 are managing throughput, not just validating quality. The six metrics to watch during Build: <strong style="color:var(--text);">Net Throughput</strong> (intents reaching Approved per day, target ≥ plan rate), <strong style="color:var(--text);">Rework Rate</strong> (Refine + Reject ÷ total rulings, healthy &lt;25%), <strong style="color:var(--text);">Escalation Rate</strong> (healthy ≤1/day), and <strong style="color:var(--text);">Forward Buffer</strong> (confirmed inventory ÷ rolling throughput, healthy ≥3 days) are checked daily. <strong style="color:var(--text);">Cycle Time</strong> and <strong style="color:var(--text);">Risk Buffer Burn</strong> are reviewed weekly.</p>
+        <p>Each metric has a named threshold trigger. A breach produces a mandatory action, not a discussion: Rework Rate above 35% for 3 days → stop Build, run IA quality intervention. Forward Buffer below 2 days → stop low-priority dispatch, surge gap-closing. These aren't judgment calls — they're pre-committed decisions in the SOW.</p>
+        <p>The dispatch decision (what goes to MeshMesh, Claude Code, or a human) is the PL's clearest Human-AI Orchestration moment in Build. On any given day, some items route to specialist agents, some to general build agents, and some are overridden to a human — a complex permission check, a sensitive integration, anything where agent failure would be expensive to catch late.</p>
+      </div>
+
+      <div class="act-gate-section" style="border-top: 1px solid var(--border); background: rgba(1,118,211,0.03); border-left: 3px solid var(--blue);">
+        <div class="act-gate-label" style="color: var(--blue);">Customer Collaboration Governance — an unresolved Act 2 question</div>
+        <p style="font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:8px;">When and how should customers participate directly in intent refinement using AI tools? This question surfaced in Cohort 1 and doesn't yet have a designed answer. The working framing: <em>"de-risk the delivery model before adding the customer as a variable"</em> — meaning the pod should have stable intent authoring practices before inviting customer co-authorship in the tool. The Adoption Architect role is the designated bridge for this transition, but what that looks like operationally is still being defined.</p>
+        <p style="font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:0;">A useful interim framing for practitioners (from Cohort 1): present intent statements to customers as <em>"jobs to be done"</em> — the outcome the customer is hiring the system to accomplish — rather than as technical specifications. This keeps the customer's review in their language while the IA manages the technical precision behind it. PubSec note: under CMMI Maturity Level 3, formal customer approval of scope and intent must be captured — the engagement memory Decision log is the right artifact for this; confirm with the customer's governance team before Phase 3 opens.</p>
+      </div>
+
     </div>
   </section>
 
   <!-- ACT 3 -->
   <section id="act3">
     <h2>Act 3: With the Customer &amp; Beyond</h2>
-    <p class="section-sub">Phases 4, 5, and reuse — where the consequences of earlier decisions become visible, and the learning compounds into the next engagement.</p>
+    <p class="section-sub">Phases 4, 5, 6, and reuse — where the consequences of earlier decisions become visible, and the learning compounds into the next engagement.</p>
 
     <div class="act-card act3">
       <div class="act-header">
         <div class="act-num">3</div>
         <div class="act-header-text">
-          <div class="act-eyebrow">Act 3 · <span class="mvg-tag">Phase 4 · Phase 5 · Reuse</span> · Delivery path</div>
+          <div class="act-eyebrow">Act 3 · <span class="mvg-tag">Phase 4 · Phase 5 · Phase 6 · Reuse</span> · Delivery path</div>
           <div class="act-title">With the Customer &amp; Beyond</div>
-          <div class="act-purpose">Deployment is the point of irreversibility. The consequences of every earlier decision become visible here — in UAT, in the Go/No-Go, in whether the customer can govern their own system after handoff. This act also establishes the habit of writing back to practice memory so what was learned on this engagement compounds into the next one.</div>
+          <div class="act-purpose">Testing and deployment are the point of irreversibility. The consequences of every earlier decision become visible here — in UAT, in the Go/No-Go, in whether the customer can govern their own system after handoff. This act also establishes the habit of writing back to practice memory so what was learned on this engagement compounds into the next one.</div>
         </div>
         <div class="act-hrs">~6 hrs</div>
       </div>
@@ -616,18 +676,18 @@
 
       <div class="act-gate-section landing">
         <div class="act-gate-label">Landing — what this act prepares you to arrive with</div>
-        <p>The Go/No-Go is the highest-stakes judgment call in the engagement lifecycle — and in an AI-native model, the consultant is forming that judgment about work that was largely agent-generated. Phase 5 is not a training event; it is a transfer of governance responsibility. A customer team that cannot make sound human-AI orchestration decisions after the consultant leaves is not ready for handoff, regardless of what the documentation says.</p>
+        <p>The Go/No-Go (Phase 5) is the highest-stakes judgment call in the engagement lifecycle — and in an AI-native model, the consultant is forming that judgment about work that was largely agent-generated. Phase 6 is not a training event; it is a transfer of governance responsibility. A customer team that cannot make sound human-AI orchestration decisions after the consultant leaves is not ready for handoff, regardless of what the documentation says.</p>
       </div>
 
       <div class="act-body" style="border-top: 1px solid var(--border);">
         <div class="act-col">
           <div class="act-col-label">Load-bearing skills at these gates</div>
           <table style="width:100%; font-size:13px; border-collapse:collapse;">
-            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600; width:38%;">Discernment</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 4: the Go/No-Go requires a clear, defensible judgment about whether the system is ready — not whether it looks ready or whether stakeholders are ready to move on.</td></tr>
-            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Output Validation</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 4: UAT criteria must trace to the Phase 0 success criteria. If they don't, UAT is testing the wrong things.</td></tr>
-            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Change Co-Creation</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 4–5: UAT with genuine customer participation reduces post-go-live adoption friction. Customers who co-created the solution drive their own adoption.</td></tr>
-            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Outcome Framing</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 5: the handoff package must include a measurement plan, not just system documentation. Adoption is only meaningful measured against Phase 0 outcomes.</td></tr>
-            <tr><td style="padding:7px 0; color:var(--text); font-weight:600;">Human-AI Orchestration</td><td style="padding:7px 0 7px 10px; color:var(--muted);">Phase 5: the customer's team now owns the orchestration decisions the consultant was making. That capability must be transferred deliberately.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600; width:38%;">Output Validation</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 4: UAT criteria must trace to the Phase 0 success criteria. If they don't, UAT is testing the wrong things.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Change Co-Creation</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 4: UAT with genuine customer participation reduces post-go-live adoption friction. Customers who co-created the solution drive their own adoption.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Discernment</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 5: the Go/No-Go requires a clear, defensible judgment about whether the system is ready — not whether it looks ready or whether stakeholders are ready to move on.</td></tr>
+            <tr><td style="padding:7px 0; border-bottom:1px solid var(--border); color:var(--text); font-weight:600;">Outcome Framing</td><td style="padding:7px 0 7px 10px; border-bottom:1px solid var(--border); color:var(--muted);">Phase 6: the handoff package must include a measurement plan, not just system documentation. Adoption is only meaningful measured against Phase 0 outcomes.</td></tr>
+            <tr><td style="padding:7px 0; color:var(--text); font-weight:600;">Human-AI Orchestration</td><td style="padding:7px 0 7px 10px; color:var(--muted);">Phase 6: the customer's team now owns the orchestration decisions the consultant was making. That capability must be transferred deliberately.</td></tr>
           </table>
         </div>
         <div class="act-col">
@@ -656,14 +716,16 @@
       <div class="act-gate-section gate-q">
         <div class="act-gate-label">Gate questions — the scenarios put learners here</div>
         <ul class="gate-q-list">
-          <li><span class="gate-q-tag">Phase 4</span>Can the consultant make a defensible, evidence-based case that this system is ready to deliver the outcomes defined in Phase 0 — and does the customer share that confidence?</li>
-          <li><span class="gate-q-tag">Phase 5</span>Does the customer have everything they need to measure outcomes, maintain the system, and govern their own human-AI orchestration decisions — without the consultant in the room?</li>
+          <li><span class="gate-q-tag">Phase 4</span>Has the customer actively driven UAT — and do the results give a defensible basis for the Go/No-Go decision in Phase 5?</li>
+          <li><span class="gate-q-tag">Phase 5</span>Can the consultant make a defensible, evidence-based case that this system is ready to deliver the outcomes defined in Phase 0 — and does the customer share that confidence?</li>
+          <li><span class="gate-q-tag">Phase 6</span>Does the customer have everything they need to measure outcomes, maintain the system, and govern their own human-AI orchestration decisions — without the consultant in the room?</li>
         </ul>
       </div>
 
       <div class="act-gate-section breaks">
         <div class="act-gate-label">What breaks when these skills are skipped</div>
         <ul class="breaks-list">
+          <li><span class="breaks-skill">Output Validation skipped at UAT</span>— UAT criteria don't trace to Phase 0 success criteria; UAT tests the wrong things; Phase 5 Go/No-Go is made on incomplete evidence</li>
           <li><span class="breaks-skill">Discernment skipped at Go/No-Go</span>— decision made on completion rate rather than outcome-readiness; known issues rationalized under deployment pressure</li>
           <li><span class="breaks-skill">Outcome Framing skipped at handoff</span>— handoff documents what was built but not how to measure whether it worked; customer cannot tell if the engagement succeeded</li>
           <li><span class="breaks-skill">Human-AI Orchestration not transferred</span>— customer cannot govern their own agents after the consultant leaves; adoption stalls or degrades without support</li>

@@ -15,6 +15,7 @@
     <a href="proficiency-overview.html">Program Design</a>
     <a href="proficiency-track.html">Proficiency Track</a>
     <a href="agentic-coach.html">Agentic Coach</a>
+    <a href="pl-guide.html">PL Guide</a>
   </div>
 </div>
 
@@ -106,7 +107,7 @@
         </div>
       </div>
 
-      <h3>The Six MVG Phases</h3>
+      <h3>The Seven MVG Phases</h3>
       <div class="phase-table">
         <div class="phase-row phase-header">
           <span>Phase</span><span>Name</span><span>Stage Gate</span>
@@ -118,16 +119,19 @@
           <span class="phase-num">1</span><span>Prepare</span><span>Customer-Approved Engagement Roadmap (Epics)</span>
         </div>
         <div class="phase-row">
-          <span class="phase-num">2</span><span>Design</span><span>Architecture Sign-Off</span>
+          <span class="phase-num">2</span><span>Design</span><span>Architecture Sign-Off & Approved Release Plan</span>
         </div>
         <div class="phase-row">
-          <span class="phase-num">3</span><span>Deliver</span><span>Approved Release Plan</span>
+          <span class="phase-num">3</span><span>Build</span><span>Build Completion & Acceptance</span>
         </div>
         <div class="phase-row">
-          <span class="phase-num">4</span><span>Deploy</span><span>UAT Sign-Off + Formal Go/No-Go</span>
+          <span class="phase-num">4</span><span>Test</span><span>UAT Sign-Off</span>
         </div>
         <div class="phase-row">
-          <span class="phase-num">5</span><span>Adopt/Consume</span><span>Release Notes + Customer-Accepted Handoff Package</span>
+          <span class="phase-num">5</span><span>Deploy</span><span>Formal Go/No-Go Decision & Release Notes</span>
+        </div>
+        <div class="phase-row">
+          <span class="phase-num">6</span><span>Adopt/Consume</span><span>Customer Accepted Solution Handoff Package</span>
         </div>
       </div>
     </section>
@@ -145,6 +149,11 @@
       </div>
 
       <h3>The Skill Demand Across the Lifecycle</h3>
+
+      <div class="callout">
+        <div class="callout-title">Three tiers of skill — official spine vs. supporting clusters</div>
+        <p>Not all 11 clusters map to official Salesforce staffing skills. That distinction matters for how your team steers content development. <strong style="color:var(--text);">Tier 1 — Official Spine:</strong> Intent Writing (→ Prompt Engineering), Change Co-Creation (→ Facilitate Alignment), Data Quality Judgment (→ Data Quality Improvement), Adaptive Learning (→ Learning Mindset) — clean match to staffed skills; these are the organizational anchor. <strong style="color:var(--text);">Tier 2 — Extend:</strong> Discernment (→ AI Fluency), Output Validation (→ Agentforce Testing), Outcome Framing (→ Monitor and Measure Outcomes), Creative Direction &amp; Taste (→ Articulating What Good Looks Like) — partial matches with new descriptions written to close the gap between what the official skill covers and what AI-native delivery requires. <strong style="color:var(--text);">Tier 3 — Framework Originals:</strong> Human-AI Orchestration, Systems Thinking, Customer AI Readiness Assessment — no current official match; these provide the context that makes the Tier 1 and Tier 2 skills meaningful under agentic delivery conditions. All three tiers represent real skill demands at these gates — the distinction is how they anchor to the official PS skills framework, not whether they matter.</p>
+      </div>
 
       <div class="spine-table-wrap">
         <table class="spine-table">
@@ -183,18 +192,24 @@
             </tr>
             <tr>
               <td class="phase-cell">Phase 3</td>
-              <td>Approved Release Plan</td>
+              <td>Build Completion & Acceptance</td>
               <td><strong>Discernment</strong> · Output Validation · Human-AI Orchestration</td>
               <td>Automation complacency sets in; validation becomes ad hoc; consultant loses situation awareness of what was built and why</td>
             </tr>
             <tr>
               <td class="phase-cell">Phase 4</td>
-              <td>UAT Sign-Off + Go/No-Go</td>
+              <td>UAT Sign-Off</td>
+              <td><strong>Discernment</strong> · Output Validation · Change Co-Creation</td>
+              <td>UAT criteria don't trace back to Phase 0 success criteria; UAT tests the wrong things; Go/No-Go is made on incomplete evidence</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">Phase 5</td>
+              <td>Formal Go/No-Go & Release Notes</td>
               <td><strong>Discernment</strong> · Output Validation · Change Co-Creation</td>
               <td>Go/No-Go decided on completion rate rather than outcome-readiness; known issues rationalized under deployment pressure</td>
             </tr>
             <tr>
-              <td class="phase-cell">Phase 5</td>
+              <td class="phase-cell">Phase 6</td>
               <td>Customer-Accepted Handoff</td>
               <td><strong>Outcome Framing</strong> · Human-AI Orchestration · Change Co-Creation</td>
               <td>Handoff documents what was built but not how to measure whether it worked; customer cannot govern their own orchestration decisions</td>
@@ -233,7 +248,7 @@
         </div>
       </div>
 
-      <p>These are not knowledge gaps — they are habits under pressure. Knowing what discernment is does not make a consultant apply it at Phase 3 velocity when a customer is in the room and the release plan is due. The gate cards below are designed to interrupt that pattern at each stop.</p>
+      <p>These are not knowledge gaps — they are habits under pressure. Knowing what discernment is does not make a consultant apply it at Phase 3 (Build) velocity when a customer is in the room and the build cycle is running. The gate cards below are designed to interrupt that pattern at each stop.</p>
     </section>
 
     <!-- GATE BY GATE -->
@@ -378,8 +393,8 @@
       <div class="gate-card">
         <div class="gate-header">
           <span class="gate-tag">Phase 3</span>
-          <span class="gate-title">Deliver</span>
-          <span class="gate-gate">Gate: Approved Release Plan</span>
+          <span class="gate-title">Build</span>
+          <span class="gate-gate">Gate: Build Completion & Acceptance</span>
         </div>
         <div class="gate-body">
           <div class="gate-section landing">
@@ -414,8 +429,43 @@
       <div class="gate-card">
         <div class="gate-header">
           <span class="gate-tag">Phase 4</span>
+          <span class="gate-title">Test</span>
+          <span class="gate-gate">Gate: UAT Sign-Off</span>
+        </div>
+        <div class="gate-body">
+          <div class="gate-section landing">
+            <div class="gate-section-label">Landing — What to Arrive With</div>
+            <p>UAT is customer-owned validation — the pod supports, the customer drives. Before this phase opens, confirm that UAT criteria trace directly back to the success criteria defined in Phase 0. If they don't, UAT will test the wrong things and the Go/No-Go decision in Phase 5 will be made on incomplete evidence.</p>
+          </div>
+          <div class="gate-section">
+            <div class="gate-section-label">Skills Load-Bearing at This Gate</div>
+            <table class="skills-table">
+              <tr><td><strong>Output Validation</strong></td><td>UAT criteria must trace to the Phase 0 success criteria. If they don't, UAT is testing the wrong things.</td></tr>
+              <tr><td><strong>Change Co-Creation</strong></td><td>UAT with genuine customer participation reduces post-go-live adoption friction significantly.</td></tr>
+              <tr><td><strong>Discernment</strong></td><td>Defects surface here — some will be rationalized under schedule pressure. Calibrated judgment about what is and isn't acceptable is required.</td></tr>
+            </table>
+          </div>
+          <div class="gate-section gate-q">
+            <div class="gate-section-label">Gate Question</div>
+            <p>Has the customer actively driven UAT — and do the results give a defensible basis for a Go/No-Go decision in Phase 5?</p>
+          </div>
+          <div class="gate-section ql-moments">
+            <div class="gate-section-label">QL Playbook — What's Happening Here</div>
+            <p><strong>M11 UAT Cycle:</strong> customer-owned validation — the pod supports, the customer drives. Defects classify and route back through the Build Day Loop. <strong>M12 UAT Sign-off:</strong> the formal gate that closes Phase 4. The pilot tracking tool (Alex Killough) surfaces time-in-phase data and phase status at this gate — the consultant's judgment must integrate that data, not just the completion checklist.</p>
+          </div>
+          <div class="gate-section takeoff">
+            <div class="gate-section-label">Takeoff — Carry This Into Phase 5</div>
+            <p>UAT Sign-off is the evidence the Go/No-Go decision is made against. Before Phase 5 opens, confirm the UAT results are documented and traceable to Phase 0 success criteria — not just a sign-off form.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 5 -->
+      <div class="gate-card">
+        <div class="gate-header">
+          <span class="gate-tag">Phase 5</span>
           <span class="gate-title">Deploy</span>
-          <span class="gate-gate">Gate: UAT Sign-Off + Formal Go/No-Go</span>
+          <span class="gate-gate">Gate: Formal Go/No-Go Decision & Release Notes</span>
         </div>
         <div class="gate-body">
           <div class="gate-section landing">
@@ -426,8 +476,8 @@
             <div class="gate-section-label">Skills Load-Bearing at This Gate</div>
             <table class="skills-table">
               <tr><td><strong>Discernment</strong></td><td>The Go/No-Go requires a clear, defensible judgment about whether the system is ready — not whether it looks ready or whether stakeholders are ready to move on.</td></tr>
-              <tr><td><strong>Output Validation</strong></td><td>UAT criteria must trace to the Phase 0 success criteria. If they don't, UAT is testing the wrong things.</td></tr>
-              <tr><td><strong>Change Co-Creation</strong></td><td>UAT with genuine customer participation reduces post-go-live adoption friction significantly.</td></tr>
+              <tr><td><strong>Output Validation</strong></td><td>The documented Go decision must be grounded in UAT evidence, not stakeholder momentum.</td></tr>
+              <tr><td><strong>Change Co-Creation</strong></td><td>Customers who participated in UAT are better prepared to own what goes live. Reinforce that ownership at the Go/No-Go.</td></tr>
             </table>
           </div>
           <div class="gate-section gate-q">
@@ -436,33 +486,33 @@
           </div>
           <div class="gate-section ql-moments">
             <div class="gate-section-label">QL Playbook — What's Happening Here</div>
-            <p><strong>M11 UAT Cycle:</strong> customer-owned validation — the pod supports, the customer drives. Defects classify and route back through the Build Day Loop. <strong>M12 UAT Sign-off:</strong> the formal gate that closes Phase 4. The Go/No-Go is a PL judgment call made against the UAT Sign-off artifact; it is the highest-stakes human decision in the engagement lifecycle. The pilot tracking tool (Alex Killough) surfaces time-in-phase data and phase status at this gate — the consultant's judgment must integrate that data, not just the completion checklist.</p>
+            <p><strong>M13 Go-Live:</strong> production deploy following the documented Go decision. Release Notes are published at this gate. The Go/No-Go is a PL judgment call made against the UAT Sign-off artifact; it is the highest-stakes human decision in the engagement lifecycle.</p>
           </div>
           <div class="gate-section takeoff">
-            <div class="gate-section-label">Takeoff — Carry This Into Phase 5</div>
-            <p>Go-live is not the end. In an AI-native model, agents can continue optimizing in production. Before Phase 5 opens, confirm that the customer team knows what decisions they are now responsible for making — and that they have the capability to make them.</p>
+            <div class="gate-section-label">Takeoff — Carry This Into Phase 6</div>
+            <p>Go-live is not the end. In an AI-native model, agents can continue optimizing in production. Before Phase 6 opens, confirm that the customer team knows what decisions they are now responsible for making — and that they have the capability to make them.</p>
           </div>
         </div>
       </div>
 
-      <!-- PHASE 5 -->
+      <!-- PHASE 6 -->
       <div class="gate-card">
         <div class="gate-header">
-          <span class="gate-tag">Phase 5</span>
+          <span class="gate-tag">Phase 6</span>
           <span class="gate-title">Adopt/Consume</span>
-          <span class="gate-gate">Gate: Release Notes + Customer-Accepted Handoff Package</span>
+          <span class="gate-gate">Gate: Customer Accepted Solution Handoff Package</span>
         </div>
         <div class="gate-body">
           <div class="gate-section landing">
             <div class="gate-section-label">Landing — What to Arrive With</div>
-            <p>Phase 5 in an AI-native model is a transfer of governance responsibility, not a training event. A customer team that cannot make sound human-AI orchestration decisions after the consultant leaves is not ready for handoff, regardless of what the documentation says.</p>
+            <p>Phase 6 in an AI-native model is a transfer of governance responsibility, not a training event. A customer team that cannot make sound human-AI orchestration decisions after the consultant leaves is not ready for handoff, regardless of what the documentation says.</p>
           </div>
           <div class="gate-section">
             <div class="gate-section-label">Skills Load-Bearing at This Gate</div>
             <table class="skills-table">
               <tr><td><strong>Outcome Framing</strong></td><td>Adoption is only meaningful measured against the outcomes defined in Phase 0. The handoff package must include a measurement plan, not just system documentation.</td></tr>
               <tr><td><strong>Human-AI Orchestration</strong></td><td>The customer's team now owns the orchestration decisions the consultant was making. That capability must be transferred deliberately.</td></tr>
-              <tr><td><strong>Change Co-Creation</strong></td><td>Customers who co-created the solution drive their own adoption. Phase 5 reinforces that ownership.</td></tr>
+              <tr><td><strong>Change Co-Creation</strong></td><td>Customers who co-created the solution drive their own adoption. Phase 6 reinforces that ownership.</td></tr>
             </table>
           </div>
           <div class="gate-section gate-q">
@@ -471,7 +521,7 @@
           </div>
           <div class="gate-section ql-moments">
             <div class="gate-section-label">QL Playbook — What's Happening Here</div>
-            <p><strong>M13 Go-Live:</strong> production deploy. <strong>M14 Hypercare:</strong> post-go-live support period. <strong>M15 Retro:</strong> structured retrospective — the QL playbook requires write-back to Engagement Memory; every engagement contributes to Practice Memory, consumption-only is a methodology violation. <strong>M16 Seal Engagement:</strong> Engagement Memory becomes immutable; the engagement formally closes. The Intelligence Layer Loop (M20) runs alongside — patterns from this engagement feed directly into prompt refinements and reusable assets for the next team. The exit interview (Stephanie's pilot mechanism) runs at Phase 5 close: 20 minutes with the PM and one senior consultant.</p>
+            <p><strong>M14 Hypercare:</strong> post-go-live support period. <strong>M15 Retro:</strong> structured retrospective — the QL playbook requires write-back to Engagement Memory; every engagement contributes to Practice Memory, consumption-only is a methodology violation. <strong>M16 Seal Engagement:</strong> Engagement Memory becomes immutable; the engagement formally closes. The Intelligence Layer Loop (M20) runs alongside — patterns from this engagement feed directly into prompt refinements and reusable assets for the next team. The exit interview (Stephanie's pilot mechanism) runs at Phase 6 close: 20 minutes with the PM and one senior consultant.</p>
           </div>
           <div class="gate-section takeoff">
             <div class="gate-section-label">Takeoff — Carry This Beyond the Engagement</div>
@@ -510,7 +560,7 @@
             <span class="mechanism-name">Gate-by-Gate Skills & Behaviors</span>
             <span class="mechanism-owner">Slack Canvas</span>
           </div>
-          <p>The core deliverable. One card per phase (Pre-Flight through Phase 5), covering: what to land with, the skills load-bearing at that gate, the gate question, and what to carry forward. Not a checklist of activities — a judgment prompt for the moments right before and after each formal gate decision. Distinct from Rohit's playbook because it names the human capability layer at each stop, not the operational steps.</p>
+          <p>The core deliverable. One card per phase (Pre-Flight through Phase 6), covering: what to land with, the skills load-bearing at that gate, the gate question, and what to carry forward. Not a checklist of activities — a judgment prompt for the moments right before and after each formal gate decision. Distinct from Rohit's playbook because it names the human capability layer at each stop, not the operational steps.</p>
           <div class="mechanism-feeds">Priority job aids — Intent Writing and Output Validation canvases — attach to this as phase-specific references</div>
         </div>
 
@@ -599,7 +649,7 @@
             <span class="mechanism-name">Exit Interview — At Project Close</span>
             <span class="mechanism-owner">Stephanie Flasch / Delivery Governance</span>
           </div>
-          <p>20-minute structured conversation with the PM and one senior consultant per project at Phase 5 handoff. Three questions: What was hardest? What would you have wanted earlier? What did you invent that should be captured? The richest source for full program design.</p>
+          <p>20-minute structured conversation with the PM and one senior consultant per project at Phase 6 handoff. Three questions: What was hardest? What would you have wanted earlier? What did you invent that should be captured? The richest source for full program design.</p>
           <div class="mechanism-feeds">Feeds: What the experience arc of the Proficiency Track should feel like</div>
         </div>
 

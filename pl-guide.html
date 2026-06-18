@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Program Lead Guide — AI-Native Delivery</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    /* Metric cards */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .metric-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .metric-target {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 6px;
+    }
+    .metric-target.green { color: var(--green); }
+    .metric-target.blue  { color: var(--blue); }
+    .metric-target.gold  { color: var(--gold); }
+    .metric-target.red   { color: var(--red); }
+    .metric-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Failure mode cards */
+    .failure-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 10px;
+    }
+    .failure-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 4px;
+    }
+    .failure-def {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      line-height: 1.55;
+    }
+    .failure-signal-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .failure-signal {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 12px;
+      border-left: 2px solid var(--gold);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .failure-action-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+    .failure-action {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 12px;
+      border-left: 2px solid var(--green);
+      line-height: 1.5;
+    }
+
+    /* Ruling cards */
+    .ruling-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .ruling-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .ruling-name {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .ruling-card.approve .ruling-name { color: var(--green); }
+    .ruling-card.refine  .ruling-name { color: var(--blue); }
+    .ruling-card.reject  .ruling-name { color: var(--red); }
+    .ruling-card.escalate .ruling-name { color: var(--gold); }
+    .ruling-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Phase row */
+    .pl-phase-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: var(--card);
+    }
+    .pl-phase-wrap {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .pl-phase-table thead tr { background: var(--bg); }
+    .pl-phase-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .pl-phase-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .pl-phase-table tbody tr:last-child td { border-bottom: none; }
+    .pl-phase-table td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+
+    /* Decision flow */
+    .decision-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 10px 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .decision-signal {
+      background: rgba(245,158,11,0.05);
+      border-right: 1px solid var(--border);
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      flex: 1;
+      line-height: 1.5;
+    }
+    .decision-signal strong { color: var(--gold); }
+    .decision-action {
+      background: var(--card);
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      flex: 1;
+      line-height: 1.5;
+    }
+
+    /* Transition map */
+    .transition-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .transition-wrap {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .transition-table thead tr { background: var(--bg); }
+    .transition-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .transition-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .transition-table tbody tr:last-child td { border-bottom: none; }
+    .transition-table td:first-child { color: var(--text); font-weight: 600; width: 22%; }
+    .transition-table td:nth-child(2) { width: 20%; }
+    .transition-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .t-replace { background: rgba(220,38,38,0.08); color: var(--red); border: 1px solid rgba(220,38,38,0.2); }
+    .t-elevate  { background: rgba(1,118,211,0.08); color: var(--blue); border: 1px solid rgba(1,118,211,0.2); }
+    .t-new      { background: rgba(124,58,237,0.08); color: var(--purple); border: 1px solid rgba(124,58,237,0.2); }
+    .t-gone     { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+
+    /* Skills grid */
+    .pl-skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .pl-skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .pl-skill-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .pl-skill-floor-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--blue);
+      margin-bottom: 4px;
+    }
+    .pl-skill-dest-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--green);
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+    .pl-skill-text {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Rebaseline memo */
+    .memo-option {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin-bottom: 10px;
+    }
+    .memo-option-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .memo-option.opt-a .memo-option-label { color: var(--green); }
+    .memo-option.opt-b .memo-option-label { color: var(--blue); }
+    .memo-option.opt-c .memo-option-label { color: var(--red); }
+    .memo-option p { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 0; }
+
+    @media (max-width: 640px) {
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+      .ruling-grid { grid-template-columns: 1fr; }
+      .pl-skills-grid { grid-template-columns: 1fr; }
+      .decision-row { flex-direction: column; }
+      .decision-signal { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="site-nav">
+  <div class="site-nav-inner">
+    <span class="site-nav-label">AI-Native Delivery Enablement</span>
+    <a href="index.html">Flight Guide</a>
+    <a href="proficiency-overview.html">Program Design</a>
+    <a href="proficiency-track.html">Proficiency Track</a>
+    <a href="agentic-coach.html">Agentic Coach</a>
+    <a href="pl-guide.html" class="current">PL Guide</a>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-label">Professional Services · Quantum Leap · Program Lead</div>
+    <h1>Program Lead Guide<br>AI-Native Delivery</h1>
+    <p class="header-sub">Your working reference for running a Quantum Leap engagement. Not a restatement of the role definition — the operational mechanics, daily metrics, failure modes, and judgment calls you need once the build cycle starts.</p>
+    <div class="header-meta">Last Updated: June 2026 &nbsp;·&nbsp; Contact: Josh Kohler, Learning Experience Design &nbsp;·&nbsp; Sources: PL Playbook, ANZ Skills Framework (Dennis Thong)</div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#role-shift">The Role Shift</a>
+    <a href="#metrics">Build Metrics</a>
+    <a href="#failure-modes">Failure Modes</a>
+    <a href="#validation">Validation Rulings</a>
+    <a href="#phase-guide">Phase Guide</a>
+    <a href="#rebaseline">Re-Baseline</a>
+    <a href="#skills">Skills Framework</a>
+    <a href="#transition">Old → New</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- THE ROLE SHIFT -->
+  <section id="role-shift">
+    <h2>The Role Shift</h2>
+    <p class="section-sub">The job description changed. Everything about the old model that was valuable still matters — what changes is how that value is expressed.</p>
+
+    <div class="callout">
+      <div class="callout-title">From managing to orchestrating</div>
+      <p>The shift is from <strong style="color:var(--text);">managing</strong> (schedules, status, RAID, resources) to <strong style="color:var(--text);">orchestrating</strong> (directing humans + agents + customers toward outcomes, making judgment calls at pace). The admin work PMs do today gets eliminated by agents — SAIL already drafts status indicators, timecards, and risk scores; governance agents handle what's coming next. What remains is the hardest part: commercial judgment, customer trust, and delivery discipline at pace.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="col-card">
+        <div class="col-label">Eliminated by agents</div>
+        <ul>
+          <li>Status reporting → Net Throughput metrics (automated)</li>
+          <li>RAID log management → Decision track + Pipeline Gate</li>
+          <li>Schedule tracking → Flow metrics (Forward Buffer, Cycle Time)</li>
+          <li>Resource allocation admin → Fixed pods, no staffing churn</li>
+          <li>Meeting minutes → Engagement Memory + transcripts</li>
+          <li>Governance pack preparation → Automated signals &amp; gates</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <div class="col-label">What remains — the orchestrator role</div>
+        <ul>
+          <li><strong style="color:var(--text);">Commercial ownership</strong> — feasibility math, SOW economics, margin accountability</li>
+          <li><strong style="color:var(--text);">Customer partnership at pace</strong> — daily engagement, negotiation, enforcing obligations</li>
+          <li><strong style="color:var(--text);">Delivery orchestration</strong> — directing humans + agents toward outcomes, diagnosing blockers</li>
+          <li><strong style="color:var(--text);">Real-time decision-making</strong> — scope classification, risk calls, no deferral</li>
+          <li><strong style="color:var(--text);">Stakeholder credibility</strong> — executive presence, hard conversations, trusted by customer leadership</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">What a great Program Lead looks like</div>
+      <p><em>You're running a compressed engagement. You partnered with the DL on feasibility during deal review — stress-testing whether this pod can deliver this SOW — working the constraint, not complaining about it. You're 12 days in, facilitating your 12th daily demo. A scope variance surfaces mid-session — contentious, commercially significant. You negotiate it with the customer in the room, land an agreement, no deferral to a SteerCo that's weeks away. Your throughput metrics are green. The DL hasn't had to intervene once. The seller is already asking if you can take the next deal.</em></p>
+      <p style="margin-top:10px; color:var(--text); font-size:14px; font-weight:600;">This is the role worth aspiring to. Senior, commercial, high-trust, high-impact.</p>
+    </div>
+  </section>
+
+  <!-- BUILD METRICS -->
+  <section id="metrics">
+    <h2>The Six Build Metrics</h2>
+    <p class="section-sub">These six metrics are checked on a defined cadence. A breach triggers a pre-committed action — not a discussion.</p>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-name">Net Throughput</div>
+        <div class="metric-target green">Daily — target ≥ plan rate</div>
+        <div class="metric-desc">Number of Intent Statements reaching Approved status per day. If this falls below plan rate for two consecutive days, investigate intent quality before adjusting scope.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Rework Rate</div>
+        <div class="metric-target green">Daily — healthy &lt;25%</div>
+        <div class="metric-desc">Refine + Reject rulings ÷ total rulings. Above 25% for 3 days → stop Build, run IA quality intervention. Above 35% immediately → stop Build.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Escalation Rate</div>
+        <div class="metric-target green">Daily — healthy ≤1/day</div>
+        <div class="metric-desc">Escalate rulings per day. Consistent escalation above 1/day signals either criteria-gap in the intent statements or a genuine scope boundary issue that needs PL attention.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Forward Buffer</div>
+        <div class="metric-target blue">Daily — healthy ≥3 days</div>
+        <div class="metric-desc">Customer-Confirmed inventory ÷ rolling throughput. If it drops below 3 days, the fleet is about to stall. Cause: almost always an intent pipeline problem, not a build problem. Below 2 days → stop low-priority dispatch, surge gap-closing.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Cycle Time</div>
+        <div class="metric-target gold">Weekly review</div>
+        <div class="metric-desc">Average time from intent creation to Approved ruling. Trend matters more than absolute number. Rising cycle time under constant throughput means validation is becoming the constraint.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Risk Buffer Burn</div>
+        <div class="metric-target gold">Weekly review</div>
+        <div class="metric-desc">Rate at which contingency buffer is being consumed. On a fixed-price model, this is the commercial health indicator. Accelerating burn signals a scope or intent problem that hasn't been classified yet.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Threshold triggers are pre-committed decisions</div>
+      <p>Each threshold trigger above is a pre-committed decision in the SOW — not a judgment call made in the moment. When a threshold is breached, the action is mandatory. The value of pre-commitment is that it removes the in-the-moment pressure to rationalize: <em>"It's probably fine, let's see how tomorrow goes."</em> It isn't fine. The trigger fires because the signal is real.</p>
+    </div>
+  </section>
+
+  <!-- FAILURE MODES -->
+  <section id="failure-modes">
+    <h2>The Three Failure Modes</h2>
+    <p class="section-sub">Named failure modes give the team a shared vocabulary for diagnosing problems before they compound. Each has a distinct early signal — catch it there, not at week 6.</p>
+
+    <div class="failure-card">
+      <div class="failure-name">Intent Deficit</div>
+      <div class="failure-def">Intent Writing pipeline stalls. Agents sit idle; the IA scrambles to gap-close; Build days slip and never recover. Root cause: gap-closing sessions produced epics that were approved but not decomposed into agent-ready intents before Build Day 1.</div>
+      <div class="failure-signal-label">Early signal</div>
+      <div class="failure-signal">Forward Buffer drops below 3 days in the first week of Build. This is the canary — don't wait for it to hit 0.</div>
+      <div class="failure-action-label">PL action</div>
+      <div class="failure-action">Stop low-priority dispatch immediately. Surge gap-closing. Review whether the Phase 1 epics were specific enough to generate intent — if not, re-run gap-closing for the affected epics with the customer before resuming full build velocity.</div>
+    </div>
+
+    <div class="failure-card">
+      <div class="failure-name">Review Lag</div>
+      <div class="failure-def">Output Validation and Discernment break down. Agents finish faster than the IA can review; the queue swells; the IA rushes calls; rework climbs past 25%; the PL mistakes a full board for good progress. Root cause: the IA's review capacity was not sized to match the agent fleet's output rate.</div>
+      <div class="failure-signal-label">Early signal</div>
+      <div class="failure-signal">Rework Rate above 25% within the first 5 Build days — the IA is approving things they're not sure about.</div>
+      <div class="failure-action-label">PL action</div>
+      <div class="failure-action">Stop Build, run IA quality intervention. Two options: reduce agent dispatch rate to match IA review capacity, or add a second IA reviewer for the validation queue. Don't add more agents — the constraint is validation speed, not production rate.</div>
+    </div>
+
+    <div class="failure-card">
+      <div class="failure-name">Scope-Creep</div>
+      <div class="failure-def">Human-AI Orchestration and Change Co-Creation break down. Customer refinements accumulate without classification; by week 6 the solution is quietly different from what was scoped and nobody has a number for how different. Root cause: daily demo feedback was absorbed as build direction rather than classified as either intent refinement (incorporate) or scope expansion (log and route).</div>
+      <div class="failure-signal-label">Early signal</div>
+      <div class="failure-signal">Scope-change log not updated in 3+ days during active Build.</div>
+      <div class="failure-action-label">PL action</div>
+      <div class="failure-action">Classify every outstanding customer input against the Phase 1 scope boundary: refinement of agreed work (continue) or new work requiring variation (log, surface to DL, don't build without a decision). Run a scope reconciliation with the customer before the next Build day. This is a commercial call, not a delivery call — own it.</div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Diagnostic: alignment-drag vs. criteria-gap</div>
+      <p>When an intent statement fails validation — either through a Refine or Reject ruling — the IA labels it. <strong style="color:var(--text);">Alignment-drag</strong>: the customer's real-world context wasn't fully surfaced in gap-closing; the intent was technically well-formed but aimed at the wrong thing. Requires a customer session to resolve. <strong style="color:var(--text);">Criteria-gap</strong>: the intent statement was ambiguous and the agent interpreted it too literally; the acceptance criteria weren't specific enough. Requires the IA to tighten the intent before re-dispatch — no customer session needed. Knowing the difference prevents a customer escalation when the root cause is internal.</p>
+    </div>
+  </section>
+
+  <!-- VALIDATION RULINGS -->
+  <section id="validation">
+    <h2>The Four Validation Rulings</h2>
+    <p class="section-sub">Every artifact in the Validate + Demo queue gets exactly one ruling — no impressionistic review, no "looks good." The ruling must be documented.</p>
+
+    <div class="ruling-grid">
+      <div class="ruling-card approve">
+        <div class="ruling-name">Approve</div>
+        <div class="ruling-desc">Output meets acceptance criteria as written. Intent closes; artifact moves to the Daily Demo queue. Document what made it approvable — this becomes a quality reference for similar intents.</div>
+      </div>
+      <div class="ruling-card refine">
+        <div class="ruling-name">Refine</div>
+        <div class="ruling-desc">Output partially meets criteria. The gap is small enough that a revised dispatch will likely close it. Amend the intent with the specific delta and re-dispatch. This enters a Feedback Loop state — cycle time accumulates.</div>
+      </div>
+      <div class="ruling-card reject">
+        <div class="ruling-name">Reject</div>
+        <div class="ruling-desc">Output does not meet criteria. Root cause matters: is this alignment-drag (return to customer for gap-closing) or criteria-gap (IA rewrites intent before re-dispatch)? Label it before re-queuing. Rejecting without labeling turns rework invisible.</div>
+      </div>
+      <div class="ruling-card escalate">
+        <div class="ruling-name">Escalate</div>
+        <div class="ruling-desc">Output surfaces something the IA cannot resolve alone — a scope boundary question, a security concern, a design decision that has commercial consequences. Goes to PL immediately. PL resolves within the day; no deferral. Under CMMI Level 3: log as a Decision in Engagement Memory before the next Build day.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">The Feedback Loop — why cycle time matters</div>
+      <p>Rejected and Refined intents enter a Feedback Loop state. They don't reset — they age. The cumulative cycle time on intents in the Feedback Loop is the most accurate measure of how much alignment work is actually happening on the engagement. A short cycle time means the intent quality was high and corrections were fast. A long cycle time means the gap-closing sessions in Phase 1 left something unresolved, and the Build phase is paying for it.</p>
+    </div>
+  </section>
+
+  <!-- PHASE GUIDE -->
+  <section id="phase-guide">
+    <h2>PL Responsibilities by Phase</h2>
+    <p class="section-sub">What you own at each MVG gate — the judgment calls and governance actions that are specifically yours.</p>
+
+    <div class="pl-phase-wrap">
+      <table class="pl-phase-table">
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Gate</th>
+            <th>PL's primary accountability</th>
+            <th>Failure if skipped</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pre-Flight</td>
+            <td>Feasibility assessment</td>
+            <td>Partner with DL to stress-test whether this SOW is deliverable under QL conditions. Commercial fluency here prevents scope and margin problems at Phase 3. This is the "working the constraint" moment — not complaining that the deal is hard.</td>
+            <td>Pod inherits an undeliverable scope at fixed price; the commercial problem surfaces at week 6 as a delivery problem</td>
+          </tr>
+          <tr>
+            <td>Phase 0</td>
+            <td>Validated Success Criteria</td>
+            <td>Ensure success criteria are outcome-framed (what changes for the customer) and measurable. Every downstream gate will be tested against these — vague criteria here mean every gate has no teeth. Sign off the M03 Pod-Ready Gate: phase 1 does not open until it's checked.</td>
+            <td>Go/No-Go in Phase 5 is made against the wrong criteria; UAT tests the wrong things</td>
+          </tr>
+          <tr>
+            <td>Phase 1</td>
+            <td>Customer-Approved Roadmap</td>
+            <td>Run gap-closing sessions that produce customer-confirmed intent — not just approved epics. M06 Build-Ready Gate: PL signs that ≥3 days of customer-confirmed Intent Statements exist before Build Day 1. This is the Forward Buffer origin point.</td>
+            <td>Intent Deficit failure mode: Forward Buffer empty on Day 1; Build never recovers</td>
+          </tr>
+          <tr>
+            <td>Phase 2</td>
+            <td>Architecture Sign-Off</td>
+            <td>Ensure architecture review involved active customer participation (not just sign-off). Confirm every agent-facing component has a clear intent attached before Phase 3 opens. Any ambiguity at this gate compounds at Phase 3 velocity.</td>
+            <td>Agent-generated architecture passes that is subtly wrong; errors discovered at UAT when cost to fix is high</td>
+          </tr>
+          <tr>
+            <td>Phase 3</td>
+            <td>Build Completion &amp; Acceptance</td>
+            <td>Monitor the six Build metrics daily (Net Throughput, Rework Rate, Escalation Rate, Forward Buffer) and weekly (Cycle Time, Risk Buffer Burn). Classify scope inputs from Daily Demo in real time — refinement vs. new work. Maintain the scope-change log. Dispatch decisions: what routes to MeshMesh, Claude Code, or a human override.</td>
+            <td>All three failure modes: Intent Deficit, Review Lag, Scope-Creep</td>
+          </tr>
+          <tr>
+            <td>Phase 4</td>
+            <td>UAT Sign-Off</td>
+            <td>Confirm UAT criteria trace to Phase 0 success criteria before UAT opens. Support customer ownership of UAT — they drive, you support. Classify defects and route through Build Day Loop. Don't rationalize defects under schedule pressure; that's Review Lag at a different gate.</td>
+            <td>UAT tests the wrong things; Go/No-Go is made on incomplete evidence</td>
+          </tr>
+          <tr>
+            <td>Phase 5</td>
+            <td>Formal Go/No-Go</td>
+            <td>Make the Go/No-Go judgment call against UAT evidence and Phase 0 success criteria — not stakeholder momentum, not completion rate. This is the PL's highest-stakes call. No deferral to a future SteerCo. Under commercial pressure to move, own the "No-Go if criteria aren't met" decision.</td>
+            <td>Known issues rationalized under deployment pressure; customer trust broken post-go-live</td>
+          </tr>
+          <tr>
+            <td>Phase 6</td>
+            <td>Customer Accepted Handoff</td>
+            <td>Transfer governance responsibility deliberately — not just documentation. The customer's team must own the orchestration decisions the consultant was making. Handoff package must include a measurement plan tied to Phase 0 outcomes. Seal Engagement Memory; complete M15 Retro; write-back to Practice Memory (consumption-only is a methodology violation).</td>
+            <td>Customer cannot govern their own agents after go-live; adoption stalls; engagement value not captured for next team</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- RE-BASELINE -->
+  <section id="rebaseline">
+    <h2>The Re-Baseline Mechanic</h2>
+    <p class="section-sub">When the engagement can no longer be delivered as scoped, the PL presents a three-options memo. No silent re-scoping, no unilateral decisions.</p>
+
+    <p>A re-baseline is triggered when metrics signal the current plan is no longer executable: sustained Forward Buffer below 2 days, Rework Rate above 35% for more than 3 days, or Risk Buffer Burn rate that will exhaust contingency before the Phase 3 gate. The PL does not absorb this — they surface it.</p>
+
+    <div class="memo-option opt-a">
+      <div class="memo-option-label">Option A — Reduce Scope, Hold Timeline &amp; Price</div>
+      <p>Remove lower-priority epics from the current engagement and deliver the reduced scope by the original date at the original price. Removed items are formally deferred to a future engagement or variation. This protects the customer relationship and the commercial structure at the cost of delivered scope.</p>
+    </div>
+
+    <div class="memo-option opt-b">
+      <div class="memo-option-label">Option B — Extend Timeline, Hold Scope &amp; Price</div>
+      <p>Add time to deliver the originally scoped work. Requires DL sign-off and customer agreement on the revised date. On a fixed-price model, this is usually the PL's preferred option only when the root cause is recoverable (e.g., tool access delay, not a fundamental intent quality problem).</p>
+    </div>
+
+    <div class="memo-option opt-c">
+      <div class="memo-option-label">Option C — Issue Variation, Hold Scope &amp; Timeline</div>
+      <p>Increase commercial commitment to deliver the scope by the original date. Requires DL and account team sign-off; has GTM implications. This option is appropriate when the root cause of the re-baseline is scope growth the customer drove — not internal delivery execution problems.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Why the memo, not the conversation</div>
+      <p>The three-options memo forces clarity before the customer conversation. A PL who walks into a re-baseline discussion without a structured proposal is likely to accept whatever the customer asks for. The memo creates an anchor: here are the three paths, here are the tradeoffs for each, here is our recommendation. It is also the paper trail that protects the SOW and the DL relationship when scope decisions get complicated later.</p>
+    </div>
+  </section>
+
+  <!-- SKILLS FRAMEWORK -->
+  <section id="skills">
+    <h2>Program Lead Skill Framework</h2>
+    <p class="section-sub">Three capability domains, each with an AI-Augmented floor and an AI-Native destination. The floor is what's expected now. The destination is the development pathway.</p>
+
+    <h3>Commercial &amp; Value</h3>
+    <div class="pl-skills-grid">
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">Commercial Fluency</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Engagement economics — P&amp;L, margin, burn, EAC, variation. Classify scope changes commercially: refinement of agreed work vs. new work requiring variation. Understand wider ProServ trade-offs and Salesforce outcomes (license growth, renewal, attrition save).</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Intent-based delivery surfaces scope decisions at daily build, not at sprint boundary — the judgment is identical but the decision window compresses. Fixed-price models make commercial fluency existential, not aspirational.</div>
+      </div>
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">Business Value Realisation</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Articulate what the engagement is delivering in customer terms. Track value milestones, not just tasks.</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Frame every delivery decision in customer outcomes. Prove what changed because we were here. Connect delivery to measurable customer value.</div>
+      </div>
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">Strategic Mindset</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Understand the customer's business context. Know why this engagement exists beyond the SOW.</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Shape delivery that accelerates time-to-value. Read industry pressures and transformation ambitions. Influence account strategy.</div>
+      </div>
+    </div>
+
+    <h3>Delivery &amp; Governance</h3>
+    <div class="pl-skills-grid">
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">Delivery Intelligence</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Proactive risk identification using AI tools + critical thinking. Right-size governance to the engagement. Know the platform well enough to make informed decisions. Act on signals, don't just report them.</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Automated gates handle routine monitoring — you intervene on exceptions only. Decision volume increases but the system surfaces what needs you. Governance by exception, not by ritual.</div>
+      </div>
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">Risk Navigation</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Flag risks early with a recommendation, not a question. Escalate with judgment — right issue, right time, proposed solution.</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Classify and act same-day. Resolve without deferral. Manage ambiguity without paralysis. No deferral to a SteerCo that's weeks away.</div>
+      </div>
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">AI Delivery Fluency</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Use DG AI tools daily. Understand how tooling across all roles changes delivery dynamics — adjust plans, gates, and resourcing. Sense-check estimates when production accelerates.</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Run intent-based, compressed, fixed-date engagements. Orchestrate humans, agent fleets, and customers. Diagnose QL failure modes (Intent Deficit, Review Lag, Scope-Creep). The constraint is validation speed, not production rate.</div>
+      </div>
+    </div>
+
+    <h3>Leadership &amp; Influence</h3>
+    <div class="pl-skills-grid">
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">Customer Trust &amp; Partnership</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Honest communication. No surprises. Own the customer relationship operationally without DL hand-holding.</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Daily engagement, demonstrable value. Maintain trust through compressed delivery intensity. Co-create with the customer, not filter for them.</div>
+      </div>
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">Stakeholder Influence</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Credible with senior stakeholders. Can hold a room. Earns trust through impact, not title.</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Shape decisions across customers, GTM, DLs, execs. C-suite credibility. Impact earns trust, not position.</div>
+      </div>
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">Courageous Accountability</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Own outcomes. Name problems early. Don't deflect to process, other teams, or the DL. Hold customers to account.</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Compression shortens the window to act but doesn't change what's expected. The re-baseline memo, the No-Go decision, the scope classification in the room — these require accountability that can't be deferred.</div>
+      </div>
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">Pod &amp; Team Leadership</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Lead the engagement team through clarity and shared purpose. Don't wait to be directed.</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Lead a small, senior, autonomous pod. Enable the IA and AO to do their best work. Orchestrate, don't manage.</div>
+      </div>
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">Adaptive Communication</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Right message, tone, medium for context. Clear, concise, audience-appropriate. From demo narration to executive escalation.</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Cadence accelerates but the skill doesn't change. Daily demo narration — making live build legible to a customer in real time — is the highest-frequency version of this skill.</div>
+      </div>
+      <div class="pl-skill-card">
+        <div class="pl-skill-name">Continuous Learning &amp; Reinvention</div>
+        <div class="pl-skill-floor-label">AI-Augmented floor</div>
+        <div class="pl-skill-text">Actively adopt new tools and ways of working. Don't wait to be trained. Seek feedback. Drive change, don't follow it.</div>
+        <div class="pl-skill-dest-label">AI-Native destination</div>
+        <div class="pl-skill-text">Same — tools evolve faster but the expectation doesn't. Write-back to Practice Memory at Phase 6 is the PL's structural contribution to the next team's reinvention.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSITION MAP -->
+  <section id="transition">
+    <h2>Old Skills → New Skills</h2>
+    <p class="section-sub">Where the traditional PM role maps to — and where it must be rebuilt from scratch. Each transition type has a different learning design implication.</p>
+
+    <div class="depth-legend" style="margin-bottom:16px;">
+      <div class="depth-legend-item"><span class="transition-badge t-replace">Replace</span>&nbsp; Old model actively gets in the way — must be named and displaced first</div>
+      <div class="depth-legend-item"><span class="transition-badge t-elevate">Elevate</span>&nbsp; Same domain, higher stakes and faster pace</div>
+      <div class="depth-legend-item"><span class="transition-badge t-new">New</span>&nbsp; No prior model — build from scratch with more scaffolding</div>
+      <div class="depth-legend-item"><span class="transition-badge t-gone">Eliminated</span>&nbsp; Agents take over — give permission to stop</div>
+    </div>
+
+    <div class="transition-wrap">
+      <table class="transition-table">
+        <thead>
+          <tr>
+            <th>Old Skill</th>
+            <th>Transition</th>
+            <th>Maps to</th>
+            <th>What the learning design must address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Manage Schedule</td>
+            <td><span class="transition-badge t-replace">Replace</span></td>
+            <td>Delivery Intelligence + Human-AI Orchestration</td>
+            <td>The Gantt mental model must be explicitly retired. Flow metrics (Forward Buffer, Cycle Time, Throughput) are not a tool upgrade — they are a different theory of what a PL is for. Practice reading flow signals, not building timelines.</td>
+          </tr>
+          <tr>
+            <td>Manage Scope</td>
+            <td><span class="transition-badge t-elevate">Elevate</span></td>
+            <td>Commercial Fluency + Outcome Framing</td>
+            <td>Scope classification must be made in the customer session, in real time, without deferral. Practice with ambiguous scope inputs and visible consequences for misclassification.</td>
+          </tr>
+          <tr>
+            <td>Manage Budget</td>
+            <td><span class="transition-badge t-elevate">Elevate</span></td>
+            <td>Commercial Fluency</td>
+            <td>Understanding deal economics well enough to make in-flight decisions that protect margin — especially under fixed-price models where compression math changes when AI accelerates production.</td>
+          </tr>
+          <tr>
+            <td>Resource Management</td>
+            <td><span class="transition-badge t-replace">Replace</span></td>
+            <td>Human-AI Orchestration + Pod Leadership</td>
+            <td>Traditional resource management assumes a large team. The new model is a 3-person pod. Practice orchestration judgment: when to direct, when to enable, when to intervene in a pod that doesn't need hand-holding.</td>
+          </tr>
+          <tr>
+            <td>Manage Project Quality</td>
+            <td><span class="transition-badge t-replace">Replace</span></td>
+            <td>Output Validation + Discernment</td>
+            <td>Traditional QA instincts — gate at the end, review finished work — actively undermine continuous validation. Name the old model, explain why it fails under agentic conditions, practice continuous validation as a daily habit.</td>
+          </tr>
+          <tr>
+            <td>Delivery Methodologies</td>
+            <td><span class="transition-badge t-new">New</span></td>
+            <td>AI Delivery Fluency</td>
+            <td>Prior Agile or Waterfall experience provides limited transfer to QL execution. QL-specific skills must be built from scratch. Use the QL model as the primary scenario context throughout — not introduced as a new topic at the end.</td>
+          </tr>
+          <tr>
+            <td>Communication Management</td>
+            <td><span class="transition-badge t-elevate">Elevate</span></td>
+            <td>Adaptive Communication + Delivery Intelligence</td>
+            <td>From documentation and cadence to real-time reading and response. Practice communication decisions inside pressure scenarios, not as a standalone module.</td>
+          </tr>
+          <tr>
+            <td>Design &amp; Deliver Presentations</td>
+            <td><span class="transition-badge t-replace">Replace</span></td>
+            <td>Adaptive Communication</td>
+            <td>Slide deck mental model does not transfer to daily demo facilitation. Practice narration and in-session facilitation — making live build legible to a customer in real time, managing reactions as they surface.</td>
+          </tr>
+          <tr>
+            <td>Manage Client Relationship</td>
+            <td><span class="transition-badge t-elevate">Elevate</span></td>
+            <td>Customer Trust &amp; Partnership</td>
+            <td>Weekly calls do not prepare a PL for daily customer engagement at delivery velocity. Practice relationship-under-pressure scenarios, not relationship-building scenarios.</td>
+          </tr>
+          <tr>
+            <td>Escalations</td>
+            <td><span class="transition-badge t-replace">Replace</span></td>
+            <td>Risk Navigation + Courageous Accountability</td>
+            <td>Traditional escalation is deferral. The new model requires same-day resolution without deferral. The PL must make and hold a judgment call that they could previously pass to a DL. Practice making the call under stakeholder pressure, committing, and managing the aftermath.</td>
+          </tr>
+          <tr>
+            <td>AI Fluency (current)</td>
+            <td><span class="transition-badge t-elevate">Elevate</span></td>
+            <td>AI Delivery Fluency</td>
+            <td>Current training covers tool use. QL delivery fluency covers orchestration: directing humans + agents toward outcomes, diagnosing failure modes. Avoid recycling tool fluency content — the starting assumption should be that PLs can use the tools. The gap is judgment about when and how.</td>
+          </tr>
+          <tr>
+            <td>Data-Driven Decision Making</td>
+            <td><span class="transition-badge t-elevate">Elevate</span></td>
+            <td>Delivery Intelligence + Discernment</td>
+            <td>Reading flow signals and acting on exceptions — without waiting for a governance cycle to surface them. Practice intervention decisions: here is a flow signal; what does it mean, and what do you do right now?</td>
+          </tr>
+          <tr>
+            <td>Business Value</td>
+            <td><span class="transition-badge t-elevate">Elevate</span></td>
+            <td>Outcome Framing</td>
+            <td>Value realisation in AI-native delivery requires continuous reconnection — not just outcome framing at kickoff. Under delivery velocity, natural drift is toward producing more rather than ensuring relevance. Practice mid-engagement reconnection.</td>
+          </tr>
+          <tr>
+            <td>Critical Thinking</td>
+            <td><span class="transition-badge t-elevate">Elevate</span></td>
+            <td>Risk Navigation + Commercial Fluency</td>
+            <td>More specific than general critical thinking: classify a risk or scope question at pace, with a recommendation attached, without deferral. Practice presenting ambiguous situations and requiring the PL to name the risk category, assess severity, and propose a response.</td>
+          </tr>
+          <tr>
+            <td>Executive Presence</td>
+            <td><span class="transition-badge t-elevate">Elevate</span></td>
+            <td>Stakeholder Influence</td>
+            <td>Credibility earned through impact, not through communication style coaching. Create situations where the PL demonstrates (not performs) credibility — hard conversations, commercial recommendations, scope governance under executive pressure.</td>
+          </tr>
+          <tr>
+            <td>Status Reporting</td>
+            <td><span class="transition-badge t-gone">Eliminated</span></td>
+            <td>→ Net Throughput metrics (SAIL)</td>
+            <td>Give explicit permission to stop. PLs who define value through status reporting will be disoriented when SAIL automates it. Reframe where value now lives.</td>
+          </tr>
+          <tr>
+            <td>RAID Log Management</td>
+            <td><span class="transition-badge t-gone">Eliminated</span></td>
+            <td>→ Decision track + Pipeline Gate</td>
+            <td>If a PL's primary governance habit is maintaining a RAID log, they need a replacement habit (Decision track, Pipeline Gate) not just a new tool.</td>
+          </tr>
+          <tr>
+            <td>Meeting Minutes</td>
+            <td><span class="transition-badge t-gone">Eliminated</span></td>
+            <td>→ Engagement Memory + transcripts</td>
+            <td>Many PLs will continue doing this out of habit or accountability anxiety unless explicitly released. Release them — and name what that capacity should go toward.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">The identity risk in the Eliminate category</div>
+      <p>For PLs who have spent years demonstrating value through eliminated activities, their disappearance is not neutral. Some will quietly continue doing them anyway. Some will feel de-skilled. The proficiency layer must address this directly — naming what was valuable about the old behavior (discipline, visibility, accountability) and showing how those values are expressed differently in the new model. This is identity work as much as skill work.</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Two gaps not yet in the skills framework</div>
+      <p><strong style="color:var(--text);">Commercial Fluency</strong> — appears in Dennis Thong's ANZ mapping for Manage Scope, Manage Budget, Identify Growth Opportunities, and Critical Thinking. The current 11-cluster framework does not have a cluster for engagement economics. For PLs who own SOW accountability, margin, and variation classification, this is a significant gap. <strong style="color:var(--text);">Courageous Accountability</strong> — the disposition to own outcomes, name problems early, and hold customers to account without deferring is central to the PL identity shift. Currently absent from the cluster framework. Recommend weaving it explicitly into the Discernment, Change Co-Creation, and Human-AI Orchestration clusters rather than treating it as a standalone skill — but it must be named somewhere, or the proficiency content will develop the technical skills without the accountability spine that makes them useful under pressure.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    Program Lead Guide · AI-Native Delivery · Quantum Leap<br>
+    Professional Services · Learning Experience Design · Contact: Josh Kohler<br>
+    Sources: PL Playbook (QL Execution Playbook) · ANZ DG Skills Framework (Dennis Thong, June 2026) · Proficiency Layer Transition Map
+  </div>
+</footer>
+
+</body>
+</html>
