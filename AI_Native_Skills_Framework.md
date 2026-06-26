@@ -132,6 +132,8 @@ Translating desired outcomes into precise, structured specifications that agents
 
 **Sub-skill — Prompt Debugging / Diagnostic Iteration:** When an agent produces bad output, the consultant must diagnose *why* before responding. Was the intent unclear? Was the tool wrong for the task? Was the underlying data bad? Was the output actually fine and the reviewer's criteria were off? These are four different diagnoses that lead to four different responses. Consultants who cannot distinguish them either blame the tool for everything or rewrite prompts when the real issue is data. Microsoft's Copilot deployment teams have specifically named this as a skill distinct from prompt writing — the ability to read a failure and respond to the right cause.
 
+**Sub-skill — Intent Statement vs. User Story Distinction:** An Intent Statement is not a user story with extra steps. A user story describes what a user wants. An Intent Statement specifies what the agent must produce — including outcome, constraints, done criteria, boundaries, and edge cases — with enough precision that there is no ambiguity for an agent to fill with inference. The failure mode: practitioners trained on Agile requirements writing default to user story format, which leaves "done" open to interpretation. Agents don't ask clarifying questions. They execute on what they're given. *Source: Victoria Gailey, MVG Phase Baseline Skills, June 2026.*
+
 ---
 
 ### 2. Discernment
@@ -143,6 +145,8 @@ The capacity to evaluate AI-generated output and make sound, defensible decision
 
 **Sub-skill — Responsible AI Sensing:** Knowing when to flag an AI output, workflow design, or agent behavior because it introduces bias, privacy exposure, or compliance risk — before it becomes a customer problem. This is distinct from output validation, which checks quality against defined criteria. Responsible AI sensing requires the consultant to notice risks that *weren't in the brief*. IBM and Deloitte have both formalized this as a practitioner skill, not just an ethical policy: a consultant reviewing an agent-generated customer segmentation model should be able to recognize when the segmentation criteria could introduce disparate impact, even if the output is technically correct.
 
+**Sub-skill — Design Gap vs. Execution Defect Distinction:** When an agent produces a bad output, the diagnosis determines the response. A design gap means the Intent Statement was flawed — the response is to rewrite the intent. An execution defect means the Intent Statement was sound but the agent failed to execute on it — the response is to refine the prompt or escalate. Conflating the two produces the wrong fix: rewriting a good intent statement wastes a phase; leaving a bad one in place propagates the error through every downstream agent action. In UAT, a design-gap defect is a methodology failure — it means something broke down in Phase 1 or 2 that should have been caught before Build. *Source: Victoria Gailey, MVG Phase Baseline Skills, June 2026.*
+
 ---
 
 ### 3. Output Validation
@@ -151,6 +155,10 @@ A structured, repeatable process for reviewing AI-generated work products agains
 *What makes it harder in an AI-native context:* Traditional QA validates work you or your team produced — you know the design decisions behind it. AI-generated work has no author who can explain intent or flag known weaknesses. Validation must be forward-looking (does this meet criteria?) rather than backward-looking (does this match the decisions we made?).
 
 *Develops:* **Judgment & Reasoning** (applying criteria systematically and making defensible decisions), **Information Discernment** (identifying what's accurate, complete, and fit for purpose)
+
+**Sub-skill — Engagement Memory as Validation Record:** In AI-native delivery, every agent output, Trusted Guide decision, customer approval, and scope change should be logged continuously in Engagement Memory. Validation is not just a gate-by-gate event — it is an ongoing audit trail. At handoff, the Engagement Memory is the evidence that every deployed capability traces back to a customer-approved Intent Statement. Consultants who treat validation as a phase-end activity rather than a continuous practice arrive at the handoff without a defensible record. *Source: Victoria Gailey, MVG Phase Baseline Skills, June 2026.*
+
+**Sub-skill — UAT as Confirmation, Not Discovery:** If the daily demo cadence worked throughout Phase 3, UAT should surface no design surprises. The customer has been approving working software daily; UAT is formal confirmation of what they already know. A design-gap defect surfacing in UAT means something failed earlier in the methodology — it is a signal to trigger a Build retrospective, not just a defect to resolve. This reframes how UAT is taught: not as the phase where the customer first sees the solution, but as the phase where they formally accept what they have been shaping all along. *Source: Victoria Gailey, MVG Phase Baseline Skills, June 2026.*
 
 ---
 
@@ -161,6 +169,8 @@ Defining and maintaining a shared definition of project success in terms of real
 
 *Develops:* **Judgment & Reasoning** (deciding what matters and why), **Collaborative Communication** (facilitating alignment with customers on what success actually means)
 
+**Sub-skill — Outcome-Traced Artifact Production:** At handoff, every deployed capability should trace back to the Intent Statement that drove it, which traces back to the epic that defined it, which traces back to the success criteria defined in Phase 0. Release Notes are not a summary of what was built — they are an outcome map. Consultants who produce deliverable-framed Release Notes ("Deployed Service Cloud agent") rather than outcome-traced ones ("Agent reduces average handle time — traces to Intent Statement IS-042, Epic E-07, Success Criteria SC-02") leave the customer without a measurement framework and the engagement without a closing loop. *Source: Victoria Gailey, MVG Phase Baseline Skills, June 2026.*
+
 ---
 
 ### 5. Human-AI Orchestration
@@ -169,6 +179,8 @@ Knowing, in real time, when to assign work to an agent, when to do it yourself, 
 *What makes it harder in an AI-native context:* Delegating to a human involves assessing their skills, availability, and context. Delegating to an agent involves assessing something different: confidence level, task type, reversibility of output, and proximity to customer-facing consequence. Agents don't push back, don't flag uncertainty reliably, and can be confidently wrong. Calibration is non-obvious and changes as tools evolve.
 
 *Develops:* **Judgment & Reasoning** (making calibrated delegate/supervise/override decisions), **Adaptive Learning** (recalibrating as tools and their capabilities evolve)
+
+**Sub-skill — Customer Influence for Operating Cadence:** AI-native delivery depends on fast customer feedback loops — daily demos, 24–48 hour decision cycles, exec sponsor availability. These are not preferences; they are methodology requirements. If the customer cannot commit to them, the delivery model cannot function as designed. The consultant's job is to establish and maintain these commitments before Phase 0 opens and to re-establish them when they erode. This is distinct from Change Co-Creation (which is about co-designing the solution) — it is about securing the operating conditions that make the methodology possible at all. *Source: Victoria Gailey, MVG Phase Baseline Skills, June 2026.*
 
 ---
 
@@ -233,6 +245,42 @@ The ability to apply human perspective, contextual judgment, and a sense of qual
 *Develops:* **Creative Direction & Taste** (originality, contextual nuance, empathy, judgment about what is meaningful or high quality), **Judgment & Reasoning** (knowing when to intervene and when to let it go)
 
 *Where it surfaces most visibly:* Intent writing (specifying what good looks like before the agent builds it), output validation (applying taste and contextual judgment alongside quality criteria), change co-creation (reading a customer's reaction and knowing what it means), and communicating AI-generated work (deciding how to frame and present work that was largely agent-produced).
+
+---
+
+## Three Non-Negotiable Mindset Shifts
+
+These are not skills to develop — they are the identity shifts that make the skills above executable. A consultant who knows what discernment is but still thinks of themselves as a builder will default to builder behavior under pressure. These shifts must be internalized before Phase 0. When they are absent, the skills framework is vocabulary without traction.
+
+*Source: Victoria Gailey, MVG Phase Baseline Skills, June 2026.*
+
+---
+
+### 1. Director, Not Builder
+
+**Old:** I spend my day writing configuration, code, and documentation.
+**New:** I spend my day writing Intent Statements, reviewing agent output, and making judgment calls.
+
+The failure mode when this shift doesn't happen: practitioners in "builder mode" become bottlenecks. They over-specify Intent Statements — turning them into user stories with implementation detail — or they under-review agent output because reviewing feels like not building. Both behaviors compromise the engagement. In the first case, the consultant is doing the agent's job for it. In the second, the consultant is not doing theirs.
+
+---
+
+### 2. Intent Statements, Not User Stories
+
+**Old:** *"As a supplier manager, I want to see duplicate accounts so I can merge them."*
+
+**New:** *"A user with the Supplier Manager role can identify potential duplicate supplier accounts. The system must surface candidates with >85% match confidence on name, tax ID, and address. It must respect record-level access. It must never auto-merge. Done when the user can review and flag candidates, with all flagged actions logged for audit."*
+
+The failure mode: user stories leave "done" open for interpretation. Intent Statements have done baked in. Agents don't ask clarifying questions — they execute on what they're given. An agent acting on a user story fills the ambiguity with inference. An agent acting on a well-formed Intent Statement produces a predictable, auditable output. The difference between the two is not style — it is whether the consultant is doing the hardest part of their job.
+
+---
+
+### 3. Judgment Over Speed
+
+**Old:** Speed of delivery = how fast I can produce artifacts.
+**New:** Speed of delivery = how quickly I make accurate judgment calls that keep agents moving in the right direction.
+
+The failure mode: assuming AI speed means skipping human-intensive steps. A flawed Intent Statement upstream produces plausible-looking artifacts that are wrong all the way down — and at agentic velocity, those artifacts propagate through multiple downstream phases before anyone detects the error. The investment in judgment at the front of each phase is what makes the speed at the back of it safe.
 
 ---
 
