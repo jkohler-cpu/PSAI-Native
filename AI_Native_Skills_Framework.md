@@ -20,12 +20,13 @@ This matters because AI-native delivery without governance is not faster deliver
 
 | Phase | Name | Stage Gate |
 |---|---|---|
-| 0 | Internal Onboarding | Validated Success Criteria |
+| 0 | Internal Onboarding | Validated Success Criteria & Risk Insight |
 | 1 | Prepare | Customer-Approved Engagement Roadmap (Epics) |
-| 2 | Design | Architecture Sign-Off |
-| 3 | Deliver | Approved Release Plan |
-| 4 | Deploy | UAT Sign-Off + Formal Go/No-Go |
-| 5 | Adopt/Consume | Release Notes + Customer-Accepted Handoff Package |
+| 2 | Design | Architecture Sign-Off & Approved Release Plan |
+| 3 | Build | Build Completion & Acceptance |
+| 4 | Test | UAT Sign-Off |
+| 5 | Deploy | Formal Go/No-Go Decision & Release Notes |
+| 6 | Adopt/Consume | Customer Accepted Solution Handoff Package |
 
 MVG applies to any execution model — traditional, AI-augmented, or fully agentic. What changes across those models is not the phase structure. What changes is the **human skill demand at each gate.** The more agentic the delivery, the more judgment-intensive each checkpoint becomes.
 
@@ -302,9 +303,9 @@ Customer AI Readiness Assessment happens before Phase 0 is opened. It determines
 ---
 
 ### Phase 0: Internal Onboarding
-**Stage Gate: Validated Success Criteria**
+**Stage Gate: Validated Success Criteria & Risk Insight**
 
-This is the pre-customer phase where the delivery team aligns on what success looks like, how the engagement will be governed, and what constraints apply before any agent work begins. It is often treated as administrative. It is not. The success criteria validated here are the quality standard every downstream gate will be measured against.
+This is the pre-customer phase where the delivery team aligns on what success looks like, how the engagement will be governed, and what constraints apply before any agent work begins. It is often treated as administrative. It is not. The success criteria validated here — and the risk insight documented alongside them — are the quality standard every downstream gate will be measured against.
 
 | Skill | Why it matters at this gate | What breaks when it's absent |
 |---|---|---|
@@ -339,70 +340,87 @@ The team moves from internal alignment to customer alignment. Epics are the cust
 ---
 
 ### Phase 2: Design
-**Stage Gate: Architecture Sign-Off**
+**Stage Gate: Architecture Sign-Off & Approved Release Plan**
 
-Agents begin doing real construction work: generating solution designs, architecture artifacts, and process maps. The consultant's role shifts from producer to director. This is the phase where the AI-Augmented trap is most visible — consultants who stay in producer mode lose the efficiency benefit and compromise their ability to validate what's been generated.
+Agents begin doing real construction work: generating solution designs, architecture artifacts, and process maps. The consultant's role shifts from producer to director. This is the phase where the AI-Augmented trap is most visible — consultants who stay in producer mode lose the efficiency benefit and compromise their ability to validate what's been generated. The Release Plan is also approved here — the 3-day Build runway must be confirmed before Phase 3 opens.
 
 | Skill | Why it matters at this gate | What breaks when it's absent |
 |---|---|---|
-| **Intent Writing** | Every agent-assisted design artifact starts with a prompt or intent statement. Quality here determines whether output is usable or requires complete regeneration. | Consultant prompts agents vaguely; spends more time editing agent outputs than a human design would have taken; velocity benefits disappear |
+| **Intent Writing** | Every agent-assisted design artifact starts with a prompt or intent statement. Quality here determines whether output is usable or requires complete regeneration. The Intent Statement backlog must be finalized and Build-ready before this gate closes. | Consultant prompts agents vaguely; spends more time editing agent outputs than a human design would have taken; velocity benefits disappear; pod enters Build without enough confirmed Intent Statements |
 | **Human-AI Orchestration** | The consultant must decide what agents design, what humans design, and how closely to supervise the blend across a range of task types | Consultant either delegates high-stakes design decisions without review, or over-supervises low-stakes tasks — neither produces the right outcome |
-| **Output Validation** | Architecture sign-off is a formal gate. Validation must be structured and documented — not an impression formed on visual review. | Architecture is "approved" based on whether it looks complete; errors in logic or fit pass through and compound in Phase 3 |
-| **Change Co-Creation** | Architecture decisions made without customer input require expensive change management later; co-design in Phase 2 is far cheaper than course correction in Phase 4 | Customer sees architecture for the first time at sign-off; no co-design sessions occurred; surprises accumulate toward go-live |
+| **Output Validation** | Architecture sign-off is a formal gate. Validation must be structured and documented — not an impression formed on visual review. | Architecture is "approved" based on whether it looks complete; errors in logic or fit pass through and compound in Phase 3 at build velocity |
+| **Change Co-Creation** | Architecture decisions made without customer input require expensive change management later; co-design in Phase 2 is far cheaper than course correction in Phase 5 | Customer sees architecture for the first time at sign-off; no co-design sessions occurred; surprises accumulate toward go-live |
+| **Discernment** | Design gaps that aren't caught here become Build defects at Phase 3 velocity. The consultant must resolve all architectural ambiguities before Build starts — not during it. | Design gaps surface during Build as defects; agents execute at speed on flawed intents; rework cost multiplies |
 
-**Gate question:** Was the architecture reviewed against defined criteria — and did the customer actively participate in shaping it, or only approve it?
+**Gate question:** Has the architecture been reviewed against defined criteria with active customer participation — is the Intent Statement backlog complete and Build-ready — and does the pod have at least 3 days of confirmed Build runway?
 
 *CPS in focus at this gate:* Creative Direction & Taste, Judgment & Reasoning, Collaborative Communication
 
 ---
 
-### Phase 3: Deliver
-**Stage Gate: Approved Release Plan**
+### Phase 3: Build
+**Stage Gate: Build Completion & Acceptance**
 
-This is the highest-velocity phase in an AI-native model. Agents are building continuously. The consultant's primary job is not construction — it is orchestration, discernment, and continuous validation across a fast-moving, high-volume build cycle. This is the phase most likely to expose automation complacency.
+This is the highest-velocity phase in an AI-native model. Agents are building continuously — writing code, configuration, and flows against confirmed Intent Statements. The consultant's primary job is not construction — it is orchestration, discernment, and continuous validation across a fast-moving, high-volume build cycle. Working software is demonstrated to the customer daily. This is the phase most likely to expose automation complacency.
 
 | Skill | Why it matters at this gate | What breaks when it's absent |
 |---|---|---|
 | **Discernment** | Agents produce plausible-looking output at speed. The consultant must maintain calibrated vigilance — not just accept work that appears complete. | Subtle logic errors, scope misalignments, and data assumption gaps accumulate; they are cheap to fix at Phase 3 and expensive at Phase 4 |
-| **Output Validation** | At delivery velocity, validation must be fast AND systematic. Ad hoc spot-checks are insufficient for a release plan gate. | Different team members apply different quality standards; error patterns are invisible until integration testing; the release plan reflects aspiration, not what was actually built |
+| **Output Validation** | At build velocity, validation must be fast AND systematic. Ad hoc spot-checks are insufficient. Continuous validation loops built into every build cycle — not tacked on at the end. | Different team members apply different quality standards; error patterns are invisible until integration testing; Build Completion gate is reached with artifacts that haven't been validated against original intent |
 | **Human-AI Orchestration** | Build tasks vary enormously in how safely they can be delegated. Calibrated judgment must be maintained across the full build cycle — not just at obvious risk points. | All tasks are treated as equally safe to delegate; the consultant loses situation awareness of what was built, by what logic, under what constraints; no one can explain the system to the customer |
-| **Intent Writing** | New sub-tasks surface throughout delivery and each requires a new intent statement. Intent is not set once at kickoff — it must be iteratively refined. | The original intent statement is assumed to cover all emerging decisions; agents fill gaps with inference; output drifts from customer expectations incrementally and invisibly |
-| **Responsible AI Sensing** | At delivery velocity, bias, privacy exposure, or compliance risk can be introduced by agent-generated outputs before anyone explicitly reviews for it. The consultant must maintain active awareness of these risks across the build cycle — not just at formal review points. | Agent-generated segmentation logic, recommendation outputs, or automated decision pathways introduce disparate impact or privacy exposure that no one flagged because it wasn't in the validation criteria |
-| **Systems Thinking** | During a fast build, second-order effects become visible. The consultant must monitor for system drift before it compounds across interdependent agent-built components. | Tasks are managed in isolation; integration failures and downstream process impacts surface late; the release plan gate is reached with a system that works in parts but not as a whole |
+| **Intent Writing** | New sub-tasks surface throughout Build and each requires a new or refined intent statement. Intent is not set once at kickoff — it must be iteratively refined as the build evolves. | The original intent statement is assumed to cover all emerging decisions; agents fill gaps with inference; output drifts from customer expectations incrementally and invisibly |
+| **Responsible AI Sensing** | At build velocity, bias, privacy exposure, or compliance risk can be introduced by agent-generated outputs before anyone explicitly reviews for it. | Agent-generated segmentation logic, recommendation outputs, or automated decision pathways introduce disparate impact or privacy exposure that no one flagged because it wasn't in the validation criteria |
+| **Systems Thinking** | During a fast build, second-order effects become visible. The consultant must monitor for system drift before it compounds across interdependent agent-built components. | Tasks are managed in isolation; integration failures and downstream process impacts surface late; the Build Completion gate is reached with a system that works in parts but not as a whole |
 
-**Gate question:** Does the release plan reflect what was actually built — was each component validated against the intent and outcomes defined in Phases 0 and 1 — and have responsible AI risks been actively reviewed, not just assumed absent?
+**Gate question:** Has all scoped Build work been completed, demoed, and accepted by the customer — has each artifact been validated against the intent and outcomes defined in Phases 0 and 1 — and have responsible AI risks been actively reviewed?
 
 *CPS in focus at this gate:* Judgment & Reasoning, Information Discernment, Adaptive Learning
 
 ---
 
-### Phase 4: Deploy
-**Stage Gate: UAT Sign-Off + Formal Go/No-Go**
+### Phase 4: Test
+**Stage Gate: UAT Sign-Off**
 
-Deployment is the point of irreversibility. The Go/No-Go decision is the highest-stakes judgment call in the lifecycle — and in an AI-native model, the consultant is frequently forming that judgment about work that was largely agent-generated. This gate is where discernment is most consequential and most likely to fail under time and stakeholder pressure.
+UAT in an AI-native model is confirmation, not discovery. The customer has been approving working software daily throughout Phase 3 — UAT should surface no design surprises. If design-gap defects appear in UAT, that is a methodology failure, not a testing problem. It signals something broke down in Phase 2 or 3 and triggers a Build retrospective.
 
 | Skill | Why it matters at this gate | What breaks when it's absent |
 |---|---|---|
-| **Discernment** | The Go/No-Go requires a clear, defensible judgment about whether the system is ready — not whether it looks ready or whether stakeholders are ready to move on | Go/No-Go is decided on UAT completion rate rather than outcome-readiness; known issues are rationalized away under deployment pressure; post-go-live failures were detectable |
-| **Output Validation** | UAT is a formal validation event. Its criteria must trace back to the success criteria defined in Phase 0 — otherwise it is testing the wrong things. | UAT validates features rather than outcomes; the Phase 0 success standard is never referenced; the system goes live and fails to deliver the value the engagement was designed to produce |
+| **Discernment** | UAT sign-off requires a clear, defensible judgment that the system is ready — not that testing is complete or that stakeholders are ready to move on | Sign-off is decided on test pass rate rather than outcome-readiness; known issues are rationalized away under schedule pressure |
+| **Output Validation** | UAT criteria must trace back to the success criteria defined in Phase 0 — otherwise testing validates the wrong things. Design-gap defects must be distinguished from confirmation defects. | UAT validates features rather than outcomes; the Phase 0 success standard is never referenced; design-gap defects are treated as normal rather than as methodology signals |
 | **Change Co-Creation** | UAT with genuine customer participation produces higher-quality sign-off and reduces post-go-live adoption friction significantly | Customer UAT is a formality; real testing happened internally; customer-facing surprises begin immediately after go-live; adoption drops |
-| **Human-AI Orchestration** | Post-deployment, some monitoring and optimization work transitions to agents. This handoff must be explicitly designed — roles, boundaries, and escalation paths defined before go-live. | No explicit plan exists for what agents manage vs. what humans manage post-go-live; ongoing monitoring falls through the cracks; system drift begins immediately |
 
-**Gate question:** Can the consultant make a defensible, evidence-based case that this system is ready to deliver the outcomes defined in Phase 0 — and does the customer share that confidence?
+**Gate question:** Has the customer formally accepted the solution based on UAT results that trace to Phase 0 success criteria — and were any design-gap defects identified and addressed before sign-off?
 
 *CPS in focus at this gate:* Judgment & Reasoning, Collaborative Communication, Information Discernment
 
 ---
 
-### Phase 5: Adopt/Consume
-**Stage Gate: Release Notes + Customer-Accepted Handoff Package**
+### Phase 5: Deploy
+**Stage Gate: Formal Go/No-Go Decision & Release Notes**
 
-In an AI-native model, Phase 5 is structurally different from traditional hypercare. Agents can continue optimizing in production. The system is not static. The handoff is not a clean break — it is a transfer of governance responsibility. A customer team that cannot make sound human-AI orchestration decisions after the consultant leaves is not ready for handoff, regardless of what the documentation says.
+Deployment is the point of irreversibility. The Go/No-Go is the highest-stakes judgment call in the lifecycle — and in an AI-native model, the consultant is forming that judgment about work that was largely agent-generated. Release Notes here are outcome-traced — every deployed capability connects back to the Intent Statement that drove it.
 
 | Skill | Why it matters at this gate | What breaks when it's absent |
 |---|---|---|
-| **Outcome Framing** | Adoption is only meaningful measured against the outcomes defined in Phase 0. The handoff package must include a measurement plan, not just system documentation. | Handoff documents what was built; no plan exists for measuring whether it achieves the outcomes that justified the investment; success is never confirmed |
-| **Change Co-Creation** | Customers who co-created the solution drive their own adoption. Phase 5 should reinforce that ownership — not transfer a finished product back to them. | Adoption is treated as a training problem; documentation and training are delivered; customer engagement drops; the system is used less than its capability warrants |
+| **Discernment** | The Go/No-Go requires a clear, defensible judgment about whether the system is ready — not whether it looks ready or whether stakeholders want to move on | Go/No-Go is decided on UAT completion rate rather than outcome-readiness; known issues are rationalized away under deployment pressure; post-go-live failures were detectable |
+| **Outcome Framing** | Release Notes must connect each deployed capability back to the Intent Statement and outcome that justified it — not just document what was built | Release Notes describe features; no one can trace whether the deployment achieved the outcomes defined in Phase 0; the closing loop never closes |
+| **Human-AI Orchestration** | Post-deployment, some monitoring and optimization work transitions to agents. This handoff must be explicitly designed — roles, boundaries, and escalation paths defined before go-live. | No explicit plan exists for what agents manage vs. what humans manage post-go-live; ongoing monitoring falls through the cracks; system drift begins immediately |
+
+**Gate question:** Can the consultant make a defensible, evidence-based case that this system is ready to deliver the outcomes defined in Phase 0 — and do the Release Notes trace every deployed capability back to its Intent Statement?
+
+*CPS in focus at this gate:* Judgment & Reasoning, Collaborative Communication, Information Discernment
+
+---
+
+### Phase 6: Adopt/Consume
+**Stage Gate: Customer Accepted Solution Handoff Package**
+
+In an AI-native model, Phase 6 is structurally different from traditional hypercare. Agents can continue optimizing in production — the system is not static. The handoff is not a training event or a clean break. It is a transfer of governance responsibility. The Handoff Package is richer than traditional: every decision is traceable from the Release Notes back to Intent Statements, through Engagement Memory. A customer team that cannot make sound human-AI orchestration decisions after the consultant leaves is not ready for handoff, regardless of what the documentation says.
+
+| Skill | Why it matters at this gate | What breaks when it's absent |
+|---|---|---|
+| **Outcome Framing** | Adoption is only meaningful measured against the outcomes defined in Phase 0. The handoff package must include a measurement plan, not just system documentation. The Final Success Criteria Alignment assessment closes the loop. | Handoff documents what was built; no plan exists for measuring whether it achieves the outcomes that justified the investment; success is never confirmed |
+| **Change Co-Creation** | Customers who co-created the solution drive their own adoption. Phase 6 should reinforce that ownership — not transfer a finished product back to them. | Adoption is treated as a training problem; documentation and training are delivered; customer engagement drops; the system is used less than its capability warrants |
 | **Systems Thinking** | In production, agentic systems introduce ongoing feedback loops that can drift without monitoring. Governance for ongoing system health must be designed into the handoff explicitly. | Handoff is a clean break; no feedback loops or monitoring design are included; system drift is discovered reactively, after customer-visible impact |
 | **Human-AI Orchestration** | The customer's team now owns the orchestration decisions the consultant was making throughout delivery. That capability must be transferred deliberately — not assumed from tool training alone. | Customer team receives tool training but not orchestration judgment training; they cannot make sound delegate / supervise / override decisions independently; they return to manual processes or accept agent output without scrutiny |
 
@@ -445,16 +463,17 @@ The Minimum Viable Governance framework is not a compliance layer. It is the str
 
 **Human-led, agent-powered** is the operating principle. Agents accelerate execution. Consultants lead strategy, validate output, and govern the decisions that cannot be automated.
 
-The six MVG phases and their stage gates:
+The seven MVG phases and their stage gates:
 
 | Phase | Name | Stage Gate |
 |---|---|---|
-| 0 | Internal Onboarding | Validated Success Criteria |
+| 0 | Internal Onboarding | Validated Success Criteria & Risk Insight |
 | 1 | Prepare | Customer-Approved Engagement Roadmap (Epics) |
-| 2 | Design | Architecture Sign-Off |
-| 3 | Deliver | Approved Release Plan |
-| 4 | Deploy | UAT Sign-Off + Formal Go/No-Go |
-| 5 | Adopt/Consume | Release Notes + Customer-Accepted Handoff Package |
+| 2 | Design | Architecture Sign-Off & Approved Release Plan |
+| 3 | Build | Build Completion & Acceptance |
+| 4 | Test | UAT Sign-Off |
+| 5 | Deploy | Formal Go/No-Go Decision & Release Notes |
+| 6 | Adopt/Consume | Customer Accepted Solution Handoff Package |
 
 Each gate is a deliberate decision point. Arriving at a gate without the skills to make a defensible decision at it is the primary risk this enablement addresses.
 
@@ -478,10 +497,10 @@ Each gate entry covers the same ground: what to land with, the skills that are l
 ---
 
 #### Phase 0: Internal Onboarding
-**Stage Gate: Validated Success Criteria**
+**Stage Gate: Validated Success Criteria & Risk Insight**
 
 **Landing — what to arrive with:**
-Before this gate closes, the team needs a shared, measurable definition of what success looks like for this engagement — in outcome terms, not deliverable terms. The success criteria validated here are the quality standard every downstream gate will be measured against. If they're vague now, every gate that follows has no teeth.
+Before this gate closes, the team needs two things: a shared, measurable definition of what success looks like — in outcome terms, not deliverable terms — and a Consolidated Risk Log with mitigation recommendations. The success criteria validated here are the quality standard every downstream gate will be measured against. The risk insight documented alongside them is what prevents Phase 3 surprises from being treated as new information.
 
 **Skills load-bearing at this gate:**
 
@@ -525,89 +544,112 @@ The epics approved here become the design brief for Phase 2. Before agents begin
 ---
 
 #### Phase 2: Design
-**Stage Gate: Architecture Sign-Off**
+**Stage Gate: Architecture Sign-Off & Approved Release Plan**
 
 **Landing — what to arrive with:**
-Agents begin doing real construction in this phase — generating solution designs, architecture artifacts, process maps. The consultant's role shifts from producer to director. This is the phase where the AI-Augmented trap is most visible: consultants who stay in producer mode lose the efficiency benefit and compromise their ability to validate what's been generated.
+Agents begin doing real construction in this phase — generating solution designs, architecture artifacts, process maps. The consultant's role shifts from producer to director. This is the phase where the AI-Augmented trap is most visible: consultants who stay in producer mode lose the efficiency benefit and compromise their ability to validate what's been generated. The Release Plan is also confirmed here — the pod must have at least 3 days of confirmed Build runway (6–10 finalized Intent Statements) before Phase 3 opens.
 
 **Skills load-bearing at this gate:**
 
 | Skill | Why it's critical here |
 |---|---|
-| **Intent Writing** | Every agent-assisted design artifact starts with an intent statement. Quality here determines whether output is usable or requires complete regeneration. |
+| **Intent Writing** | Every agent-assisted design artifact starts with an intent statement. Quality here determines whether output is usable or requires complete regeneration. The Intent Statement backlog must be Build-ready before this gate closes. |
 | **Output Validation** | Architecture sign-off is a formal gate. Validation must be structured and documented — not an impression formed on visual review. |
 | **Human-AI Orchestration** | The consultant must decide what agents design, what humans design, and how closely to supervise the blend. |
-| **Discernment** | Agent-generated architecture can look complete and be subtly wrong. The consultant must maintain calibrated scrutiny when output is polished. |
+| **Discernment** | Agent-generated architecture can look complete and be subtly wrong. Design gaps not caught here become Build defects at Phase 3 velocity. |
 
-**Gate question:** Was the architecture reviewed against defined criteria — and did the customer actively participate in shaping it, or only approve it?
+**Gate question:** Was the architecture reviewed against defined criteria — did the customer actively participate in shaping it — and does the pod have a confirmed 3-day Build runway of finalized Intent Statements?
 
 **Takeoff — carry this into Phase 3:**
-Architecture sign-off is the last gate before delivery velocity kicks in. What's approved here becomes the blueprint agents build from. Any ambiguity in the architecture compounds at Phase 3 speed. Before Phase 3 opens, confirm that every agent-facing component of the architecture has a clear, specific intent statement attached to it.
+Architecture sign-off is the last gate before Build velocity kicks in. What's approved here becomes the blueprint agents build from. Any ambiguity in the architecture compounds at Phase 3 speed. Every agent-facing component must have a clear, specific intent statement attached to it before Phase 3 opens.
 
 **Job aids available:** Intent Writing canvas, Output Validation canvas *(priority — available at pilot launch)*
 
 ---
 
-#### Phase 3: Deliver
-**Stage Gate: Approved Release Plan**
+#### Phase 3: Build
+**Stage Gate: Build Completion & Acceptance**
 
 **Landing — what to arrive with:**
-This is the highest-velocity phase in an AI-native model. Agents are building continuously. The consultant's primary job is not construction — it is orchestration, discernment, and continuous validation across a fast-moving, high-volume build cycle. This is the phase most likely to expose automation complacency.
+This is the highest-velocity phase in an AI-native model. Agents are building continuously — writing code, configuration, and flows against confirmed Intent Statements. The consultant's primary job is orchestration, discernment, and continuous validation. Working software is demonstrated to the customer daily. This is the phase most likely to expose automation complacency.
 
 **Skills load-bearing at this gate:**
 
 | Skill | Why it's critical here |
 |---|---|
 | **Discernment** | Agents produce plausible-looking output at speed. Calibrated vigilance — not just accepting work that appears complete — is the primary skill demand. |
-| **Output Validation** | At delivery velocity, validation must be fast AND systematic. Ad hoc spot-checks are insufficient for a release plan gate. Continuous validation loops built into the build cycle, not tacked on at the end. |
+| **Output Validation** | At build velocity, validation must be fast AND systematic. Continuous validation loops built into every build cycle, not tacked on at the end. |
 | **Human-AI Orchestration** | Build tasks vary enormously in how safely they can be delegated. Calibrated judgment must be maintained across the full build cycle. |
-| **Intent Writing** | New sub-tasks surface throughout delivery. Intent is not set once at kickoff — it must be iteratively refined as the build evolves. |
+| **Intent Writing** | New sub-tasks surface throughout Build. Intent must be iteratively refined as the build evolves — it is not set once at kickoff. |
 
-**Gate question:** Does the release plan reflect what was actually built — was each component validated against the intent and outcomes defined in Phases 0 and 1 — and have responsible AI risks been actively reviewed?
+**Gate question:** Has all scoped Build work been completed, demoed, and accepted by the customer — and has each artifact been validated against the intent and outcomes defined in Phases 0 and 1?
 
 **Takeoff — carry this into Phase 4:**
-The release plan approved here is only as reliable as the validation that produced it. Before Phase 4 opens, confirm that UAT criteria trace directly back to the success criteria defined in Phase 0. If they don't, UAT will test the wrong things and the Go/No-Go decision will be made on incomplete evidence.
+If the daily demo cadence held, UAT should have no surprises. Before Phase 4 opens, confirm that UAT criteria trace directly back to the success criteria defined in Phase 0. A design-gap defect surfacing in UAT means something failed in Phase 2 or 3 — treat it as a methodology signal, not just a defect to resolve.
 
 **Job aids available:** Output Validation canvas, Intent Writing canvas, Discernment Trailhead module *(priority — available at pilot launch)*
 
 ---
 
-#### Phase 4: Deploy
-**Stage Gate: UAT Sign-Off + Formal Go/No-Go**
+#### Phase 4: Test
+**Stage Gate: UAT Sign-Off**
 
 **Landing — what to arrive with:**
-Deployment is the point of irreversibility. The Go/No-Go is the highest-stakes judgment call in the lifecycle — and in an AI-native model, the consultant is forming that judgment about work that was largely agent-generated. This gate is where discernment is most consequential and most likely to fail under stakeholder pressure.
+UAT is confirmation, not discovery. The customer has been approving working software daily throughout Phase 3. This gate is formal acceptance of what they've already shaped. If design-gap defects appear here, that signals a Phase 2 or 3 breakdown — trigger a retrospective, don't just resolve the defect and move on.
+
+**Skills load-bearing at this gate:**
+
+| Skill | Why it's critical here |
+|---|---|
+| **Discernment** | UAT sign-off requires a defensible judgment that the system is ready — not that the test pass rate hit a threshold or that schedule pressure is high. |
+| **Output Validation** | UAT criteria must trace to Phase 0 success criteria. Design-gap defects must be distinguished from confirmation defects — they require different responses. |
+| **Change Co-Creation** | Genuine customer participation in UAT produces higher-quality sign-off and reduces post-go-live adoption friction. |
+
+**Gate question:** Has the customer formally accepted the solution based on UAT results that trace to Phase 0 success criteria — and were any design-gap defects identified and resolved before sign-off?
+
+**Takeoff — carry this into Phase 5:**
+Go/No-Go is the point of irreversibility. Before Phase 5 opens, confirm the Release Notes are outcome-traced — every deployed capability connects back to the Intent Statement that drove it. And confirm the customer team knows what decisions they are now responsible for making.
+
+**Job aids available:** Output Validation canvas, Discernment Trailhead module
+
+---
+
+#### Phase 5: Deploy
+**Stage Gate: Formal Go/No-Go Decision & Release Notes**
+
+**Landing — what to arrive with:**
+Deployment is the point of irreversibility. The Go/No-Go is the highest-stakes judgment call in the lifecycle — and in an AI-native model, the consultant is forming that judgment about work that was largely agent-generated. Release Notes here are not a feature summary — they are an outcome map connecting every deployed capability back to the Intent Statement and success criteria that justified it.
 
 **Skills load-bearing at this gate:**
 
 | Skill | Why it's critical here |
 |---|---|
 | **Discernment** | The Go/No-Go requires a clear, defensible judgment about whether the system is ready — not whether it looks ready or whether stakeholders are ready to move on. |
-| **Output Validation** | UAT criteria must trace to the Phase 0 success criteria. If they don't, UAT is testing the wrong things. |
-| **Change Co-Creation** | UAT with genuine customer participation produces higher-quality sign-off and reduces post-go-live adoption friction significantly. |
+| **Outcome Framing** | Release Notes must connect each deployed capability to the Intent Statement and outcome that drove it. Deliverable-framed Release Notes leave the closing loop open. |
+| **Human-AI Orchestration** | Post-deployment agent monitoring and optimization must be explicitly designed — roles, boundaries, and escalation paths defined before go-live. |
 
-**Gate question:** Can the consultant make a defensible, evidence-based case that this system is ready to deliver the outcomes defined in Phase 0 — and does the customer share that confidence?
+**Gate question:** Can the consultant make a defensible, evidence-based case that this system is ready to deliver the outcomes defined in Phase 0 — and do the Release Notes trace every deployed capability to its Intent Statement?
 
-**Takeoff — carry this into Phase 5:**
-Go-live is not the end. In an AI-native model, agents can continue optimizing in production — the system is not static. The handoff is a transfer of governance responsibility, not a clean break. Before Phase 5 opens, confirm that the customer team knows what decisions they are now responsible for making, and that they have the capability to make them.
+**Takeoff — carry this into Phase 6:**
+Go-live is not the end. Agents can continue optimizing in production — the system is not static. The handoff is a transfer of governance responsibility, not a clean break. Before Phase 6 opens, confirm the customer team has the capability to make the orchestration decisions the consultant was making throughout delivery.
 
-**Job aids available:** Output Validation canvas, Discernment Trailhead module
+**Job aids available:** Output Validation canvas, Outcome Framing canvas, Discernment Trailhead module
 
 ---
 
-#### Phase 5: Adopt/Consume
-**Stage Gate: Release Notes + Customer-Accepted Handoff Package**
+#### Phase 6: Adopt/Consume
+**Stage Gate: Customer Accepted Solution Handoff Package**
 
 **Landing — what to arrive with:**
-Phase 5 in an AI-native model is structurally different from traditional hypercare. The handoff is not a training event — it is a transfer of governance responsibility. A customer team that cannot make sound human-AI orchestration decisions after the consultant leaves is not ready for handoff, regardless of what the documentation says.
+Phase 6 in an AI-native model is structurally different from traditional hypercare. The handoff is not a training event — it is a transfer of governance responsibility. The Handoff Package is richer than traditional: every decision traces from Release Notes back through Intent Statements, through Engagement Memory. A customer team that cannot make sound human-AI orchestration decisions after the consultant leaves is not ready for handoff, regardless of what the documentation says.
 
 **Skills load-bearing at this gate:**
 
 | Skill | Why it's critical here |
 |---|---|
-| **Outcome Framing** | Adoption is only meaningful measured against the outcomes defined in Phase 0. The handoff package must include a measurement plan, not just system documentation. |
-| **Human-AI Orchestration** | The customer's team now owns the orchestration decisions the consultant was making throughout delivery. That capability must be transferred deliberately. |
-| **Change Co-Creation** | Customers who co-created the solution drive their own adoption. Phase 5 reinforces that ownership — it doesn't transfer a finished product back to them. |
+| **Outcome Framing** | The Final Success Criteria Alignment assessment closes the loop from Phase 0 — did the engagement achieve the outcomes it committed to? The handoff package must include this measurement, not just system documentation. |
+| **Human-AI Orchestration** | The customer's team now owns the orchestration decisions the consultant was making throughout delivery. That capability must be transferred deliberately — not assumed from tool training alone. |
+| **Change Co-Creation** | Customers who co-created the solution drive their own adoption. Phase 6 reinforces that ownership — it doesn't transfer a finished product back to them. |
 
 **Gate question:** Does the customer have everything they need to measure outcomes, maintain the system, and govern their own human-AI orchestration decisions — without the consultant in the room?
 
@@ -626,7 +668,7 @@ Three canvases are prioritized for pilot launch based on consequence on a live e
 |---|---|---|---|
 | 1 | Intent Writing | Slack canvas | Highest-leverage skill in the framework; errors here propagate through every downstream agent action |
 | 2 | Output Validation | Slack canvas | Continuous validation loops are new behavior for most consultants; they need a protocol, not just an instruction |
-| 3 | Discernment | Trailhead unit | Automation complacency is the invisible risk at Phase 3 velocity; naming it is the minimum required intervention |
+| 3 | Discernment | Trailhead unit | Automation complacency is the invisible risk at Phase 3 Build velocity; naming it is the minimum required intervention |
 
 Remaining Base Layer canvases and Trailhead modules ship in waves after pilot launch, informed by what the data collection mechanisms surface.
 
